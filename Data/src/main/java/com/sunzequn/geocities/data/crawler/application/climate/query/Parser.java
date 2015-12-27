@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * Created by Sloriac on 15/12/20.
  */
-public class QueryParser extends PullText {
+public class Parser extends PullText {
 
     private static final String PREFIX = "http://en.climate-data.org/search/?q=";
 
-    public QueryParser() {
+    public Parser() {
     }
 
     public CityWithClimate parse(City city) {

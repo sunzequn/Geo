@@ -29,11 +29,11 @@ public class Main {
         System.out.println(cities.size());
         for (int i = 0; i < THREAD_NUM; i++) {
             new Thread(() -> {
-                QueryParser queryParser = new QueryParser();
+                Parser parser = new Parser();
                 while (true) {
                     City city = getCity();
                     if (city != null) {
-                        CityWithClimate cityWithClimate = queryParser.parse(city);
+                        CityWithClimate cityWithClimate = parser.parse(city);
                         if (cityWithClimate != null) {
                             writeClimate(cityWithClimate);
                         } else {
