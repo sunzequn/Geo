@@ -21,7 +21,7 @@ public class ReadByLines {
             it = FileUtils.lineIterator(file, "UTF-8");
             while (it.hasNext()) {
                 String line = it.nextLine();
-                if (line.contains("北京"))
+                if (line.contains("新沂"))
                     System.out.println(line);
                 num++;
                 if (num % 100000 == 0)

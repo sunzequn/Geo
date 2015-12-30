@@ -1,5 +1,7 @@
 package com.sunzequn.geocities.data.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +27,13 @@ public class StringUtil {
         List<String> strings = new ArrayList<>();
         String[] array = string.split(division);
         for (String str : array) {
-            strings.add(str.trim());
+            if (!StringUtils.isEmpty(str.trim())) {
+                strings.add(str.trim());
+            }
         }
-        return strings;
+        if (strings.size() > 0) {
+            return strings;
+        }
+        return null;
     }
 }
