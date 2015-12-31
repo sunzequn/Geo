@@ -47,7 +47,7 @@ public class WriteUtil {
 
     public void flush() {
         try {
-            bufferedWriter.flush();
+            fileWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
