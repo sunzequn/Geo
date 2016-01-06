@@ -1,7 +1,4 @@
-package com.sunzequn.geocities.data.crawler.application.climate.data;
-
-import com.sunzequn.geocities.data.crawler.simple.parser.PullText;
-import org.jsoup.nodes.Document;
+package com.sunzequn.geocities.data.crawler.application.climate.amount;
 
 /**
  * Created by Sloriac on 15/12/27.
