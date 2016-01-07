@@ -18,4 +18,17 @@ public class DateUtils {
             return null;
         }
     }
+
+    /**
+     * 产生一个0-1000的随机整数
+     *
+     * @return 0-1000的随机整数
+     */
+    public static int randomTimeMilli() {
+        return (int) (Math.random() * 1000);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(randomTimeMilli());
+    }
 }

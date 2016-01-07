@@ -1,11 +1,12 @@
 package com.sunzequn.geo.data.crawler.application.climate.pull.parser;
 
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Continent;
 import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Country;
-import com.sunzequn.geo.data.crawler.application.climate.pull.dao.ContinentDao;
+import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Region;
 import com.sunzequn.geo.data.crawler.application.climate.pull.dao.CountryDao;
+import com.sunzequn.geo.data.crawler.application.climate.pull.dao.RegionDao;
 import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
 import com.sunzequn.geo.data.crawler.simple.parser.PullText;
+import com.sunzequn.geo.data.utils.DateUtils;
 import com.sunzequn.geo.data.utils.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
@@ -16,19 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Sloriac on 16/1/6.
+ * Created by Sloriac on 16/1/7.
  * <p>
- * 解析http://en.climate-data.org/网站的Continent详情页面
- * 抽取Country信息
+ * 解析http://en.climate-data.org/网站的Country详情页面
+ * 抽取Region信息
  */
-public class ContinentParser extends PullText {
+public class CountryParser extends PullText {
 
     private static final String PREFIX = "http://en.climate-data.org";
     private static final int TIMEOUT = 5000;
 
-    public List<Country> parser(Continent continent) {
-
-        String url = PREFIX + continent.getUrl();
+    public List<Region> parser(Country country) {
+        String url = PREFIX + country.getUrl();
         Document document = pullFromUrl(url, TIMEOUT, HttpMethod.Get);
         if (document == null) {
             return null;
@@ -43,22 +43,20 @@ public class ContinentParser extends PullText {
             return null;
         }
 
-        List<Country> countries = new ArrayList<>();
+        List<Region> regions = new ArrayList<>();
         for (Element li : lis) {
-            Country country = extract(li, continent.getId());
-            if (country != null) {
-                countries.add(country);
+            Region region = extract(li, country.getId());
+            if (region != null) {
+                regions.add(region);
             }
         }
-
-        if (countries.size() > 0) {
-            return countries;
+        if (regions.size() > 0) {
+            return regions;
         }
         return null;
     }
 
-    private Country extract(Element element, int parentid) {
-
+    private Region extract(Element element, int parentid) {
         String name = element.text().trim();
         if (name.equals("")) {
             return null;
@@ -68,28 +66,37 @@ public class ContinentParser extends PullText {
             return null;
         }
         String url = link.attr("href");
+        if (!url.contains("region"))
+            return null;
         String[] parts = StringUtils.split(url, "/");
         if (parts.length == 0) {
             return null;
         }
         int id = Integer.parseInt(parts[parts.length - 1]);
-        Country country = new Country(id, name, url, parentid, 0);
-        return country;
+        Region region = new Region(id, name, url, parentid, 0);
+        return region;
     }
 
-    //爬取Continent页面把Country信息存进数据库
     public static void main(String[] args) {
-        ContinentParser continentParser = new ContinentParser();
-        ContinentDao continentDao = new ContinentDao();
+        CountryParser countryParser = new CountryParser();
         CountryDao countryDao = new CountryDao();
-        List<Continent> continents = continentDao.getAll();
-        for (Continent continent : continents) {
-            List<Country> countries = continentParser.parser(continent);
-            if (countries != null)
-                for (Country country : countries) {
-                    countryDao.save(country);
-                    System.out.println(country);
+        RegionDao regionDao = new RegionDao();
+        List<Country> countries = countryDao.getUnvisited();
+        for (Country country : countries) {
+            List<Region> regions = countryParser.parser(country);
+            if (regions != null) {
+                countryDao.update(country.getId(), 1);
+                for (Region region : regions) {
+                    regionDao.save(region);
+                    System.out.println(region);
                 }
+            }
+            try {
+                Thread.sleep(DateUtils.randomTimeMilli());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

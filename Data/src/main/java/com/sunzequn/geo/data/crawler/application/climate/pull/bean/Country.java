@@ -9,15 +9,17 @@ public class Country {
     private String name;
     private String url;
     private int parentid;
+    private int ifvisited;
 
     public Country() {
     }
 
-    public Country(int id, String name, String url, int parentid) {
+    public Country(int id, String name, String url, int parentid, int ifvisited) {
         this.id = id;
         this.name = name;
         this.url = url;
         this.parentid = parentid;
+        this.ifvisited = ifvisited;
     }
 
     public int getId() {
@@ -52,6 +54,14 @@ public class Country {
         this.parentid = parentid;
     }
 
+    public int getIfvisited() {
+        return ifvisited;
+    }
+
+    public void setIfvisited(int ifvisited) {
+        this.ifvisited = ifvisited;
+    }
+
     @Override
     public String toString() {
         return "Country{" +
@@ -59,6 +69,7 @@ public class Country {
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", parentid=" + parentid +
+                ", ifvisited=" + ifvisited +
                 '}';
     }
 }

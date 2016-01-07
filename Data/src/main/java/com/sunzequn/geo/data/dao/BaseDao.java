@@ -17,7 +17,7 @@ public abstract class BaseDao {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/geocities?useUnicode=true&characterEncoding=UTF-8";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
-    private static Connection connection;
+    protected static Connection connection;
 
     protected void getConnection() {
         try {
@@ -39,6 +39,17 @@ public abstract class BaseDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    protected int execute(String sql, Object[] params) {
+        QueryRunner queryRunner = new QueryRunner();
+        try {
+            int res = queryRunner.update(connection, sql, params);
+            return res;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }
