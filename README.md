@@ -1,1 +1,1 @@
-# GeoCities
+# Geo
