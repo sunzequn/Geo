@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Sloriac on 15/12/20.
  */
-public class TimeUtil {
+public class TimeUtils {
 
     private static long startTime;
     private static long endTime;

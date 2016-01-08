@@ -1,7 +1,7 @@
 package com.sunzequn.geo.data.crawler.application.climate.query;
 
 import com.sunzequn.geo.data.crawler.simple.parser.PullText;
-import com.sunzequn.geo.data.utils.StringUtil;
+import com.sunzequn.geo.data.utils.StringUtils;
 import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -49,9 +49,9 @@ public class Parser extends PullText {
                     continue;
                 }
                 CityWithClimate cityWithClimate = new CityWithClimate(city);
-                cityWithClimate.setClimate(StringUtil.removePrefix(strings.get(climateIndex), "Climate:"));
-                cityWithClimate.setTemperature(StringUtil.remove(strings.get(temperatureIndex), "Average temperature:", "°C"));
-                cityWithClimate.setPrecipitation(StringUtil.remove(strings.get(precipitationIndex), "Precipitation:", "mm"));
+                cityWithClimate.setClimate(StringUtils.removePrefix(strings.get(climateIndex), "Climate:"));
+                cityWithClimate.setTemperature(StringUtils.remove(strings.get(temperatureIndex), "Average temperature:", "°C"));
+                cityWithClimate.setPrecipitation(StringUtils.remove(strings.get(precipitationIndex), "Precipitation:", "mm"));
                 return cityWithClimate;
             }
         }

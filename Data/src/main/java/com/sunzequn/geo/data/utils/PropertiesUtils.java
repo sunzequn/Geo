@@ -10,26 +10,26 @@ import java.util.Properties;
 /**
  * Created by Sloriac on 15/12/20.
  * <p>
- * The util class for reading properties files.
+ * 读取Properties配置文件的工具类
  */
-public class PropertiesUtil {
+public class PropertiesUtils {
 
     /**
-     * The name of the default config file.
+     * 默认的配置文件路径
      */
     private static String defaultConfigFile = "config.properties";
 
     /**
-     * Get the value by it`s key from the default config.
+     * 从配置文件中根据键获得值
      *
-     * @param key The value`s key.
-     * @return the value if it is existed otherwise null.
+     * @param key 键
+     * @return 如果键值对存在则返回值, 否则返回null
      */
     public static String getValue(String key) {
         Properties properties = new Properties();
 
         try {
-            ClassLoader classLoader = PropertiesUtil.class.getClassLoader();
+            ClassLoader classLoader = PropertiesUtils.class.getClassLoader();
             InputStream inputStream = classLoader.getResourceAsStream(defaultConfigFile);
             if (inputStream == null) {
                 throw new ConfigException("No config file founded.");

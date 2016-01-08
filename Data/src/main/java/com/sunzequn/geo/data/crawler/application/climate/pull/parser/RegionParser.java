@@ -2,14 +2,12 @@ package com.sunzequn.geo.data.crawler.application.climate.pull.parser;
 
 import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Country;
 import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Place;
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Region;
 import com.sunzequn.geo.data.crawler.application.climate.pull.dao.CountryDao;
 import com.sunzequn.geo.data.crawler.application.climate.pull.dao.PlaceFromCountryDao;
 import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
 import com.sunzequn.geo.data.crawler.simple.parser.PullText;
 import com.sunzequn.geo.data.utils.ListUtils;
-import com.sunzequn.geo.data.utils.StringUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.sunzequn.geo.data.utils.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -50,7 +48,7 @@ public class RegionParser extends PullText {
                 if (!place_url.contains("location"))
                     return null;
 
-                String[] parts = StringUtils.split(place_url, "/");
+                String[] parts = org.apache.commons.lang3.StringUtils.split(place_url, "/");
                 if (parts.length == 0) {
                     return null;
                 }
@@ -66,9 +64,9 @@ public class RegionParser extends PullText {
                     continue;
                 }
                 String name = strings.get(0).trim();
-                String climate = StringUtil.removePrefix(strings.get(1), "Climate:");
-                String temperature = StringUtil.remove(strings.get(2), "Average temperature:", "°C");
-                String precipitation = StringUtil.remove(strings.get(3), "Precipitation:", "mm");
+                String climate = StringUtils.removePrefix(strings.get(1), "Climate:");
+                String temperature = StringUtils.remove(strings.get(2), "Average temperature:", "°C");
+                String precipitation = StringUtils.remove(strings.get(3), "Precipitation:", "mm");
 
                 Place place = new Place(id, name, place_url, parentid, 0, climate, Double.parseDouble(temperature), Double.parseDouble(precipitation));
                 places.add(place);

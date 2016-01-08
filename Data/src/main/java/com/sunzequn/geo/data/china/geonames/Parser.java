@@ -1,10 +1,10 @@
 package com.sunzequn.geo.data.china.geonames;
 
 import com.google.gson.Gson;
-import com.sunzequn.geo.data.utils.WriteUtil;
+import com.sunzequn.geo.data.utils.WriteUtils;
 import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
 import com.sunzequn.geo.data.crawler.simple.parser.PullText;
-import com.sunzequn.geo.data.utils.ReadUtil;
+import com.sunzequn.geo.data.utils.ReadUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 
@@ -39,9 +39,9 @@ public class Parser extends PullText {
     }
 
     public void writeRdf(String file, String rdf) {
-        WriteUtil writeUtil = new WriteUtil(file, false);
-        writeUtil.write(rdf);
-        writeUtil.close();
+        WriteUtils writeUtils = new WriteUtils(file, false);
+        writeUtils.write(rdf);
+        writeUtils.close();
     }
 
     public void mkdir(String dir) {
@@ -107,8 +107,8 @@ public class Parser extends PullText {
 
     public List<String> contiansId(String id) {
         String containsFile = getContainsFileName(id);
-        ReadUtil readUtil = new ReadUtil(containsFile);
-        List<String> lines = readUtil.readByLine();
+        ReadUtils readUtils = new ReadUtils(containsFile);
+        List<String> lines = readUtils.readByLine();
         List<String> ids = new ArrayList<>();
         for (String line : lines) {
             if (line.contains("isdefinedby")) {
@@ -125,8 +125,8 @@ public class Parser extends PullText {
     public String getChineseName(String id) {
         String name = "";
         String aboutFile = getAboutFileName(id);
-        ReadUtil readUtil = new ReadUtil(aboutFile);
-        List<String> lines = readUtil.readByLine();
+        ReadUtils readUtils = new ReadUtils(aboutFile);
+        List<String> lines = readUtils.readByLine();
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
             if (line.contains("<gn:alternatename xml:lang=\"zh\">")) {

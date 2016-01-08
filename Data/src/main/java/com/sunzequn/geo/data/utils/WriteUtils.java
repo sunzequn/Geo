@@ -5,17 +5,17 @@ import java.io.*;
 /**
  * Created by Sloriac on 15/12/20.
  */
-public class WriteUtil {
+public class WriteUtils {
 
     private String file;
     private boolean append;
     private FileWriter fileWriter;
     private BufferedWriter bufferedWriter;
 
-    private WriteUtil() {
+    private WriteUtils() {
     }
 
-    public WriteUtil(String file, boolean append) {
+    public WriteUtils(String file, boolean append) {
         this.file = file;
         this.append = append;
         try {

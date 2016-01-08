@@ -1,9 +1,9 @@
 package com.sunzequn.geo.data.crawler.application.climate.query;
 
-import com.sunzequn.geo.data.utils.ReadUtil;
-import com.sunzequn.geo.data.utils.StringUtil;
-import com.sunzequn.geo.data.utils.TimeUtil;
-import com.sunzequn.geo.data.utils.WriteUtil;
+import com.sunzequn.geo.data.utils.ReadUtils;
+import com.sunzequn.geo.data.utils.StringUtils;
+import com.sunzequn.geo.data.utils.TimeUtils;
+import com.sunzequn.geo.data.utils.WriteUtils;
 import org.junit.Test;
 
 import java.util.*;
@@ -19,13 +19,13 @@ public class Main {
     private static final String CITY_NO_CLIMATE_PATH = "Data/src/main/resources/city/city_mathmatical_no_climate.txt";
     private static final int THREAD_NUM = 2;
     private static LinkedList<City> cities = new LinkedList<>();
-    private static WriteUtil writeClimate = new WriteUtil(CITY_CLIMATE_PATH, true);
-    private static WriteUtil writeNoClimate = new WriteUtil(CITY_NO_CLIMATE_PATH, true);
+    private static WriteUtils writeClimate = new WriteUtils(CITY_CLIMATE_PATH, true);
+    private static WriteUtils writeNoClimate = new WriteUtils(CITY_NO_CLIMATE_PATH, true);
     private static int num = 0;
 
     public static void main(String[] args) {
         readCity();
-        TimeUtil.start();
+        TimeUtils.start();
         System.out.println(cities.size());
         for (int i = 0; i < THREAD_NUM; i++) {
             new Thread(() -> {
@@ -42,8 +42,8 @@ public class Main {
                     } else {
                         writeClimate.close();
                         writeNoClimate.close();
-                        TimeUtil.end();
-                        TimeUtil.print();
+                        TimeUtils.end();
+                        TimeUtils.print();
                         return;
                     }
                 }
@@ -75,11 +75,11 @@ public class Main {
     }
 
     public static void readCity() {
-        ReadUtil readUtil = new ReadUtil("Data/src/main/resources/city/city.txt");
-        List<String> strings = readUtil.readByLine();
-        readUtil.close();
+        ReadUtils readUtils = new ReadUtils("Data/src/main/resources/city/city.txt");
+        List<String> strings = readUtils.readByLine();
+        readUtils.close();
         for (String string : strings) {
-            List<String> data = StringUtil.split(string, ",");
+            List<String> data = StringUtils.split(string, ",");
             City city = new City(data.get(0), data.get(1), data.get(2));
             cities.addLast(city);
         }
@@ -87,31 +87,31 @@ public class Main {
 
     @Test
     public void pullAgain() {
-        ReadUtil readUtil1 = new ReadUtil("src/main/resources/city/city_mathmatical.txt");
-        List<String> strings1 = readUtil1.readByLine();
-        readUtil1.close();
+        ReadUtils readUtils1 = new ReadUtils("src/main/resources/city/city_mathmatical.txt");
+        List<String> strings1 = readUtils1.readByLine();
+        readUtils1.close();
 
-        ReadUtil readUtil2 = new ReadUtil("src/main/resources/city/city_mathmatical_climate.txt");
-        List<String> strings2 = readUtil2.readByLine();
-        readUtil2.close();
+        ReadUtils readUtils2 = new ReadUtils("src/main/resources/city/city_mathmatical_climate.txt");
+        List<String> strings2 = readUtils2.readByLine();
+        readUtils2.close();
 
-        ReadUtil readUtil3 = new ReadUtil("src/main/resources/city/city_mathmatical_no_climate.txt");
-        List<String> strings3 = readUtil3.readByLine();
-        readUtil3.close();
+        ReadUtils readUtils3 = new ReadUtils("src/main/resources/city/city_mathmatical_no_climate.txt");
+        List<String> strings3 = readUtils3.readByLine();
+        readUtils3.close();
 
         System.out.println(strings1.size());
         System.out.println(strings2.size());
         System.out.println(strings3.size());
 
         for (String ss : strings2) {
-            List<String> sss = StringUtil.split(ss, ",");
+            List<String> sss = StringUtils.split(ss, ",");
             String ssss = sss.get(0) + "," + sss.get(1) + "," + sss.get(2);
             strings3.add(ssss);
         }
 
         System.out.println(strings3.size());
 
-        TimeUtil.start();
+        TimeUtils.start();
 
         Set<String> set1 = new HashSet<>(strings1);
         Set<String> set3 = new HashSet<>(strings3);
@@ -125,14 +125,14 @@ public class Main {
         List<String> temp = new ArrayList<>(set1);
         System.out.println(temp.size());
 
-        WriteUtil writeUtil = new WriteUtil("src/main/resources/city/city.txt", false);
+        WriteUtils writeUtils = new WriteUtils("src/main/resources/city/city.txt", false);
         for (String t : temp) {
-            writeUtil.write(t);
+            writeUtils.write(t);
         }
-        writeUtil.close();
+        writeUtils.close();
 
-        TimeUtil.end();
-        TimeUtil.print();
+        TimeUtils.end();
+        TimeUtils.print();
 
 
     }

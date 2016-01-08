@@ -8,14 +8,15 @@ import java.lang.reflect.Method;
 /**
  * Created by Sloriac on 15/12/20.
  */
-public class ClassUtil {
+public class ClassUtils {
 
     /**
-     * Get the value of a property by it`s name.
+     * 根据属性名得到属性值
      *
-     * @param t     The object from which we retrieve values.
-     * @param field The name of the property.
-     * @return the value of the property.
+     * @param t 属性所属的类
+     * @param field 类的属性名
+     * @param <T> 泛型
+     * @return 该属性的值
      */
     public static <T> Object getFieldValue(T t, String field) {
         try {
@@ -25,18 +26,21 @@ public class ClassUtil {
                 throw new RuntimeException("No read method for bean property "
                         + t.getClass() + " " + field);
             }
-            Object value = method.invoke(t, new Object[]{});
-            return value;
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+            return method.invoke(t);
+        } catch (IntrospectionException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
     }
 
+    /**
+     * 设置类的属性值
+     *
+     * @param t     属性所属的类
+     * @param field 属性名
+     * @param value 属性值
+     * @param <T>   泛型
+     */
     public static <T> void setFieldValue(T t, String field, Object value) {
         try {
             PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field, t.getClass());
@@ -46,11 +50,7 @@ public class ClassUtil {
                         + t.getClass() + " " + field);
             }
             method.invoke(t, value);
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (IntrospectionException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }

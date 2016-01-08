@@ -7,17 +7,17 @@ import java.util.List;
 /**
  * Created by Sloriac on 15/12/20.
  */
-public class ReadUtil {
+public class ReadUtils {
 
     private String file;
     private FileInputStream fileInputStream;
     private InputStreamReader inputStreamReader;
     private BufferedReader bufferedReader;
 
-    public ReadUtil() {
+    public ReadUtils() {
     }
 
-    public ReadUtil(String file) {
+    public ReadUtils(String file) {
         this.file = file;
         try {
             fileInputStream = new FileInputStream(file);

@@ -1,6 +1,6 @@
 package com.sunzequn.geo.data.crawler.simple.wrapper;
 
-import com.sunzequn.geo.data.utils.PropertiesUtil;
+import com.sunzequn.geo.data.utils.PropertiesUtils;
 
 /**
  * Created by Sloriac on 15/12/20.
@@ -41,11 +41,11 @@ public class UrlQueue {
     private UrlQueue() {
 
         String number;
-        number = PropertiesUtil.getValue("maxVisitedUrlNumber");
+        number = PropertiesUtils.getValue("maxVisitedUrlNumber");
         if (number != null) {
             maxVisitedUrlNumber = Integer.parseInt(number);
         }
-        number = PropertiesUtil.getValue("maxUnvisitedUrlNumber");
+        number = PropertiesUtils.getValue("maxUnvisitedUrlNumber");
         if (number != null) {
             maxUnvisitedUrlNumber = Integer.parseInt(number);
         }

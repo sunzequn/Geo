@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Sloriac on 15/12/20.
  */
-public class StringUtil {
+public class StringUtils {
 
     public static String removePrefix(String string, String prefix) {
         return string.replaceFirst(prefix, "").trim();
@@ -27,7 +27,7 @@ public class StringUtil {
         List<String> strings = new ArrayList<>();
         String[] array = string.split(division);
         for (String str : array) {
-            if (!StringUtils.isEmpty(str.trim())) {
+            if (!org.apache.commons.lang3.StringUtils.isEmpty(str.trim())) {
                 strings.add(str.trim());
             }
         }
