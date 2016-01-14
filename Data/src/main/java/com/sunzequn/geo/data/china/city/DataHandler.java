@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.china;
+package com.sunzequn.geo.data.china.city;
 
 import com.sunzequn.geo.data.utils.StringUtils;
 import org.apache.commons.io.FileUtils;

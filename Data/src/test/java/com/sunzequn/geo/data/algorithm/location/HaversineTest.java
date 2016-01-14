@@ -9,6 +9,6 @@ public class HaversineTest {
 
     @Test
     public void distanceTest() {
-        System.out.println(Haversine.distance(39.941, 116.45, 39.94, 116.451));
+        System.out.println(com.sunzequn.geo.data.algorithm.location.Haversine.distance(39.941, 116.45, 39.94, 116.451));
     }
 }

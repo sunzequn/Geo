@@ -1,9 +1,9 @@
-package com.sunzequn.geo.data.china;
+package com.sunzequn.geo.data.china.city;
 
 import com.google.gson.Gson;
-import com.sunzequn.geo.data.china.division.tojson.Province;
-import com.sunzequn.geo.data.china.division.tojson.China;
-import com.sunzequn.geo.data.china.division.tojson.City;
+import com.sunzequn.geo.data.china.city.tojson.Province;
+import com.sunzequn.geo.data.china.city.tojson.China;
+import com.sunzequn.geo.data.china.city.tojson.City;
 
 import java.util.ArrayList;
 import java.util.List;

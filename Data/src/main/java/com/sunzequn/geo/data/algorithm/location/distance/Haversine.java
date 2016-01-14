@@ -1,4 +1,6 @@
-package com.sunzequn.geo.data.algorithm.location;
+package com.sunzequn.geo.data.algorithm.location.distance;
+
+import com.sunzequn.geo.data.algorithm.location.DegreeUtils;
 
 /**
  * Created by Sloriac on 16/1/5.
@@ -29,10 +31,10 @@ public class Haversine {
         /*
         角度转弧度
          */
-        lat1 = CalculateUtils.deg2rad(lat1);
-        lat2 = CalculateUtils.deg2rad(lat2);
-        lon1 = CalculateUtils.deg2rad(lon1);
-        lon2 = CalculateUtils.deg2rad(lon2);
+        lat1 = DegreeUtils.deg2rad(lat1);
+        lat2 = DegreeUtils.deg2rad(lat2);
+        lon1 = DegreeUtils.deg2rad(lon1);
+        lon2 = DegreeUtils.deg2rad(lon2);
 
         double havLat = haversine(lat2 - lat1);
         double havLon = haversine(lon2 - lon1);

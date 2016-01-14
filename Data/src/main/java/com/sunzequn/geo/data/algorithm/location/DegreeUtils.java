@@ -5,7 +5,7 @@ package com.sunzequn.geo.data.algorithm.location;
  * <p>
  * 计算工具类
  */
-public class CalculateUtils {
+public class DegreeUtils {
 
     /**
      * 将角度转换为弧度

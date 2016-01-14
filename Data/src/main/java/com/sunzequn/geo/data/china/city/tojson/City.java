@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.china.division.tojson;
+package com.sunzequn.geo.data.china.city.tojson;
 
 import java.util.List;
 

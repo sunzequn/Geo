@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.china;
+package com.sunzequn.geo.data.china.city;
 
 import java.util.DoubleSummaryStatistics;
 import java.util.List;

@@ -8,7 +8,7 @@ import org.junit.Test;
  */
 public class PlaceDaoTest {
 
-    private PlaceFromCountryDao placeDao = new PlaceFromCountryDao();
+    private PlaceDao placeDao = new PlaceDao();
 
     @Test
     public void saveTest() {

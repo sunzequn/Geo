@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.china;
+package com.sunzequn.geo.data.china.city;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -82,7 +82,7 @@ public class CityDao {
         return null;
     }
 
-    public static int deleteById(int id) {
+    public int deleteById(int id) {
         QueryRunner queryRunner = new QueryRunner();
         String sql = "delete from china_city where id = ?";
         Object[] params = {id};
@@ -94,7 +94,7 @@ public class CityDao {
         return 0;
     }
 
-    public static int updateBadData(int id, String mergerName, int parentId, int levelType) {
+    public int updateBadData(int id, String mergerName, int parentId, int levelType) {
         QueryRunner queryRunner = new QueryRunner();
         String sql = "update china_city set mergername = ?, parentid = ?, leveltype = ? where id = ?";
         Object[] params = {mergerName, parentId, levelType, id};
