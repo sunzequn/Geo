@@ -1,6 +1,6 @@
 package com.sunzequn.geo.data.china.city;
 
-import com.sunzequn.geo.data.utils.StringUtils;
+import com.sunzequn.geo.data.utils.MyStringUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
@@ -28,7 +28,7 @@ public class DataHandler {
             it = FileUtils.lineIterator(file, "UTF-8");
             while (it.hasNext()) {
                 String line = it.nextLine();
-                List<String> columns = StringUtils.split(line, "\t");
+                List<String> columns = MyStringUtils.split(line, "\t");
                 ChinaCity chinaCity = new ChinaCity(columns);
                 if (!org.apache.commons.lang3.StringUtils.isEmpty(chinaCity.getName())) {
                     num++;

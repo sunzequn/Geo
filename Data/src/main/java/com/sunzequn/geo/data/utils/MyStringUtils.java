@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Sloriac on 15/12/20.
  */
-public class StringUtils {
+public class MyStringUtils {
 
     public static String removePrefix(String string, String prefix) {
         return string.replaceFirst(prefix, "").trim();

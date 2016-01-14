@@ -1,7 +1,7 @@
 package com.sunzequn.geo.data.crawler.application.climate.query;
 
 import com.sunzequn.geo.data.utils.ReadUtils;
-import com.sunzequn.geo.data.utils.StringUtils;
+import com.sunzequn.geo.data.utils.MyStringUtils;
 import com.sunzequn.geo.data.utils.TimeUtils;
 import com.sunzequn.geo.data.utils.WriteUtils;
 import org.junit.Test;
@@ -79,7 +79,7 @@ public class Main {
         List<String> strings = readUtils.readByLine();
         readUtils.close();
         for (String string : strings) {
-            List<String> data = StringUtils.split(string, ",");
+            List<String> data = MyStringUtils.split(string, ",");
             City city = new City(data.get(0), data.get(1), data.get(2));
             cities.addLast(city);
         }
@@ -104,7 +104,7 @@ public class Main {
         System.out.println(strings3.size());
 
         for (String ss : strings2) {
-            List<String> sss = StringUtils.split(ss, ",");
+            List<String> sss = MyStringUtils.split(ss, ",");
             String ssss = sss.get(0) + "," + sss.get(1) + "," + sss.get(2);
             strings3.add(ssss);
         }
