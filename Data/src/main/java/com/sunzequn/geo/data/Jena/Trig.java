@@ -14,16 +14,26 @@ import java.io.FileOutputStream;
 public class Trig {
 
     private static final String TRIG = "Data/src/main/resources/data/sw/test.trig";
-    private static final String EX = "Data/src/main/resources/data/sw/ex.trig";
     private static final String NT = "Data/src/main/resources/data/sw/test.nt";
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public void toNt(String trigFile, String ntFile) {
         Model model = ModelFactory.createDefaultModel();
-        model.read(TRIG);
-        System.out.println(model.isEmpty());
-
-        FileOutputStream fileOutputStream = new FileOutputStream(NT);
+        model.read(trigFile);
+        if (model.isEmpty())
+            return;
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(ntFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         RDFDataMgr.write(fileOutputStream, model, Lang.NT);
+    }
+
+    public static void main(String[] args) {
+
+        Trig trig = new Trig();
+        trig.toNt(TRIG, NT);
 
     }
 }
