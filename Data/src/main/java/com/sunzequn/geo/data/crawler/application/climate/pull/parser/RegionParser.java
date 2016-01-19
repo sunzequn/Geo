@@ -122,5 +122,4 @@ public class RegionParser extends PullText {
         regionParser.getFromRegion();
     }
 
-
 }

@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.Jena;
+package com.sunzequn.geo.data.jena;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
