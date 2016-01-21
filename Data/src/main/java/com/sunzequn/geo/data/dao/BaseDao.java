@@ -14,7 +14,9 @@ import java.util.List;
 public abstract class BaseDao {
 
     private static final String CLASS_NAME = "com.mysql.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/geocities?useUnicode=true&characterEncoding=UTF-8";
+    private static final String JDBC_URL_PREFIX = "jdbc:mysql://localhost:3306/";
+    private static final String JDBC_URL_SUFFIX = "?useUnicode=true&characterEncoding=UTF-8";
+    private static final String DATABASE = "geocities";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
     protected static Connection connection;
@@ -22,7 +24,25 @@ public abstract class BaseDao {
     protected void getConnection() {
         try {
             Class.forName(CLASS_NAME);
-            connection = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(JDBC_URL_PREFIX + DATABASE + JDBC_URL_SUFFIX, USER, PASSWORD);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void getConnection(String databaseName) {
+        try {
+            Class.forName(CLASS_NAME);
+            connection = DriverManager.getConnection(JDBC_URL_PREFIX + databaseName + JDBC_URL_SUFFIX, USER, PASSWORD);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void getConnection(String databaseName, String user, String password) {
+        try {
+            Class.forName(CLASS_NAME);
+            connection = DriverManager.getConnection(JDBC_URL_PREFIX + databaseName + JDBC_URL_SUFFIX, user, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
