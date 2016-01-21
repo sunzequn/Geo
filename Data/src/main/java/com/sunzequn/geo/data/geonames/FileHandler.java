@@ -40,7 +40,6 @@ public class FileHandler {
 
         File file = new File(FILE);
         LineIterator it = FileUtils.lineIterator(file, "UTF-8");
-
         try {
             while (it.hasNext()) {
                 String line = it.nextLine();
