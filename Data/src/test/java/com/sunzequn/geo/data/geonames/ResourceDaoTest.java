@@ -1,9 +1,8 @@
 package com.sunzequn.geo.data.geonames;
 
+import com.sunzequn.geo.data.geonames.missingdata.Resource;
+import com.sunzequn.geo.data.geonames.missingdata.ResourceDao;
 import org.junit.Test;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Sloriac on 16/1/21.

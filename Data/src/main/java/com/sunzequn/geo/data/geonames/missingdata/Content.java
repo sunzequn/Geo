@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.geonames;
+package com.sunzequn.geo.data.geonames.missingdata;
 
 /**
  * Created by Sloriac on 16/1/21.
