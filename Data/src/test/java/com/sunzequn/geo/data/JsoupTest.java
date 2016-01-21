@@ -22,7 +22,8 @@ public class JsoupTest {
 
         URL url = new URL("http://sws.geonames.org/3020251/nearby.rdf");
         HttpURLConnection action = (HttpURLConnection) url.openConnection(proxy);
-        action.setConnectTimeout(5000);
+        action.setConnectTimeout(1000);
+//        action.setReadTimeout(1000);
         InputStream in = action.getInputStream();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
