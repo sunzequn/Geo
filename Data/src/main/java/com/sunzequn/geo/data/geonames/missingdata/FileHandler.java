@@ -19,8 +19,8 @@ public class FileHandler {
 
     private static final String FILE = "Data/src/main/resources/data/geonames/all-geonames-rdf.txt";
     private static final String GN = "http://www.geonames.org/ontology#";
+    private static final String RDFS = "http://www.w3.org/2000/01/rdf-schema#";
     private static final String PREFIX = "http://sws.geonames.org/";
-    private static final String NEARBY_SUFFIX = "/nearby.rdf";
     private static final String CONTAINS_SUFFIX = "/contains.rdf";
     private static final String NEIGHBOURS_SUFFIX = "/neighbours.rdf";
     private static final String CONTAINS_TABLE = "contains_url";
@@ -48,7 +48,7 @@ public class FileHandler {
                 String line = it.nextLine();
                 if (!line.contains(nearby)) {
                     nearbyNum++;
-                    handleLine(nearbyDao, line, nearby, NEARBY_SUFFIX);
+                    handleNearby(line);
                 }
                 if (line.contains(neighbours)) {
                     neighboursNum++;
@@ -79,8 +79,21 @@ public class FileHandler {
             String string = StringUtils.removeStart(strings.get(0), PREFIX);
             string = StringUtils.removeEnd(string, suffix);
             int id = Integer.parseInt(string);
-            Resource resource = new Resource(id, 0);
-            resourceDao.save(resource);
+//            Resource resource = new Resource(id, 0);
+//            resourceDao.save(resource);
+        }
+    }
+
+    private static void handleNearby(String line) {
+        Rdf rdf = new Rdf();
+        List<String> strings = rdf.getObject(line, RDFS + "isDefinedBy");
+        if (strings.size() == 1) {
+            String string = StringUtils.removeStart(strings.get(0), PREFIX);
+            string = StringUtils.removeEnd(string, "/about.rdf");
+            int id = Integer.parseInt(string);
+            System.out.println(id);
+//            Resource resource = new Resource(id, 0);
+//            nearbyDao.save(resource);
         }
     }
 }
