@@ -33,4 +33,8 @@ public class ResourceDao extends BaseDao {
         return execute(sql, params);
     }
 
+    public void close() {
+        closeConnection();
+    }
+
 }

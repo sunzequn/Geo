@@ -48,6 +48,14 @@ public abstract class BaseDao {
         }
     }
 
+    protected void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     protected <T> List<T> query(String sql, Object[] params, Class clazz) {
         QueryRunner queryRunner = new QueryRunner();
         try {

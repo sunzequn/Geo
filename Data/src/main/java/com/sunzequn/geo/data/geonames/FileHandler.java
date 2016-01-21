@@ -26,6 +26,9 @@ public class FileHandler {
     private static final String CONTAINS_TABLE = "contains_url";
     private static final String NEIGHBOURS_TABLE = "neighbours_url";
     private static final String NEARBY_TABLE = "nearby_url";
+    private static ResourceDao nearbyDao = new ResourceDao(NEARBY_TABLE);
+    private static ResourceDao containsDao = new ResourceDao(CONTAINS_TABLE);
+    private static ResourceDao neighboursDao = new ResourceDao(NEIGHBOURS_TABLE);
 
     public static void main(String[] args) throws IOException {
 
@@ -45,15 +48,15 @@ public class FileHandler {
                 String line = it.nextLine();
                 if (line.contains(nearby)) {
                     nearbyNum++;
-                    handleLine(line, nearby, NEARBY_TABLE, NEARBY_SUFFIX);
+                    handleLine(nearbyDao, line, nearby, NEARBY_SUFFIX);
                 }
                 if (line.contains(neighbours)) {
                     neighboursNum++;
-                    handleLine(line, neighbours, NEIGHBOURS_TABLE, NEIGHBOURS_SUFFIX);
+                    handleLine(neighboursDao, line, neighbours, NEIGHBOURS_SUFFIX);
                 }
                 if (line.contains(contains)) {
                     containsNum++;
-                    handleLine(line, contains, CONTAINS_TABLE, CONTAINS_SUFFIX);
+                    handleLine(containsDao, line, contains, CONTAINS_SUFFIX);
                 }
             }
         } finally {
@@ -62,18 +65,20 @@ public class FileHandler {
         System.out.println("nearby : " + nearbyNum);
         System.out.println("neighbours : " + neighboursNum);
         System.out.println("contains : " + containsNum);
+        nearbyDao.close();
+        neighboursDao.close();
+        containsDao.close();
         TimeUtils.end();
         TimeUtils.print();
     }
 
-    private static void handleLine(String line, String type, String table, String suffix) {
+    private static void handleLine(ResourceDao resourceDao, String line, String type, String suffix) {
         Rdf rdf = new Rdf();
         List<String> strings = rdf.getObject(line, GN + type);
         if (strings.size() == 1) {
             String string = StringUtils.removeStart(strings.get(0), PREFIX);
             string = StringUtils.removeEnd(string, suffix);
             int id = Integer.parseInt(string);
-            ResourceDao resourceDao = new ResourceDao(table);
             Resource resource = new Resource(id, 0);
             resourceDao.save(resource);
         }
