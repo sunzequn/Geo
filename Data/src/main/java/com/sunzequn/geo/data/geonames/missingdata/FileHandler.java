@@ -46,7 +46,7 @@ public class FileHandler {
         try {
             while (it.hasNext()) {
                 String line = it.nextLine();
-                if (!line.contains(nearby)) {
+                if (!line.contains(nearby) && !line.trim().startsWith("http")) {
                     nearbyNum++;
                     handleNearby(line);
                 }
@@ -79,8 +79,8 @@ public class FileHandler {
             String string = StringUtils.removeStart(strings.get(0), PREFIX);
             string = StringUtils.removeEnd(string, suffix);
             int id = Integer.parseInt(string);
-//            Resource resource = new Resource(id, 0);
-//            resourceDao.save(resource);
+            Resource resource = new Resource(id, 0);
+            resourceDao.save(resource);
         }
     }
 
@@ -91,9 +91,8 @@ public class FileHandler {
             String string = StringUtils.removeStart(strings.get(0), PREFIX);
             string = StringUtils.removeEnd(string, "/about.rdf");
             int id = Integer.parseInt(string);
-            System.out.println(id);
-//            Resource resource = new Resource(id, 0);
-//            nearbyDao.save(resource);
+            Resource resource = new Resource(id, 0);
+            nearbyDao.save(resource);
         }
     }
 }
