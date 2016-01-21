@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class FileHandler {
 
-    private static final String FILE = "/Volumes/Sloriac/DataSet/Geo/all-geonames-rdf.txt";
+    private static final String FILE = "Data/src/main/resources/data/geonames/all-geonames-rdf.txt";
     private static final String GN = "http://www.geonames.org/ontology#";
     private static final String PREFIX = "http://sws.geonames.org/";
     private static final String NEARBY_SUFFIX = "/nearby.rdf";
@@ -66,7 +66,7 @@ public class FileHandler {
         TimeUtils.print();
     }
 
-    private static void handleLine(String line, String type, String suffix, String table) {
+    private static void handleLine(String line, String type, String table, String suffix) {
         Rdf rdf = new Rdf();
         List<String> strings = rdf.getObject(line, GN + type);
         if (strings.size() == 1) {
