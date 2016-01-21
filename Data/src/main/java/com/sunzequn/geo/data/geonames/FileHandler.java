@@ -46,7 +46,7 @@ public class FileHandler {
         try {
             while (it.hasNext()) {
                 String line = it.nextLine();
-                if (line.contains(nearby)) {
+                if (!line.contains(nearby)) {
                     nearbyNum++;
                     handleLine(nearbyDao, line, nearby, NEARBY_SUFFIX);
                 }
