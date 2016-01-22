@@ -37,6 +37,7 @@ public class HttpConnector {
             throw new HttpException("应该在getConnection之后设置超时时间");
         } else {
             connection.setConnectTimeout(timeout);
+            connection.setReadTimeout(timeout);
         }
         return this;
     }
@@ -53,17 +54,26 @@ public class HttpConnector {
         return this;
     }
 
-    public String getContent() throws Exception {
-        InputStream inputStream = connection.getInputStream();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-        StringBuilder stringBuilder = new StringBuilder();
+    public Response getContent() {
+        try {
+            InputStream inputStream = connection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            StringBuilder stringBuilder = new StringBuilder();
 //        String line = System.getProperty("line.separator");
-        for (String temp = bufferedReader.readLine(); temp != null; temp = bufferedReader.readLine()) {
-            stringBuilder.append(temp.trim() + " ");
+            for (String temp = bufferedReader.readLine(); temp != null; temp = bufferedReader.readLine()) {
+                stringBuilder.append(temp.trim() + " ");
+            }
+            bufferedReader.close();
+            inputStream.close();
+            String content = stringBuilder.toString();
+            int code = connection.getResponseCode();
+            Response response = new Response(code, content);
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Response(503, null);
         }
-        bufferedReader.close();
-        inputStream.close();
-        return stringBuilder.toString();
+
     }
 
 }

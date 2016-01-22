@@ -27,6 +27,16 @@ public class ResourceDao extends BaseDao {
         return query(sql, null, Resource.class);
     }
 
+    public List<Resource> getUnvisited() {
+        String sql = "select * from " + tableName + " where ifvisited <> 0";
+        return query(sql, null, Resource.class);
+    }
+
+    public List<Resource> getAll() {
+        String sql = "select * from " + tableName;
+        return query(sql, null, Resource.class);
+    }
+
     public int update(int id, int ifvisited) {
         String sql = "update " + tableName + " set ifvisited = ? where id = ?";
         Object[] params = {ifvisited, id};
