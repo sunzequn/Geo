@@ -17,49 +17,53 @@ import java.util.List;
  */
 public class Main {
 
-    private static final int THREAD_NUM = 20;
-    private static final int TIMEOUT = 10000;
-    private static final int DURATION = 15000;
+    private static final int THREAD_NUM = 10;
+    private static final int TIMEOUT = 5000;
+    private static final int DURATION = 5000;
     private static final String PREFIX = "http://sws.geonames.org/";
-    private static final String SUFFIX = "/nearby.rdf";
+    private static final String SUFFIX = "/contains.rdf";
 
     private static GetProxy getProxy = new GetProxy();
     private static ProxyBean proxyBean = null;
     private static LinkedList<Resource> resources = new LinkedList<>();
     private static ResourceDao resourceDao = new ResourceDao("contains_url");
+    private static ContentDao contentDao = new ContentDao("contains");
 
     public static void main(String[] args) throws InterruptedException {
 
         while (true) {
             refreshProxy();
-            TimeUtils.start();
+            TimeUtils timeUtils = new TimeUtils();
+            timeUtils.start();
             for (int i = 0; i < THREAD_NUM; i++) {
                 new Thread(() -> {
-                    ContentDao contentDao = new ContentDao("contains");
                     while (true) {
                         try {
                             HttpConnector httpConnector = new HttpConnector();
                             int id = getId();
+                            System.out.println(id);
                             String url = PREFIX + id + SUFFIX;
                             String string = httpConnector.setUrl(url)
                                     .setProxy(getHost(), getPort())
                                     .getConnection().setTimeout(TIMEOUT).getContent();
                             if (string.trim().startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>")) {
                                 Content content = new Content(id, string);
-                                contentDao.save(content);
+                                update(id);
+                                save(content);
                             } else {
+                                System.out.println(string);
                                 throw new HttpException("返回文件不正确");
+
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            contentDao.close();
                             break;
                         }
                     }
                 }, "thread" + i).start();
             }
-            if (TimeUtils.duration() <= DURATION) {
-                TimeUtils.print();
+            if (timeUtils.duration() <= DURATION) {
+                timeUtils.print();
                 Thread.sleep(DURATION);
             }
         }
@@ -84,4 +88,13 @@ public class Main {
         }
         return resources.pop().getId();
     }
+
+    private static synchronized void save(Content content) {
+        contentDao.save(content);
+    }
+
+    private static synchronized void update(int id) {
+        resourceDao.update(id, 1);
+    }
+
 }

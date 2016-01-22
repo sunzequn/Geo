@@ -25,7 +25,6 @@ public class Main {
 
     public static void main(String[] args) {
         readCity();
-        TimeUtils.start();
         System.out.println(cities.size());
         for (int i = 0; i < THREAD_NUM; i++) {
             new Thread(() -> {
@@ -42,8 +41,6 @@ public class Main {
                     } else {
                         writeClimate.close();
                         writeNoClimate.close();
-                        TimeUtils.end();
-                        TimeUtils.print();
                         return;
                     }
                 }
@@ -111,8 +108,6 @@ public class Main {
 
         System.out.println(strings3.size());
 
-        TimeUtils.start();
-
         Set<String> set1 = new HashSet<>(strings1);
         Set<String> set3 = new HashSet<>(strings3);
 
@@ -130,11 +125,6 @@ public class Main {
             writeUtils.write(t);
         }
         writeUtils.close();
-
-        TimeUtils.end();
-        TimeUtils.print();
-
-
     }
 
 

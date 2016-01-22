@@ -7,22 +7,22 @@ import java.util.Date;
  */
 public class TimeUtils {
 
-    private static long startTime;
-    private static long endTime;
+    private long startTime;
+    private long endTime;
 
-    public static void start() {
+    public void start() {
         startTime = new Date().getTime();
     }
 
-    public static void end() {
+    public void end() {
         endTime = new Date().getTime();
     }
 
-    public static long duration() {
+    public long duration() {
         return endTime - startTime;
     }
 
-    public static void print() {
+    public void print() {
         System.out.println("cost: " + duration() + " milliseconds");
     }
 }

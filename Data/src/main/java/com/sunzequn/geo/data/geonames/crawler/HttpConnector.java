@@ -2,6 +2,7 @@ package com.sunzequn.geo.data.geonames.crawler;
 
 import com.sunzequn.geo.data.exception.HttpException;
 import com.sunzequn.geo.data.utils.TimeUtils;
+import com.sunzequn.geo.data.utils.WriteUtils;
 
 import java.io.*;
 import java.net.*;
@@ -11,9 +12,11 @@ import java.net.*;
  */
 public class HttpConnector {
 
+    //    private static final String FILE = "Data/src/main/resources/data/test.txt";
     private URL url = null;
     private HttpURLConnection connection = null;
     private Proxy proxy = null;
+//    private WriteUtils writeUtils = new WriteUtils(FILE, true);
 
     public HttpConnector setUrl(String uri) throws MalformedURLException {
         url = new URL(uri);
@@ -54,9 +57,9 @@ public class HttpConnector {
         InputStream inputStream = connection.getInputStream();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
         StringBuilder stringBuilder = new StringBuilder();
-        String line = System.getProperty("line.separator");
+//        String line = System.getProperty("line.separator");
         for (String temp = bufferedReader.readLine(); temp != null; temp = bufferedReader.readLine()) {
-            stringBuilder.append(temp + line);
+            stringBuilder.append(temp.trim() + " ");
         }
         bufferedReader.close();
         inputStream.close();
