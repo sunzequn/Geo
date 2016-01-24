@@ -3,6 +3,8 @@ package com.sunzequn.geo.data.jena;
 import com.sunzequn.geo.data.utils.StringUtils;
 import org.apache.jena.rdf.model.*;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
