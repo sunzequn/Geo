@@ -22,6 +22,11 @@ public class ContentDao extends BaseDao {
         return execute(sql, params);
     }
 
+    public List<Content> getAll() {
+        String sql = "select * from " + tableName;
+        return query(sql, null, Content.class);
+    }
+
     public void close() {
         closeConnection();
     }

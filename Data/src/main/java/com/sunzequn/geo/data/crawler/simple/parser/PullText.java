@@ -25,7 +25,7 @@ public abstract class PullText {
 
         try {
             Document document;
-            Connection connection = Jsoup.connect(url).timeout(timeout);
+            Connection connection = Jsoup.connect(url).userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36").timeout(timeout);
             if (method == HttpMethod.Get) {
                 document = connection.get();
             } else {

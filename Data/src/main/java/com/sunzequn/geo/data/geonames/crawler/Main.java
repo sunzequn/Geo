@@ -5,83 +5,108 @@ import com.sunzequn.geo.data.geonames.missingdata.Content;
 import com.sunzequn.geo.data.geonames.missingdata.ContentDao;
 import com.sunzequn.geo.data.geonames.missingdata.Resource;
 import com.sunzequn.geo.data.geonames.missingdata.ResourceDao;
-import com.sunzequn.geo.data.utils.StringUtils;
+import com.sunzequn.geo.data.jena.Rdf;
 import com.sunzequn.geo.data.utils.TimeUtils;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.xerces.impl.io.UCSReader;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by Sloriac on 16/1/21.
  */
 public class Main {
 
-    private static final int THREAD_NUM = 20;
-    private static final int TIMEOUT = 10000;
-    private static final int DURATION = 15000;
+    private static final int THREAD_NUM = 15;
+    private static final int TIMEOUT = 7000;
+    private static final int DURATION = 5000;
     private static final String PREFIX = "http://sws.geonames.org/";
-    private static final String SUFFIX = "/nearby.rdf";
+    private static final String SUFFIX = "/contains.rdf";
 
     private static GetProxy getProxy = new GetProxy();
-    private static ProxyBean proxyBean = null;
+    private static LinkedList<ProxyBean> proxyBeans = null;
     private static LinkedList<Resource> resources = new LinkedList<>();
     private static ResourceDao resourceDao = new ResourceDao("contains_url");
+    private static ContentDao contentDao = new ContentDao("contains");
 
     public static void main(String[] args) throws InterruptedException {
-
+//        refreshProxy();
         while (true) {
-            refreshProxy();
-            TimeUtils.start();
+//            ProxyBean proxy = getProxy();
+            TimeUtils timeUtils = new TimeUtils();
+            timeUtils.start();
             for (int i = 0; i < THREAD_NUM; i++) {
+                Rdf rdf = new Rdf();
                 new Thread(() -> {
-                    ContentDao contentDao = new ContentDao("contains");
                     while (true) {
                         try {
                             HttpConnector httpConnector = new HttpConnector();
                             int id = getId();
+                            if (id == 0) {
+                                return;
+                            }
+                            System.out.println(id);
                             String url = PREFIX + id + SUFFIX;
-                            String string = httpConnector.setUrl(url)
-                                    .setProxy(getHost(), getPort())
+                            Response response = httpConnector.setUrl(url)
+//                                    .setProxy(proxy.getHost(), proxy.getPort())
                                     .getConnection().setTimeout(TIMEOUT).getContent();
-                            if (string.trim().startsWith("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>")) {
+                            System.out.println(response.getCode() + ": " + url);
+                            if (response.getCode() != 200) {
+                                update(id, 2);
+                                continue;
+                            }
+                            String string = response.getContent().trim();
+                            if (rdf.validate(string)) {
                                 Content content = new Content(id, string);
-                                contentDao.save(content);
+                                update(id, 1);
+                                save(content);
                             } else {
+                                System.out.println(string);
                                 throw new HttpException("返回文件不正确");
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
-                            contentDao.close();
+//                            e.printStackTrace();
                             break;
                         }
                     }
                 }, "thread" + i).start();
             }
-            if (TimeUtils.duration() <= DURATION) {
-                TimeUtils.print();
+            if (timeUtils.duration() <= DURATION) {
+                timeUtils.end();
+                timeUtils.print();
                 Thread.sleep(DURATION);
             }
         }
     }
 
-    private static void refreshProxy() {
-        proxyBean = getProxy.get();
-        System.out.println(proxyBean);
+    private static void refreshProxy() throws InterruptedException {
+        proxyBeans = getProxy.get666();
+        System.out.println(proxyBeans);
     }
 
-    private static int getPort() {
-        return proxyBean.getPort();
-    }
-
-    private static String getHost() {
-        return proxyBean.getHost();
+    private static ProxyBean getProxy() throws InterruptedException {
+        if (proxyBeans.size() == 0) {
+            refreshProxy();
+        }
+        return proxyBeans.pop();
     }
 
     private static synchronized int getId() {
         if (resources.size() < THREAD_NUM + 10) {
-            resources = new LinkedList<>(resourceDao.getUnvisited(1000));
+            resources = new LinkedList<>(resourceDao.getUnvisited());
+            if (resources.size() == 0) {
+                return 0;
+            }
         }
         return resources.pop().getId();
     }
+
+    private static synchronized void save(Content content) {
+        contentDao.save(content);
+    }
+
+    private static synchronized void update(int id, int status) {
+        resourceDao.update(id, status);
+    }
+
 }

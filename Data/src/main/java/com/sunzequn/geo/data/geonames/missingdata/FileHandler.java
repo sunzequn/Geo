@@ -39,8 +39,6 @@ public class FileHandler {
         int neighboursNum = 0;
         int containsNum = 0;
 
-        TimeUtils.start();
-
         File file = new File(FILE);
         LineIterator it = FileUtils.lineIterator(file, "UTF-8");
         try {
@@ -68,8 +66,6 @@ public class FileHandler {
         nearbyDao.close();
         neighboursDao.close();
         containsDao.close();
-        TimeUtils.end();
-        TimeUtils.print();
     }
 
     private static void handleLine(ResourceDao resourceDao, String line, String type, String suffix) {

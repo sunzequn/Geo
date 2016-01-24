@@ -3,8 +3,6 @@ package com.sunzequn.geo.data.jena;
 import com.sunzequn.geo.data.utils.StringUtils;
 import org.apache.jena.rdf.model.*;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +30,31 @@ public class Rdf {
         Model model = ModelFactory.createDefaultModel();
         model.read(in, null);
         model.write(out);
+    }
+
+
+
+    public boolean validate(String rdf) {
+        try {
+            Model model = ModelFactory.createDefaultModel();
+            model.read(StringUtils.string2InputStream(rdf), null);
+            if (model.isEmpty()) {
+                System.out.println("------The RDF file is empty. ----");
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isEmpty(String rdf) {
+        try {
+            Model model = ModelFactory.createDefaultModel();
+            model.read(StringUtils.string2InputStream(rdf), null);
+            return model.isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void print(String rdf) {
