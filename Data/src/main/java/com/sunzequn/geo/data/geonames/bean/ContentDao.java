@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.geonames.missingdata;
+package com.sunzequn.geo.data.geonames.bean;
 
 import com.sunzequn.geo.data.dao.BaseDao;
 

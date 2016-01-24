@@ -1,14 +1,12 @@
 package com.sunzequn.geo.data.geonames.crawler;
 
 import com.sunzequn.geo.data.exception.HttpException;
-import com.sunzequn.geo.data.geonames.missingdata.Content;
-import com.sunzequn.geo.data.geonames.missingdata.ContentDao;
-import com.sunzequn.geo.data.geonames.missingdata.Resource;
-import com.sunzequn.geo.data.geonames.missingdata.ResourceDao;
+import com.sunzequn.geo.data.geonames.bean.Content;
+import com.sunzequn.geo.data.geonames.bean.ContentDao;
+import com.sunzequn.geo.data.geonames.bean.Resource;
+import com.sunzequn.geo.data.geonames.bean.ResourceDao;
 import com.sunzequn.geo.data.jena.Rdf;
 import com.sunzequn.geo.data.utils.TimeUtils;
-import org.apache.jena.vocabulary.RDF;
-import org.apache.xerces.impl.io.UCSReader;
 
 import java.util.LinkedList;
 

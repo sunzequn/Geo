@@ -1,9 +1,19 @@
-package com.sunzequn.geo.data.geonames.missingdata;
+package com.sunzequn.geo.data.geonames.handler;
 
+import com.sunzequn.geo.data.geonames.bean.Content;
+import com.sunzequn.geo.data.geonames.bean.ContentDao;
+import com.sunzequn.geo.data.geonames.bean.Resource;
+import com.sunzequn.geo.data.geonames.bean.ResourceDao;
 import com.sunzequn.geo.data.jena.Rdf;
+import com.sunzequn.geo.data.utils.StringUtils;
 import com.sunzequn.geo.data.utils.TimeUtils;
+import com.sunzequn.geo.data.utils.WriteUtils;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -58,6 +68,26 @@ public class DataHandler {
                 num++;
             }
         }
+        timeUtils.end();
+        timeUtils.print();
+        System.out.println(num);
+    }
+
+    public void writeToFile() throws Exception {
+
+        String file = "Data/src/main/resources/data/sw/contains.rdf";
+        WriteUtils writeUtils = new WriteUtils(file, true);
+        TimeUtils timeUtils = new TimeUtils();
+        timeUtils.start();
+        ContentDao contentDao = new ContentDao("contains");
+        Rdf rdf = new Rdf();
+        List<Content> contents = contentDao.getAll();
+        int num = 0;
+        for (Content content : contents)
+            if (!rdf.isEmpty(content.getContent())) {
+                writeUtils.write(content.getContent());
+                num++;
+            }
         timeUtils.end();
         timeUtils.print();
         System.out.println(num);

@@ -1,7 +1,7 @@
 package com.sunzequn.geo.data.geonames;
 
-import com.sunzequn.geo.data.geonames.missingdata.Resource;
-import com.sunzequn.geo.data.geonames.missingdata.ResourceDao;
+import com.sunzequn.geo.data.geonames.bean.Resource;
+import com.sunzequn.geo.data.geonames.bean.ResourceDao;
 import org.junit.Test;
 
 /**

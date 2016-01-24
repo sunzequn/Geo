@@ -1,8 +1,9 @@
-package com.sunzequn.geo.data.geonames.missingdata;
+package com.sunzequn.geo.data.geonames.handler;
 
+import com.sunzequn.geo.data.geonames.bean.Resource;
+import com.sunzequn.geo.data.geonames.bean.ResourceDao;
 import com.sunzequn.geo.data.jena.Rdf;
 import com.sunzequn.geo.data.utils.StringUtils;
-import com.sunzequn.geo.data.utils.TimeUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
