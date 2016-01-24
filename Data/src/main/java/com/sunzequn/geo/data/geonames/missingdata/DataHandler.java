@@ -1,6 +1,8 @@
 package com.sunzequn.geo.data.geonames.missingdata;
 
+import com.sunzequn.geo.data.jena.Rdf;
 import com.sunzequn.geo.data.utils.TimeUtils;
+import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +13,8 @@ import java.util.Set;
  */
 public class DataHandler {
 
-    public static void synchronousContainsData() {
+    @Test
+    public void synchronousContainsData() {
 
         TimeUtils timeUtils = new TimeUtils();
         timeUtils.start();
@@ -38,11 +41,26 @@ public class DataHandler {
                 }
             }
         }
-
+        timeUtils.end();
         timeUtils.print();
     }
 
-    public static void main(String[] args) {
-        synchronousContainsData();
+    @Test
+    public void countNotEmpty() {
+        TimeUtils timeUtils = new TimeUtils();
+        timeUtils.start();
+        ContentDao contentDao = new ContentDao("contains");
+        Rdf rdf = new Rdf();
+        List<Content> contents = contentDao.getAll();
+        int num = 0;
+        for (Content content : contents) {
+            if (!rdf.isEmpty(content.getContent())) {
+                num++;
+            }
+        }
+        timeUtils.end();
+        timeUtils.print();
+        System.out.println(num);
     }
+
 }

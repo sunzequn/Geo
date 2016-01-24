@@ -49,12 +49,17 @@ public class GetProxy extends PullText {
 
     public LinkedList<ProxyBean> get666() throws InterruptedException {
 
-        Thread.sleep(1000);
+        Thread.sleep(5000);
 
         System.out.println("------ : " + new Date());
         try {
-            String url = "http://xvre.daili666api.com/ip/?tid=558067874820839&num=5&delay=5&category=2";
+            //all
+            String url = "http://xvre.daili666api.com/ip/?tid=558067874820839&num=5&delay=3&category=2&filter=on";
 
+            //foreign
+//            String url = "http://xvre.daili666api.com/ip/?tid=558067874820839&num=5&delay=5&category=2&foreign=only&filter=on";
+
+//            String url = "http://xvre.daili666api.com/ip/?tid=558067874820839&num=5&category=2&foreign=none&filter=on";
             HttpConnector httpConnector = new HttpConnector();
             Response response = httpConnector.setUrl(url).getConnection().setTimeout(5000).getContent();
             String text = response.getContent();

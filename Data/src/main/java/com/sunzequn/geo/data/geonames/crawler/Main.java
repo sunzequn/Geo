@@ -30,13 +30,12 @@ public class Main {
     private static ContentDao contentDao = new ContentDao("contains");
 
     public static void main(String[] args) throws InterruptedException {
-        refreshProxy();
+//        refreshProxy();
         while (true) {
-            ProxyBean proxy = getProxy();
+//            ProxyBean proxy = getProxy();
             TimeUtils timeUtils = new TimeUtils();
             timeUtils.start();
             for (int i = 0; i < THREAD_NUM; i++) {
-
                 Rdf rdf = new Rdf();
                 new Thread(() -> {
                     while (true) {
@@ -49,7 +48,7 @@ public class Main {
                             System.out.println(id);
                             String url = PREFIX + id + SUFFIX;
                             Response response = httpConnector.setUrl(url)
-                                    .setProxy(proxy.getHost(), proxy.getPort())
+//                                    .setProxy(proxy.getHost(), proxy.getPort())
                                     .getConnection().setTimeout(TIMEOUT).getContent();
                             System.out.println(response.getCode() + ": " + url);
                             if (response.getCode() != 200) {
@@ -73,6 +72,7 @@ public class Main {
                 }, "thread" + i).start();
             }
             if (timeUtils.duration() <= DURATION) {
+                timeUtils.end();
                 timeUtils.print();
                 Thread.sleep(DURATION);
             }

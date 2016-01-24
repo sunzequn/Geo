@@ -39,6 +39,16 @@ public class Rdf {
         }
     }
 
+    public boolean isEmpty(String rdf) {
+        try {
+            Model model = ModelFactory.createDefaultModel();
+            model.read(StringUtils.string2InputStream(rdf), null);
+            return model.isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public void print(String rdf) {
         Model model = ModelFactory.createDefaultModel();
         model.read(StringUtils.string2InputStream(rdf), null);
