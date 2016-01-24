@@ -23,7 +23,7 @@ public class Trig {
             return;
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = new FileOutputStream(ntFile);
+            fileOutputStream = new FileOutputStream(ntFile, true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

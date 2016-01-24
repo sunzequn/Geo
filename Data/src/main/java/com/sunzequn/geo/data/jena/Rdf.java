@@ -3,6 +3,8 @@ package com.sunzequn.geo.data.jena;
 import com.sunzequn.geo.data.utils.StringUtils;
 import org.apache.jena.rdf.model.*;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,12 @@ public class Rdf {
         if (strings.size() > 0)
             return strings;
         return null;
+    }
+
+    public void toNt(InputStream in, OutputStream out) {
+        Model model = ModelFactory.createDefaultModel();
+        model.read(in, null);
+        model.write(out);
     }
 
     public void print(String rdf) {
