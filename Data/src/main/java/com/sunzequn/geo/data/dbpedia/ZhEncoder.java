@@ -89,6 +89,7 @@ public class ZhEncoder {
                 Literal literal = object.asLiteral();
                 newSubject.addProperty(newPredicate, literal);
             } else {
+                System.out.println(object.asResource().getNameSpace());
                 String[] objects = nameHandler(object.asResource().getNameSpace(), object.asResource().getLocalName());
                 String objectNS = objects[0];
                 String objectLN = objects[1];
@@ -115,8 +116,9 @@ public class ZhEncoder {
             ln = ln.trim();
             ln.replace(" ", "_");
         }
-
-        ln = URLEncoder.encode(ln);
+        if (MyStringUtils.isContainsChinese(ln)) {
+            ln = URLEncoder.encode(ln);
+        }
         if (MyStringUtils.isContainsChinese(ns)) {
             throw new RdfException("chinese");
         }
