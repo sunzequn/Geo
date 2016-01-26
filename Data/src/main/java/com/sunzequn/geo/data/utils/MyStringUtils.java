@@ -2,6 +2,8 @@ package com.sunzequn.geo.data.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -45,6 +47,8 @@ public class MyStringUtils {
     }
 
     public static boolean isContainsChinese(String str) {
+        if (str == null)
+            return false;
         String regEx = "[\u4e00-\u9fa5]";
         Pattern pat = Pattern.compile(regEx);
         Matcher matcher = pat.matcher(str);
@@ -55,9 +59,32 @@ public class MyStringUtils {
         return flg;
     }
 
-    public static void main(String[] args) {
-        String s = "http://zh.dbpedia.org/resource/菲爾˙";
-        System.out.println(isContainsChinese(s));
-        System.out.println(after(s, "/"));
+    public static String encode(String string, String division) throws UnsupportedEncodingException {
+        if (!string.contains(division)) {
+            return string;
+        }
+        boolean isEnded = false;
+        if (string.endsWith(division)) {
+            isEnded = true;
+        }
+        String[] strings = StringUtils.split(string, division);
+        String res = "";
+        for (String s : strings) {
+            s = encode(s, ":");
+            if (isContainsChinese(s)){
+                s.replace(" ", "_");
+                s = URLEncoder.encode(s, "UTF-8");
+            }
+            res = res + s + division;
+        }
+        if (!isEnded){
+            res = StringUtils.removeEnd(res, division);
+        }
+        return res;
+    }
+
+    public static void main(String[] args) throws UnsupportedEncodingException {
+//        String s = "zh.dbpedia.org/resource/站长工具/站长工具/";
+//        System.out.println(encode(s, "/"));
     }
 }

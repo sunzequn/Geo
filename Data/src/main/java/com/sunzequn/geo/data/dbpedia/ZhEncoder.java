@@ -11,10 +11,7 @@ import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URLEncoder;
 
 /**
@@ -32,7 +29,7 @@ public class ZhEncoder {
     }
 
     private static void hanlder() throws IOException {
-        String dir = "Data/src/main/resources/data/dbpedia/old";
+        String dir = "Data/src/main/resources/data/dbpedia/test";
         String newDir = "Data/src/main/resources/data/dbpedia/new/";
         String errorDir = "Data/src/main/resources/data/dbpedia/error/";
         File root = new File(dir);
@@ -66,7 +63,7 @@ public class ZhEncoder {
     }
 
 
-    private static Model modelHandler(Model model) throws RdfException {
+    private static Model modelHandler(Model model) throws RdfException, UnsupportedEncodingException {
         Model newModel = ModelFactory.createDefaultModel();
         StmtIterator iter = model.listStatements();
         while (iter.hasNext()) {
@@ -102,36 +99,26 @@ public class ZhEncoder {
         return null;
     }
 
-    private static String[] nameHandler(String ns, String ln) throws RdfException {
-        String division = null;
-        if (!ns.endsWith("/")) {
-            if (ns.contains("Category:")) {
-                division = "Category:";
-            } else {
-                division = "/";
-            }
-            String after = MyStringUtils.after(ns, division);
-            ns = org.apache.commons.lang3.StringUtils.removeEnd(ns, after);
-            ln = after + ln;
-            ln = ln.trim();
+    private static String[] nameHandler(String ns, String ln) throws RdfException, UnsupportedEncodingException {
+        String prefix = "http://";
+        if(MyStringUtils.isContainsChinese(ns)){
+            String tempNs = org.apache.commons.lang3.StringUtils.removeStart(ns, prefix);
+            tempNs = MyStringUtils.encode(tempNs, "/");
+            ns = prefix + tempNs;
+        }
+        if (MyStringUtils.isContainsChinese(ln)){
             ln.replace(" ", "_");
-        }
-        if (MyStringUtils.isContainsChinese(ln)) {
-            ln = URLEncoder.encode(ln);
-        }
-        if (MyStringUtils.isContainsChinese(ns)) {
-            throw new RdfException("chinese");
+            ln = URLEncoder.encode(ln, "UTF-8");
         }
         String[] strings = {ns, ln};
         return strings;
     }
 
-    private static Model lineHandler(String line) throws RdfException {
+    private static Model lineHandler(String line) throws RdfException, UnsupportedEncodingException {
         Model model = ModelFactory.createDefaultModel();
         InputStream inputStream = StringUtils.string2InputStream(line);
         model.read(inputStream, null, "N-TRIPLES");
         return modelHandler(model);
-
     }
 }
 
