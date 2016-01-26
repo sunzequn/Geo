@@ -29,7 +29,7 @@ public class ZhEncoder {
     }
 
     private static void hanlder() throws IOException {
-        String dir = "Data/src/main/resources/data/dbpedia/test";
+        String dir = "Data/src/main/resources/data/dbpedia/old";
         String newDir = "Data/src/main/resources/data/dbpedia/new/";
         String errorDir = "Data/src/main/resources/data/dbpedia/error/";
         File root = new File(dir);
@@ -102,13 +102,16 @@ public class ZhEncoder {
     private static String[] nameHandler(String ns, String ln) throws RdfException, UnsupportedEncodingException {
         String prefix = "http://";
         if(MyStringUtils.isContainsChinese(ns)){
-            String tempNs = org.apache.commons.lang3.StringUtils.removeStart(ns, prefix);
-            tempNs = MyStringUtils.encode(tempNs, "/");
-            ns = prefix + tempNs;
+            ns.replace(" ", "_");
+            ns = MyStringUtils.encode(ns);
+//            String tempNs = org.apache.commons.lang3.StringUtils.removeStart(ns, prefix);
+//            tempNs = MyStringUtils.encode(tempNs, "/");
+//            ns = prefix + tempNs;
         }
         if (MyStringUtils.isContainsChinese(ln)){
             ln.replace(" ", "_");
-            ln = URLEncoder.encode(ln, "UTF-8");
+//            ln = URLEncoder.encode(ln, "UTF-8");
+            ln = MyStringUtils.encode(ln);
         }
         String[] strings = {ns, ln};
         return strings;
