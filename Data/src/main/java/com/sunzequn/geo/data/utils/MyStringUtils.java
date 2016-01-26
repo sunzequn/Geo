@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Sloriac on 15/12/20.
@@ -35,5 +37,27 @@ public class MyStringUtils {
             return strings;
         }
         return null;
+    }
+
+    public static String after(String string, String division) {
+        String[] strings = StringUtils.split(string, division);
+        return strings[strings.length - 1];
+    }
+
+    public static boolean isContainsChinese(String str) {
+        String regEx = "[\u4e00-\u9fa5]";
+        Pattern pat = Pattern.compile(regEx);
+        Matcher matcher = pat.matcher(str);
+        boolean flg = false;
+        if (matcher.find()) {
+            flg = true;
+        }
+        return flg;
+    }
+
+    public static void main(String[] args) {
+        String s = "http://zh.dbpedia.org/resource/菲爾˙";
+        System.out.println(isContainsChinese(s));
+        System.out.println(after(s, "/"));
     }
 }

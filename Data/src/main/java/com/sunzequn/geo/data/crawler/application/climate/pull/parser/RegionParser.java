@@ -10,6 +10,7 @@ import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
 import com.sunzequn.geo.data.crawler.simple.parser.PullText;
 import com.sunzequn.geo.data.utils.ListUtils;
 import com.sunzequn.geo.data.utils.MyStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -68,7 +69,7 @@ public class RegionParser extends PullText {
                     continue;
                 }
                 String name = strings.get(0).trim();
-                String climate = MyStringUtils.removePrefix(strings.get(1), "Climate:");
+                String climate = StringUtils.removeStart(strings.get(1), "Climate:");
                 String temperature = MyStringUtils.remove(strings.get(2), "Average temperature:", "°C");
                 String precipitation = MyStringUtils.remove(strings.get(3), "Precipitation:", "mm");
 

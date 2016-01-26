@@ -1,5 +1,7 @@
 package com.sunzequn.geo.data.dbpedia;
 
+import com.sunzequn.geo.data.exception.RdfException;
+import com.sunzequn.geo.data.utils.MyStringUtils;
 import com.sunzequn.geo.data.utils.StringUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
@@ -54,7 +56,8 @@ public class ZhEncoder {
         }
     }
 
-    private static Model modelHandler(Model model) {
+
+    private static Model modelHandler(Model model) throws RdfException {
         Model newModel = ModelFactory.createDefaultModel();
         StmtIterator iter = model.listStatements();
         while (iter.hasNext()) {
@@ -63,11 +66,13 @@ public class ZhEncoder {
             Property predicate = stmt.getPredicate();
             RDFNode object = stmt.getObject();
 
-            String subjectNS = subject.getNameSpace();
-            String subjectLN = URLEncoder.encode(subject.getLocalName());
+            String[] subjects = nameHandler(subject.getNameSpace(), subject.getLocalName());
+            String subjectNS = subjects[0];
+            String subjectLN = subjects[1];
 
-            String predicateNS = predicate.getNameSpace();
-            String predicateLN = URLEncoder.encode(predicate.getLocalName());
+            String[] predicates = nameHandler(predicate.getNameSpace(), predicate.getLocalName());
+            String predicateNS = predicates[0];
+            String predicateLN = predicates[1];
 
             Resource newSubject = newModel.createResource(subjectNS + subjectLN);
             Property newPredicate = newModel.createProperty(predicateNS, predicateLN);
@@ -75,8 +80,9 @@ public class ZhEncoder {
                 Literal literal = object.asLiteral();
                 newSubject.addProperty(newPredicate, literal);
             } else {
-                String objectNS = object.asResource().getNameSpace();
-                String objectLN = URLEncoder.encode(object.asResource().getLocalName());
+                String[] objects = nameHandler(object.asResource().getNameSpace(), object.asResource().getLocalName());
+                String objectNS = objects[0];
+                String objectLN = objects[1];
                 RDFNode newObject = newModel.createResource(objectNS + objectLN);
                 newSubject.addProperty(newPredicate, newObject);
             }
@@ -86,7 +92,30 @@ public class ZhEncoder {
         return null;
     }
 
-    private static Model lineHandler(String line) {
+    private static String[] nameHandler(String ns, String ln) throws RdfException {
+        String division = null;
+        if (!ns.endsWith("/")) {
+            if (ns.contains("Category:")) {
+                division = "Category:";
+            } else {
+                division = "/";
+            }
+            String after = MyStringUtils.after(ns, division);
+            ns = org.apache.commons.lang3.StringUtils.removeEnd(ns, after);
+            ln = after + ln;
+            ln = ln.trim();
+            ln.replace(" ", "_");
+        }
+
+        ln = URLEncoder.encode(ln);
+        if (MyStringUtils.isContainsChinese(ns)) {
+            throw new RdfException("chinese");
+        }
+        String[] strings = {ns, ln};
+        return strings;
+    }
+
+    private static Model lineHandler(String line) throws RdfException {
         Model model = ModelFactory.createDefaultModel();
         InputStream inputStream = StringUtils.string2InputStream(line);
         model.read(inputStream, null, "N-TRIPLES");
@@ -94,3 +123,4 @@ public class ZhEncoder {
 
     }
 }
+
