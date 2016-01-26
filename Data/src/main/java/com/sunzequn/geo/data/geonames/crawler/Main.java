@@ -92,7 +92,7 @@ public class Main {
     private static synchronized int getId() {
         return 411741;
 //        if (resources.size() < THREAD_NUM + 10) {
-//            resources = new LinkedList<>(resourceDao.getUnvisited());
+//            resources = new_test LinkedList<>(resourceDao.getUnvisited());
 //            if (resources.size() == 0) {
 //                return 0;
 //            }

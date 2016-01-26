@@ -18,16 +18,16 @@ import java.util.regex.Pattern;
 public class JsoupTest {
 
     public static void main(String[] args) throws IOException {
-//        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("183.130.91.203", 9000));
+//        Proxy proxy = new_test Proxy(Proxy.Type.HTTP, new_test InetSocketAddress("183.130.91.203", 9000));
 //
-//        URL url = new URL("http://sws.geonames.org/3020251/nearby.rdf");
+//        URL url = new_test URL("http://sws.geonames.org/3020251/nearby.rdf");
 //        HttpURLConnection action = (HttpURLConnection) url.openConnection(proxy);
 //        action.setConnectTimeout(1000);
 ////        action.setReadTimeout(1000);
 //        InputStream in = action.getInputStream();
 //
-//        BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-//        StringBuilder sb = new StringBuilder();
+//        BufferedReader br = new_test BufferedReader(new_test InputStreamReader(in, "UTF-8"));
+//        StringBuilder sb = new_test StringBuilder();
 //        String lin = System.getProperty("line.separator");
 //        for (String temp = br.readLine(); temp != null; temp = br.readLine()) {
 //
@@ -40,7 +40,7 @@ public class JsoupTest {
 //        System.out.println(sb);
         String FILE = "Data/src/main/resources/data/test.txt";
         String str = "dfsdfsgsdfdsf";
-//        str = new String(str.getBytes("Unicode"),"UTF-16");
+//        str = new_test String(str.getBytes("Unicode"),"UTF-16");
         WriteUtils writeUtils = new WriteUtils(FILE, false);
         writeUtils.write(str);
         writeUtils.close();

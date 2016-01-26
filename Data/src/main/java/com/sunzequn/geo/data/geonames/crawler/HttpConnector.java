@@ -16,7 +16,7 @@ public class HttpConnector {
     private URL url = null;
     private HttpURLConnection connection = null;
     private Proxy proxy = null;
-//    private WriteUtils writeUtils = new WriteUtils(FILE, true);
+//    private WriteUtils writeUtils = new_test WriteUtils(FILE, true);
 
     public HttpConnector setUrl(String uri) throws MalformedURLException {
         url = new URL(uri);

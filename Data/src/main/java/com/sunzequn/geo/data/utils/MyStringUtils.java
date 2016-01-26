@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,34 +99,51 @@ public class MyStringUtils {
     }
 
     public static String encode(String string) throws UnsupportedEncodingException {
+
+        String prefix = "http://";
+        if (string.startsWith(prefix)){
+            string = StringUtils.removeStart(string, prefix);
+        }else {
+            prefix = "";
+        }
+        Set<Character> set = new HashSet<>();
+        set.add('·');
+        set.add(':');
+        set.add('˙');
         char[] chs = string.toCharArray();
         String res = "";
         for (int i = 0; i < chs.length; i++) {
             char c = chs[i];
-            if (MyStringUtils.isChinese(c)) {
+            if (MyStringUtils.isChinese(c) || set.contains(c)) {
                 String temp = URLEncoder.encode(String.valueOf(c), "UTF-8");
                 res = res + temp;
             } else {
                 res = res + c;
             }
         }
-        return res;
+        return prefix + res;
     }
 
 
     public static void main(String[] args) throws Exception {
 //        String dir = "Data/src/main/resources/data/dbpedia/old/category.nt";
-//        File file = new File(dir);
+//        File file = new_test File(dir);
 //        String s = "<http://zh.wikipedia.org/wiki/\\u5F6D\\u8428\\u79D1\\u62C9\\u7EA7\\u91CD\\u5DE1\\u6D0B\\u8230> <http://xmlns.com/foaf/0.1/primaryTopic> <http://zh.dbpedia.org/resource/\\u5F6D\\u8428\\u79D1\\u62C9\\u7EA7\\u91CD\\u5DE1\\u6D0B\\u8230> .\n";
 //        System.out.println(s);
 //        System.out.println(encode(s));
 
-        String s = "\u83f2\u723e\u02d9\u666e\u862d\u63d0\u723e";
-        char[] chs = s.toCharArray();
-        for (char ch : chs) {
-            if (isChinese(ch))
-                System.out.println(ChineseUtils.tradToSimp(String.valueOf(ch)));
-        }
+//        String s = "\u83f2\u723e\u02d9\u666e\u862d\u63d0\u723e";
+//        String[] strings = StringUtils.split(s, "u");
+//        System.out.println(strings.length);
+//        System.out.println(s);
+//        char[] chs = s.toCharArray();
+//        for (char ch : chs) {
+//            if (isChinese(ch))
+//                System.out.println(ch);
+//        }
+
+        String s = "http://zh.dbpedia.org/resource/wiki:";
+        System.out.println(encode(s));
 
     }
 }

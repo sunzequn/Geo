@@ -38,6 +38,7 @@ public class ZhEncoder {
             if (file.getName().contains("DS_Store")) {
                 continue;
             }
+            System.out.println(file.getName());
             LineIterator it = FileUtils.lineIterator(file, "UTF-8");
             FileOutputStream fileOutputStream = new FileOutputStream(newDir + file.getName(), true);
             WriteUtils error = new WriteUtils(errorDir + file.getName(), true);
@@ -86,7 +87,6 @@ public class ZhEncoder {
                 Literal literal = object.asLiteral();
                 newSubject.addProperty(newPredicate, literal);
             } else {
-                System.out.println(object.asResource().getNameSpace());
                 String[] objects = nameHandler(object.asResource().getNameSpace(), object.asResource().getLocalName());
                 String objectNS = objects[0];
                 String objectLN = objects[1];
@@ -100,19 +100,20 @@ public class ZhEncoder {
     }
 
     private static String[] nameHandler(String ns, String ln) throws RdfException, UnsupportedEncodingException {
+
         String prefix = "http://";
-        if(MyStringUtils.isContainsChinese(ns)){
-            ns.replace(" ", "_");
-            ns = MyStringUtils.encode(ns);
+//        if(MyStringUtils.isContainsChinese(ns) || ns.contains(":")){
+        ns.replace(" ", "_");
+        ns = MyStringUtils.encode(ns);
 //            String tempNs = org.apache.commons.lang3.StringUtils.removeStart(ns, prefix);
 //            tempNs = MyStringUtils.encode(tempNs, "/");
 //            ns = prefix + tempNs;
-        }
-        if (MyStringUtils.isContainsChinese(ln)){
-            ln.replace(" ", "_");
+//        }
+//        if (MyStringUtils.isContainsChinese(ln) || ){
+        ln.replace(" ", "_");
 //            ln = URLEncoder.encode(ln, "UTF-8");
-            ln = MyStringUtils.encode(ln);
-        }
+        ln = MyStringUtils.encode(ln);
+//        }
         String[] strings = {ns, ln};
         return strings;
     }
