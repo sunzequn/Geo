@@ -119,7 +119,12 @@ public class MyStringUtils {
 //        System.out.println(s);
 //        System.out.println(encode(s));
 
-        String s = "菲爾˙普蘭提爾";
-        System.out.println(ChineseUtils.tradToSimp(s));
+        String s = "\u83f2\u723e\u02d9\u666e\u862d\u63d0\u723e";
+        char[] chs = s.toCharArray();
+        for (char ch : chs) {
+            if (isChinese(ch))
+                System.out.println(ChineseUtils.tradToSimp(String.valueOf(ch)));
+        }
+
     }
 }
