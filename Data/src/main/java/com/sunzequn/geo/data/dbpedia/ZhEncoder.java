@@ -3,6 +3,8 @@ package com.sunzequn.geo.data.dbpedia;
 import com.sunzequn.geo.data.exception.RdfException;
 import com.sunzequn.geo.data.utils.MyStringUtils;
 import com.sunzequn.geo.data.utils.StringUtils;
+import com.sunzequn.geo.data.utils.TimeUtils;
+import com.sunzequn.geo.data.utils.WriteUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.jena.rdf.model.*;
@@ -21,12 +23,18 @@ import java.net.URLEncoder;
 public class ZhEncoder {
 
     public static void main(String[] args) throws IOException {
+
+        TimeUtils timeUtils = new TimeUtils();
+        timeUtils.start();
         hanlder();
+        timeUtils.end();
+        timeUtils.print();
     }
 
     private static void hanlder() throws IOException {
         String dir = "Data/src/main/resources/data/dbpedia/old";
         String newDir = "Data/src/main/resources/data/dbpedia/new/";
+        String errorDir = "Data/src/main/resources/data/dbpedia/error/";
         File root = new File(dir);
         File[] files = root.listFiles();
         for (File file : files) {
@@ -35,9 +43,10 @@ public class ZhEncoder {
             }
             LineIterator it = FileUtils.lineIterator(file, "UTF-8");
             FileOutputStream fileOutputStream = new FileOutputStream(newDir + file.getName(), true);
-            String line;
-            try {
-                while (it.hasNext()) {
+            WriteUtils error = new WriteUtils(errorDir + file.getName(), true);
+            String line = null;
+            while (it.hasNext()) {
+                try {
                     line = it.nextLine();
                     line = line.trim();
                     //不是注释
@@ -45,14 +54,14 @@ public class ZhEncoder {
                         Model model = lineHandler(line);
                         RDFDataMgr.write(fileOutputStream, model, Lang.NT);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    error.write(line);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                LineIterator.closeQuietly(it);
-                fileOutputStream.close();
-
             }
+            error.close();
+            LineIterator.closeQuietly(it);
+            fileOutputStream.close();
         }
     }
 

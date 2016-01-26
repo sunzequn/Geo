@@ -2,6 +2,8 @@ package com.sunzequn.geo.data.jena;
 
 import com.sunzequn.geo.data.utils.StringUtils;
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,9 +33,8 @@ public class Rdf {
     public void toNt(InputStream in, OutputStream out) {
         Model model = ModelFactory.createDefaultModel();
         model.read(in, null);
-        model.write(out);
+        RDFDataMgr.write(out, model, Lang.NT);
     }
-
 
 
     public boolean validate(String rdf) {

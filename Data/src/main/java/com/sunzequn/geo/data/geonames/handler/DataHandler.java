@@ -1,19 +1,15 @@
 package com.sunzequn.geo.data.geonames.handler;
 
-import com.sunzequn.geo.data.geonames.bean.Content;
-import com.sunzequn.geo.data.geonames.bean.ContentDao;
-import com.sunzequn.geo.data.geonames.bean.Resource;
-import com.sunzequn.geo.data.geonames.bean.ResourceDao;
+import com.sunzequn.geo.data.geonames.bean.*;
+import com.sunzequn.geo.data.geonames.bean.Error;
 import com.sunzequn.geo.data.jena.Rdf;
 import com.sunzequn.geo.data.utils.StringUtils;
 import com.sunzequn.geo.data.utils.TimeUtils;
 import com.sunzequn.geo.data.utils.WriteUtils;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -73,7 +69,7 @@ public class DataHandler {
         System.out.println(num);
     }
 
-    public void writeToFile() throws Exception {
+    public static void writeToFile() throws Exception {
 
         String file = "Data/src/main/resources/data/sw/contains.rdf";
         WriteUtils writeUtils = new WriteUtils(file, true);
@@ -88,9 +84,46 @@ public class DataHandler {
                 writeUtils.write(content.getContent());
                 num++;
             }
+        writeUtils.close();
         timeUtils.end();
         timeUtils.print();
         System.out.println(num);
+    }
+
+    public static void writeToNt() throws IOException {
+
+        int num = 0;
+        List<Content> contents = new ArrayList<>();
+        String nt = "Data/src/main/resources/data/sw/contains.nt";
+        File file = new File(nt);
+        OutputStream outputStream = new FileOutputStream(file, true);
+        TimeUtils timeUtils = new TimeUtils();
+        timeUtils.start();
+        ContentDao contentDao = new ContentDao("contains");
+        Rdf rdf = new Rdf();
+        contents = contentDao.getAll();
+        ErrorDao errorDao = new ErrorDao("error");
+
+        for (Content content : contents) {
+
+            if (!rdf.isEmpty(content.getContent())) {
+                num++;
+                try {
+                    rdf.toNt(StringUtils.string2InputStream(content.getContent()), outputStream);
+                } catch (Exception e) {
+                    errorDao.save(new Error(content.getId()));
+                }
+            }
+        }
+        outputStream.close();
+        timeUtils.end();
+        timeUtils.print();
+        System.out.println(num);
+    }
+
+    public static void main(String[] args) throws Exception {
+        writeToFile();
+//        writeToNt();
     }
 
 }
