@@ -1,5 +1,6 @@
 package com.sunzequn.geo.data.utils;
 
+import net.sf.chineseutils.ChineseUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -110,11 +111,15 @@ public class MyStringUtils {
         return res;
     }
 
+
     public static void main(String[] args) throws Exception {
 //        String dir = "Data/src/main/resources/data/dbpedia/old/category.nt";
 //        File file = new File(dir);
-        String s = "<http://zh.wikipedia.org/wiki/\\u5F6D\\u8428\\u79D1\\u62C9\\u7EA7\\u91CD\\u5DE1\\u6D0B\\u8230> <http://xmlns.com/foaf/0.1/primaryTopic> <http://zh.dbpedia.org/resource/\\u5F6D\\u8428\\u79D1\\u62C9\\u7EA7\\u91CD\\u5DE1\\u6D0B\\u8230> .\n";
-        System.out.println(s);
-        System.out.println(encode(s));
+//        String s = "<http://zh.wikipedia.org/wiki/\\u5F6D\\u8428\\u79D1\\u62C9\\u7EA7\\u91CD\\u5DE1\\u6D0B\\u8230> <http://xmlns.com/foaf/0.1/primaryTopic> <http://zh.dbpedia.org/resource/\\u5F6D\\u8428\\u79D1\\u62C9\\u7EA7\\u91CD\\u5DE1\\u6D0B\\u8230> .\n";
+//        System.out.println(s);
+//        System.out.println(encode(s));
+
+        String s = "菲爾˙普蘭提爾";
+        System.out.println(ChineseUtils.tradToSimp(s));
     }
 }
