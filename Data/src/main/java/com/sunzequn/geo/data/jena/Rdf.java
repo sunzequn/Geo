@@ -37,7 +37,6 @@ public class Rdf {
     }
 
 
-
     public boolean validate(String rdf) {
         try {
             Model model = ModelFactory.createDefaultModel();

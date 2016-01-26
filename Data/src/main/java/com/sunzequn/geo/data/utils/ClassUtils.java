@@ -13,9 +13,9 @@ public class ClassUtils {
     /**
      * 根据属性名得到属性值
      *
-     * @param t 属性所属的类
+     * @param t     属性所属的类
      * @param field 类的属性名
-     * @param <T> 泛型
+     * @param <T>   泛型
      * @return 该属性的值
      */
     public static <T> Object getFieldValue(T t, String field) {
