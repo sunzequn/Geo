@@ -98,6 +98,16 @@ public class MyStringUtils {
         return false;
     }
 
+    public static boolean containsChinese(String string) {
+        char[] chs = string.toCharArray();
+        for (char ch : chs) {
+            if (isChinese(ch)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static String encode(String string) throws UnsupportedEncodingException {
 
         String prefix = "http://";
