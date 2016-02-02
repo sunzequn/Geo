@@ -31,7 +31,6 @@ public class NearbyCrawler {
     public static void main(String[] args) throws InterruptedException {
         initIds();
         refreshProxy();
-
         while (true) {
             ProxyBean proxy = getProxy();
             TimeUtils timeUtils = new TimeUtils();

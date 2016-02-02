@@ -49,7 +49,7 @@ public class GetProxy extends PullText {
 
     public synchronized LinkedList<ProxyBean> get666() throws InterruptedException {
 
-        int num = (int) (Math.random() * 30);
+        int num = (int) (Math.random() * 60);
         if (num < 6){
             num = 6;
         }
