@@ -6,12 +6,9 @@ package com.sunzequn.geo.data.geonames.bean;
 public class Id {
 
     private int id;
-    private int ifvisited;
 
-    public Id(int id, int ifvisited) {
+    public Id(int id) {
         this.id = id;
-        this.ifvisited = ifvisited;
-
     }
 
     public int getId() {
@@ -22,11 +19,4 @@ public class Id {
         this.id = id;
     }
 
-    public int getIfvisited() {
-        return ifvisited;
-    }
-
-    public void setIfvisited(int ifvisited) {
-        this.ifvisited = ifvisited;
-    }
 }
