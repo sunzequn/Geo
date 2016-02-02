@@ -23,7 +23,7 @@ public class ContentDao extends BaseDao {
     }
 
     public List<Content> getAll() {
-        String sql = "select * from " + tableName;
+        String sql = "select * from " + tableName + " limit 10000";
         return query(sql, null, Content.class);
     }
 

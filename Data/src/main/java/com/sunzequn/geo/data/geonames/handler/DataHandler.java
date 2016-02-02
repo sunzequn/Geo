@@ -55,7 +55,7 @@ public class DataHandler {
     public void countNotEmpty() {
         TimeUtils timeUtils = new TimeUtils();
         timeUtils.start();
-        ContentDao contentDao = new ContentDao("contains");
+        ContentDao contentDao = new ContentDao("nearby");
         Rdf rdf = new Rdf();
         List<Content> contents = contentDao.getAll();
         int num = 0;

@@ -45,28 +45,31 @@ public class FileHandler {
         try {
             while (it.hasNext()) {
                 String line = it.nextLine();
-                if (!line.contains(nearby) && !line.trim().startsWith("http")) {
+                if (line.contains(nearby)){
                     nearbyNum++;
-                    handleNearby(line);
                 }
-                if (line.contains(neighbours)) {
-                    neighboursNum++;
-                    handleLine(neighboursDao, line, neighbours, NEIGHBOURS_SUFFIX);
-                }
-                if (line.contains(contains)) {
-                    containsNum++;
-                    handleLine(containsDao, line, contains, CONTAINS_SUFFIX);
-                }
+//                if (!line.contains(nearby) && !line.trim().startsWith("http")) {
+//                    nearbyNum++;
+//                    handleNearby(line);
+//                }
+//                if (line.contains(neighbours)) {
+//                    neighboursNum++;
+//                    handleLine(neighboursDao, line, neighbours, NEIGHBOURS_SUFFIX);
+//                }
+//                if (line.contains(contains)) {
+//                    containsNum++;
+//                    handleLine(containsDao, line, contains, CONTAINS_SUFFIX);
+//                }
             }
         } finally {
             LineIterator.closeQuietly(it);
         }
         System.out.println("nearby : " + nearbyNum);
-        System.out.println("neighbours : " + neighboursNum);
-        System.out.println("contains : " + containsNum);
-        nearbyDao.close();
-        neighboursDao.close();
-        containsDao.close();
+//        System.out.println("neighbours : " + neighboursNum);
+//        System.out.println("contains : " + containsNum);
+//        nearbyDao.close();
+//        neighboursDao.close();
+//        containsDao.close();
     }
 
     private static void handleLine(ResourceDao resourceDao, String line, String type, String suffix) {

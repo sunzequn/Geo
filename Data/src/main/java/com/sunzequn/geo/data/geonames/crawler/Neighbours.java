@@ -15,17 +15,17 @@ import java.util.LinkedList;
  */
 public class Neighbours {
 
-    private static final int THREAD_NUM = 1;
-    private static final int TIMEOUT = 7000;
-    private static final int DURATION = 5000;
+    private static final int THREAD_NUM = 40;
+    private static final int TIMEOUT = 8000;
+    private static final int DURATION = 1000 * 10;
     private static final String PREFIX = "http://sws.geonames.org/";
-    private static final String SUFFIX = "/neighbours.rdf";
+    private static final String SUFFIX = "/nearby.rdf";
 
     private static GetProxy getProxy = new GetProxy();
     private static LinkedList<ProxyBean> proxyBeans = null;
     private static LinkedList<Resource> resources = new LinkedList<>();
-    private static ResourceDao resourceDao = new ResourceDao("neighbours_url");
-    private static ContentDao contentDao = new ContentDao("neighbours");
+    private static ResourceDao resourceDao = new ResourceDao("nearby_url");
+    private static ContentDao contentDao = new ContentDao("nearby");
 
     public static void main(String[] args) throws InterruptedException {
         refreshProxy();
@@ -54,7 +54,7 @@ public class Neighbours {
                                 continue;
                             }
                             String string = response.getContent().trim();
-                            if (rdf.validate(string)) {
+                            if (rdf.validate(string) && (!rdf.isEmpty(string))) {
                                 Content content = new Content(id, string);
                                 update(id, 1);
                                 save(content);
@@ -69,11 +69,9 @@ public class Neighbours {
                     }
                 }, "thread" + i).start();
             }
-            if (timeUtils.duration() <= DURATION) {
-                timeUtils.end();
-                timeUtils.print();
-                Thread.sleep(DURATION);
-            }
+
+            Thread.sleep(DURATION);
+
         }
     }
 
