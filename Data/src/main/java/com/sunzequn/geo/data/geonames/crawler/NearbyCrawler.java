@@ -16,96 +16,99 @@ import java.util.Set;
  */
 public class NearbyCrawler {
 
-    private static final int THREAD_NUM = 40;
+    private static final int THREAD_NUM = 30;
     private static final int TIMEOUT = 8000;
-    private static final int DURATION = 1000 * 10;
+    private static final int DURATION = 1000;
     private static final String PREFIX = "http://sws.geonames.org/";
     private static final String SUFFIX = "/nearby.rdf";
 
     private static GetProxy getProxy = new GetProxy();
     private static LinkedList<ProxyBean> proxyBeans = null;
     private static LinkedList<Integer> ids = new LinkedList<>();
-    private static ResourceDao resourceDao = new ResourceDao("nearby_url");
+    //    private static ResourceDao resourceDao = new ResourceDao("nearby_url");
     private static NearbyDao nearbyDao = new NearbyDao();
 
     public static void main(String[] args) throws InterruptedException {
         initIds();
         refreshProxy();
-        while (true) {
-            ProxyBean proxy = getProxy();
-            TimeUtils timeUtils = new TimeUtils();
-            timeUtils.start();
-            for (int i = 0; i < THREAD_NUM; i++) {
+        for (int i = 0; i < THREAD_NUM; i++) {
+            new Thread(() -> {
                 Rdf rdf = new Rdf();
-                new Thread(() -> {
-                    while (true) {
-                        try {
-                            HttpConnector httpConnector = new HttpConnector();
-                            int id = getId();
-                            if (id == 0) {
-                                return;
-                            }
-                            System.out.println(id);
-                            String url = PREFIX + id + SUFFIX;
-                            Response response = httpConnector.setUrl(url)
-                                    .setProxy(proxy.getHost(), proxy.getPort())
-                                    .getConnection().setTimeout(TIMEOUT).getContent();
-                            System.out.println(response.getCode() + ": " + url);
-                            if (response.getCode() != 200) {
-                                update(id, 2);
-                                continue;
-                            }
-                            String string = response.getContent().trim();
-                            if (rdf.validate(string) && (!rdf.isEmpty(string))) {
-                                Nearby nearby = new Nearby(id, string, 0);
-                                update(id, 1);
-                                save(nearby);
-                            } else {
-                                System.out.println(string);
-                                throw new HttpException("返回文件不正确");
-                            }
-                        } catch (Exception e) {
-//                            e.printStackTrace();
-                            break;
+                ProxyBean proxy = getProxy();
+                while (true) {
+                    try {
+                        HttpConnector httpConnector = new HttpConnector();
+                        int id = getId();
+                        if (id == 0) {
+                            return;
                         }
+//                            System.out.println(id);
+                        String url = PREFIX + id + SUFFIX;
+                        Response response = httpConnector.setUrl(url)
+                                .setProxy(proxy.getHost(), proxy.getPort())
+                                .getConnection().setTimeout(TIMEOUT).getContent();
+//                            System.out.println(response.getCode() + ": " + url);
+                        if (response.getCode() != 200){
+                            proxy = getProxy();
+                            continue;
+                        }
+                        String string = response.getContent().trim();
+                        if (rdf.validate(string) && (!rdf.isEmpty(string))) {
+                            Nearby nearby = new Nearby(id, string, 0);
+//                            update(id, 1);
+                            System.out.println(id);
+                            save(nearby);
+                        } else {
+                            System.out.println(string);
+                            proxy = getProxy();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+//                        break;
                     }
-                }, "thread" + i).start();
-            }
+                }
 
-            Thread.sleep(DURATION);
-
+            }, "thread" + i).start();
         }
+
     }
 
-    private static void refreshProxy() throws InterruptedException {
+    private static synchronized void refreshProxy() {
         proxyBeans = getProxy.get666();
         System.out.println(proxyBeans);
     }
 
-    private static ProxyBean getProxy() throws InterruptedException {
+    private static synchronized ProxyBean getProxy() {
         if (proxyBeans.size() == 0) {
             refreshProxy();
         }
-        return proxyBeans.pop();
+        ProxyBean proxyBean = proxyBeans.getFirst();
+        if (proxyBean.getVisitedNum() == 0) {
+            proxyBeans.pop();
+            return getProxy();
+        } else {
+            proxyBean.desc();
+            return proxyBean;
+        }
     }
 
-    private static void initIds(){
+    private static void initIds() {
         Set<Integer> idset = new HashSet<>();
-        for (int i = 1; i < 1000 * 10000; i++){
+        for (int i = 700000; i < 1000 * 10000; i++) {
             idset.add(i);
         }
         Set<Integer> handledIdset = new HashSet<>();
         int start = 0;
-        while (true){
+        while (true) {
             List<Nearby> nearbies = nearbyDao.getAll(start, 20000);
-            if (nearbies == null || nearbies.size() == 0){
+            if (nearbies == null || nearbies.size() == 0) {
                 System.out.println("over");
                 break;
             }
-            for (int i = 0; i < nearbies.size(); i++){
+            for (int i = 0; i < nearbies.size(); i++) {
                 Nearby nearby = nearbies.get(i);
                 handledIdset.add(nearby.getId());
-                if (i == nearbies.size() - 1){
+                if (i == nearbies.size() - 1) {
                     start = nearby.getId();
                 }
             }
@@ -126,8 +129,8 @@ public class NearbyCrawler {
         nearbyDao.save(nearby);
     }
 
-    private static synchronized void update(int id, int status) {
-        resourceDao.update(id, status);
-    }
+//    private static synchronized void update(int id, int status) {
+//        resourceDao.update(id, status);
+//    }
 
 }

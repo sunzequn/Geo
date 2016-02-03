@@ -70,7 +70,7 @@ public class HttpConnector {
             Response response = new Response(code, content);
             return response;
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return new Response(503, null);
         }
 

@@ -47,13 +47,13 @@ public class GetProxy extends PullText {
         }
     }
 
-    public synchronized LinkedList<ProxyBean> get666() throws InterruptedException {
+    public synchronized LinkedList<ProxyBean> get666() {
 
-        int num = (int) (Math.random() * 60);
-        if (num < 6){
-            num = 6;
+        try {
+            Thread.sleep(1000 * 5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        Thread.sleep(1000 * num);
 
         System.out.println("------ : " + new Date());
         try {
@@ -70,9 +70,9 @@ public class GetProxy extends PullText {
 //            String url = "http://xvre.daili666api.com/ip/?tid=558067874820839&num=5&category=2&foreign=none&filter=on";
 
             //kuai dai li
-            String url = "http://dev.kuaidaili.com/api/getproxy/?orderid=985438635875134&num=5&b_pcchrome=1&b_pcie=1&b_pcff=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3";
+            String url = "http://dev.kuaidaili.com/api/getproxy/?orderid=985438635875134&num=50&b_pcchrome=1&b_pcie=1&b_pcff=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3";
             HttpConnector httpConnector = new HttpConnector();
-            Response response = httpConnector.setUrl(url).getConnection().setTimeout(5000).getContent();
+            Response response = httpConnector.setUrl(url).getConnection().setTimeout(8000).getContent();
             String text = response.getContent();
             String[] ips = StringUtils.split(text, " ");
             List<ProxyBean> proxyBeans = new ArrayList<>();
