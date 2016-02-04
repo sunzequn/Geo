@@ -70,7 +70,7 @@ public class GetProxy extends PullText {
 //            String url = "http://xvre.daili666api.com/ip/?tid=558067874820839&num=5&category=2&foreign=none&filter=on";
 
             //kuai dai li
-            String url = "http://dev.kuaidaili.com/api/getproxy/?orderid=985438635875134&num=50&b_pcchrome=1&b_pcie=1&b_pcff=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3";
+            String url = "http://dev.kuaidaili.com/api/getproxy/?orderid=985438635875134&num=20&b_pcchrome=1&b_pcie=1&b_pcff=1&protocol=1&method=1&an_an=1&an_ha=1&sp1=1&sp2=1&sep=3";
             HttpConnector httpConnector = new HttpConnector();
             Response response = httpConnector.setUrl(url).getConnection().setTimeout(8000).getContent();
             String text = response.getContent();

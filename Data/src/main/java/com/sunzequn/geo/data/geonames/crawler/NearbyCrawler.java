@@ -27,6 +27,7 @@ public class NearbyCrawler {
     private static LinkedList<Integer> ids = new LinkedList<>();
     //    private static ResourceDao resourceDao = new ResourceDao("nearby_url");
     private static NearbyDao nearbyDao = new NearbyDao();
+    private static NoIdDao noIdDao = new NoIdDao();
 
     public static void main(String[] args) throws InterruptedException {
         initIds();
@@ -53,14 +54,21 @@ public class NearbyCrawler {
                             continue;
                         }
                         String string = response.getContent().trim();
-                        if (rdf.validate(string) && (!rdf.isEmpty(string))) {
-                            Nearby nearby = new Nearby(id, string, 0);
-//                            update(id, 1);
-                            System.out.println(id);
-                            save(nearby);
+                        if (rdf.validate(string)) {
+
+                            if (!rdf.isEmpty(string)){
+                                Nearby nearby = new Nearby(id, string, 0);
+                                save(nearby);
+                                System.out.println("+++ "+id);
+                            }else {
+                                Nearby nearby = new Nearby(id, null, 0);
+                                save(nearby);
+                                System.out.println("--- "+id);
+                            }
+
                         } else {
                             System.out.println(string);
-                            proxy = getProxy();
+                            saveNoId(id);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -94,7 +102,7 @@ public class NearbyCrawler {
 
     private static void initIds() {
         Set<Integer> idset = new HashSet<>();
-        for (int i = 700000; i < 1000 * 10000; i++) {
+        for (int i = 2100000; i < 1000 * 10000; i++) {
             idset.add(i);
         }
         Set<Integer> handledIdset = new HashSet<>();
@@ -115,7 +123,18 @@ public class NearbyCrawler {
             System.out.println("success");
         }
         idset.removeAll(handledIdset);
+
+        List<NoId> noIds = noIdDao.getAll();
+        Set<Integer> nosets = new HashSet<>();
+        for (NoId noId : noIds){
+            nosets.add(noId.getId());
+        }
+
+        idset.removeAll(nosets);
+
         ids.addAll(idset);
+
+        System.out.println(noIds.size());
         System.out.println(handledIdset.size());
         System.out.println(ids.size());
         System.out.println(idset.size());
@@ -123,6 +142,10 @@ public class NearbyCrawler {
 
     private static synchronized int getId() {
         return ids.pop();
+    }
+
+    private static synchronized void saveNoId(int id) {
+        noIdDao.save(new NoId(id));
     }
 
     private static synchronized void save(Nearby nearby) {

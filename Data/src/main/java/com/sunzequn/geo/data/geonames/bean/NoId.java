@@ -2,12 +2,17 @@ package com.sunzequn.geo.data.geonames.bean;
 
 /**
  * Created by sloriac on 16-2-2.
+ *
+ *
  */
-public class Id {
+public class NoId {
 
     private int id;
 
-    public Id(int id) {
+    public NoId() {
+    }
+
+    public NoId(int id) {
         this.id = id;
     }
 
@@ -19,4 +24,10 @@ public class Id {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "NoId{" +
+                "id=" + id +
+                '}';
+    }
 }
