@@ -102,7 +102,7 @@ public class DataHandler {
         ContentDao contentDao = new ContentDao("contains");
         Rdf rdf = new Rdf();
         contents = contentDao.getAll();
-        ErrorDao errorDao = new ErrorDao("error");
+        ErrorDao errorDao = new ErrorDao();
 
         for (Content content : contents) {
 

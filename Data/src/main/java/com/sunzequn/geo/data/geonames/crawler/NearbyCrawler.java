@@ -2,6 +2,7 @@ package com.sunzequn.geo.data.geonames.crawler;
 
 import com.sunzequn.geo.data.exception.HttpException;
 import com.sunzequn.geo.data.geonames.bean.*;
+import com.sunzequn.geo.data.geonames.bean.Error;
 import com.sunzequn.geo.data.jena.Rdf;
 import com.sunzequn.geo.data.utils.TimeUtils;
 import org.junit.Test;
@@ -28,6 +29,7 @@ public class NearbyCrawler {
     //    private static ResourceDao resourceDao = new ResourceDao("nearby_url");
     private static NearbyDao nearbyDao = new NearbyDao();
     private static NoIdDao noIdDao = new NoIdDao();
+    private static ErrorDao errorDao = new ErrorDao();
 
     public static void main(String[] args) throws InterruptedException {
         initIds();
@@ -49,26 +51,30 @@ public class NearbyCrawler {
                                 .setProxy(proxy.getHost(), proxy.getPort())
                                 .getConnection().setTimeout(TIMEOUT).getContent();
 //                            System.out.println(response.getCode() + ": " + url);
-                        if (response.getCode() != 200){
+                        if (response.getCode() != 200) {
+                            saveError(id);
                             proxy = getProxy();
                             continue;
                         }
                         String string = response.getContent().trim();
                         if (rdf.validate(string)) {
 
-                            if (!rdf.isEmpty(string)){
+                            if (!rdf.isEmpty(string)) {
                                 Nearby nearby = new Nearby(id, string, 0);
                                 save(nearby);
-                                System.out.println("+++ "+id);
-                            }else {
+                                System.out.println("+++ " + id);
+                            } else {
                                 Nearby nearby = new Nearby(id, null, 0);
                                 save(nearby);
-                                System.out.println("--- "+id);
+                                System.out.println("--- " + id);
                             }
 
                         } else {
+                            proxy = getProxy();
                             System.out.println(string);
-                            saveNoId(id);
+                            if (!string.contains("the hourly limit of 2000 credits for")) {
+                                saveNoId(id);
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -102,7 +108,7 @@ public class NearbyCrawler {
 
     private static void initIds() {
         Set<Integer> idset = new HashSet<>();
-        for (int i = 2100000; i < 1000 * 10000; i++) {
+        for (int i = 3000000; i < 1000 * 10000; i++) {
             idset.add(i);
         }
         Set<Integer> handledIdset = new HashSet<>();
@@ -122,22 +128,25 @@ public class NearbyCrawler {
             }
             System.out.println("success");
         }
+        System.out.println("idset: " + idset.size());
+        System.out.println("handledIdset: " + handledIdset.size());
         idset.removeAll(handledIdset);
+        System.out.println("idset: " + idset.size());
 
         List<NoId> noIds = noIdDao.getAll();
-        Set<Integer> nosets = new HashSet<>();
-        for (NoId noId : noIds){
-            nosets.add(noId.getId());
+        if (noIds != null || noIds.size() != 0) {
+            Set<Integer> nosets = new HashSet<>();
+            for (NoId noId : noIds) {
+                nosets.add(noId.getId());
+            }
+            System.out.println("nosets: " + nosets.size());
+            idset.removeAll(nosets);
+            System.out.println("idset: " + idset.size());
         }
 
-        idset.removeAll(nosets);
 
         ids.addAll(idset);
-
-        System.out.println(noIds.size());
-        System.out.println(handledIdset.size());
-        System.out.println(ids.size());
-        System.out.println(idset.size());
+        System.out.println("ids: " + ids.size());
     }
 
     private static synchronized int getId() {
@@ -146,6 +155,10 @@ public class NearbyCrawler {
 
     private static synchronized void saveNoId(int id) {
         noIdDao.save(new NoId(id));
+    }
+
+    private static synchronized void saveError(int id) {
+        errorDao.save(new Error(id));
     }
 
     private static synchronized void save(Nearby nearby) {

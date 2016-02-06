@@ -7,15 +7,14 @@ import com.sunzequn.geo.data.dao.BaseDao;
  */
 public class ErrorDao extends BaseDao {
 
-    private String tableName;
+    private static final String TABLENAME = "error";
 
-    public ErrorDao(String tableName) {
-        this.tableName = tableName;
+    public ErrorDao() {
         getConnection("geonames_file");
     }
 
     public int save(Error error) {
-        String sql = "insert into " + tableName + " values (?)";
+        String sql = "insert into " + TABLENAME + " values (?)";
         Object[] params = {error.getId()};
         return execute(sql, params);
     }

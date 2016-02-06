@@ -7,6 +7,9 @@ public class Error {
 
     private int id;
 
+    public Error() {
+    }
+
     public Error(int id) {
         this.id = id;
     }
