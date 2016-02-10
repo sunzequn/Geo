@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.crawler.application.climate.pull.bean;
+package com.sunzequn.geo.data.climate.pull.bean;
 
 /**
  * Created by Sloriac on 16/1/6.

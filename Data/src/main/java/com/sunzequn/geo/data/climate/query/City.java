@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.crawler.application.climate.query;
+package com.sunzequn.geo.data.climate.query;
 
 /**
  * Created by Sloriac on 15/12/20.

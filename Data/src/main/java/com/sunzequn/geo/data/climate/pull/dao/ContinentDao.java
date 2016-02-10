@@ -1,6 +1,6 @@
-package com.sunzequn.geo.data.crawler.application.climate.pull.dao;
+package com.sunzequn.geo.data.climate.pull.dao;
 
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Continent;
+import com.sunzequn.geo.data.climate.pull.bean.Continent;
 import com.sunzequn.geo.data.dao.BaseDao;
 
 import java.util.List;

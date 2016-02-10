@@ -1,12 +1,6 @@
-package com.sunzequn.geo.data.crawler.application.climate.pull.parser;
+package com.sunzequn.geo.data.climate.pull.parser;
 
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Country;
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Place;
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Region;
-import com.sunzequn.geo.data.crawler.application.climate.pull.dao.CountryDao;
-import com.sunzequn.geo.data.crawler.application.climate.pull.dao.PlaceDao;
-import com.sunzequn.geo.data.crawler.application.climate.pull.dao.RegionDao;
-import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
+import com.sunzequn.geo.data.climate.pull.bean.Place;
 import com.sunzequn.geo.data.crawler.simple.parser.PullText;
 import com.sunzequn.geo.data.utils.ListUtils;
 import com.sunzequn.geo.data.utils.MyStringUtils;
@@ -32,9 +26,7 @@ public class RegionParser extends PullText {
     private static final String FROM_COUNTRY_TABLE_NAME = "climate_seed_place_from_country";
     private static final String TABLE_NAME = "climate_seed_place";
 
-    private List<Place> parser(String url, int parentid) {
-
-        Document document = pullFromUrl(url, TIMEOUT, HttpMethod.Get);
+    private List<Place> parser(int parentid, Document document) {
         if (document == null) {
             return null;
         }
@@ -82,36 +74,36 @@ public class RegionParser extends PullText {
         return null;
     }
 
-    private void getFromCountry() {
-        CountryDao countryDao = new CountryDao();
-        List<Country> countries = countryDao.getUnvisited();
-        PlaceDao dao = new PlaceDao();
-        for (Country country : countries) {
-            String url = PREFIX + country.getUrl();
-            List<Place> places = parser(url, country.getId());
-            if (places != null) {
-                for (Place place : places) {
-                    dao.save(place, FROM_COUNTRY_TABLE_NAME);
-                }
-                countryDao.update(country.getId(), 1);
-            }
-        }
-    }
+//    private void getFromCountry() {
+//        CountryDao countryDao = new CountryDao();
+//        List<Country> countries = countryDao.getUnvisited();
+//        PlaceDao dao = new PlaceDao();
+//        for (Country country : countries) {
+//            String url = PREFIX + country.getUrl();
+//            List<Place> places = parser(url, country.getId());
+//            if (places != null) {
+//                for (Place place : places) {
+//                    dao.save(place, FROM_COUNTRY_TABLE_NAME);
+//                }
+//                countryDao.update(country.getId(), 1);
+//            }
+//        }
+//    }
 
     private void getFromRegion() {
-        RegionDao regionDao = new RegionDao();
-        List<Region> regions = regionDao.getUnvisited();
-        PlaceDao dao = new PlaceDao();
-        for (Region region : regions) {
-            String url = PREFIX + region.getUrl();
-            List<Place> places = parser(url, region.getId());
-            if (places != null) {
-                for (Place place : places) {
-                    dao.save(place, TABLE_NAME);
-                }
-                regionDao.update(region.getId(), 1);
-            }
-        }
+//        RegionDao regionDao = new RegionDao();
+//        List<Region> regions = regionDao.getUnvisited();
+//        PlaceDao dao = new PlaceDao();
+//        for (Region region : regions) {
+//            String url = PREFIX + region.getUrl();
+//            List<Place> places = parser(url, region.getId());
+//            if (places != null) {
+//                for (Place place : places) {
+//                    dao.save(place, TABLE_NAME);
+//                }
+//                regionDao.update(region.getId(), 1);
+//            }
+//        }
 
     }
 

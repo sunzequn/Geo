@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.crawler.application.climate.query;
+package com.sunzequn.geo.data.climate.query;
 
 import com.sunzequn.geo.data.crawler.simple.parser.PullText;
 import com.sunzequn.geo.data.utils.MyStringUtils;

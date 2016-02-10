@@ -1,10 +1,8 @@
-package com.sunzequn.geo.data.crawler.application.climate.pull.dao;
+package com.sunzequn.geo.data.climate.pull.dao;
 
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Country;
+import com.sunzequn.geo.data.climate.pull.bean.Country;
 import com.sunzequn.geo.data.dao.BaseDao;
-import org.apache.commons.dbutils.QueryRunner;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**

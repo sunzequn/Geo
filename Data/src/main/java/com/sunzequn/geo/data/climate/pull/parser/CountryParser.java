@@ -1,9 +1,9 @@
-package com.sunzequn.geo.data.crawler.application.climate.pull.parser;
+package com.sunzequn.geo.data.climate.pull.parser;
 
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Country;
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Region;
-import com.sunzequn.geo.data.crawler.application.climate.pull.dao.CountryDao;
-import com.sunzequn.geo.data.crawler.application.climate.pull.dao.RegionDao;
+import com.sunzequn.geo.data.climate.pull.bean.Country;
+import com.sunzequn.geo.data.climate.pull.bean.Region;
+import com.sunzequn.geo.data.climate.pull.dao.CountryDao;
+import com.sunzequn.geo.data.climate.pull.dao.RegionDao;
 import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
 import com.sunzequn.geo.data.crawler.simple.parser.PullText;
 import com.sunzequn.geo.data.utils.DateUtils;

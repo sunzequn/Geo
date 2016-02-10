@@ -3,4 +3,4 @@
  * <p>
  * 爬取http://en.climate-data.org/ 网站的城市气候数据
  */
-package com.sunzequn.geo.data.crawler.application.climate.pull;
+package com.sunzequn.geo.data.climate.pull;

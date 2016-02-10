@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.crawler.application.climate.amount;
+package com.sunzequn.geo.data.climate.amount;
 
 import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
 import com.sunzequn.geo.data.crawler.simple.parser.PullText;

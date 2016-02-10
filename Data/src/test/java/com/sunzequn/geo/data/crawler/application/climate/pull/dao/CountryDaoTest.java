@@ -1,8 +1,7 @@
 package com.sunzequn.geo.data.crawler.application.climate.pull.dao;
 
-import com.sunzequn.geo.data.crawler.application.climate.pull.bean.Country;
-import org.junit.After;
-import org.junit.Before;
+import com.sunzequn.geo.data.climate.pull.bean.Country;
+import com.sunzequn.geo.data.climate.pull.dao.CountryDao;
 import org.junit.Test;
 
 /**

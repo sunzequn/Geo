@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.crawler.application.climate.amount;
+package com.sunzequn.geo.data.climate.amount;
 
 /**
  * Created by Sloriac on 15/12/27.
