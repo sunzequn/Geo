@@ -19,7 +19,7 @@ public class Main {
     private static final int TIMEOUT = 7000;
     private static final int DURATION = 5000;
     private static final String PREFIX = "http://sws.geonames.org/";
-    private static final String SUFFIX = "/contains.rdf";
+    private static final String SUFFIX = "/neighbours.rdf";
 
     private static GetProxy getProxy = new GetProxy();
     private static LinkedList<ProxyBean> proxyBeans = null;
@@ -28,9 +28,9 @@ public class Main {
     private static ContentDao contentDao = new ContentDao("contains");
 
     public static void main(String[] args) throws InterruptedException {
-        refreshProxy();
+//        refreshProxy();
         while (true) {
-            ProxyBean proxy = getProxy();
+//            ProxyBean proxy = getProxy();
             TimeUtils timeUtils = new TimeUtils();
             timeUtils.start();
             for (int i = 0; i < THREAD_NUM; i++) {
@@ -46,7 +46,7 @@ public class Main {
                             System.out.println(id);
                             String url = PREFIX + id + SUFFIX;
                             Response response = httpConnector.setUrl(url)
-                                    .setProxy(proxy.getHost(), proxy.getPort())
+//                                    .setProxy(proxy.getHost(), proxy.getPort())
                                     .getConnection().setTimeout(TIMEOUT).getContent();
                             System.out.println(response.getCode() + ": " + url);
                             if (response.getCode() != 200) {
@@ -90,14 +90,13 @@ public class Main {
     }
 
     private static synchronized int getId() {
-        return 411741;
-//        if (resources.size() < THREAD_NUM + 10) {
-//            resources = new_test LinkedList<>(resourceDao.getUnvisited());
-//            if (resources.size() == 0) {
-//                return 0;
-//            }
-//        }
-//        return resources.pop().getId();
+        if (resources.size() == 0) {
+            resources = new LinkedList<>(resourceDao.getUnvisited());
+            if (resources.size() == 0) {
+                return 0;
+            }
+        }
+        return resources.pop().getId();
     }
 
     private static synchronized void save(Content content) {

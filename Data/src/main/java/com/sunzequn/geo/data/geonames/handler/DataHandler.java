@@ -121,9 +121,77 @@ public class DataHandler {
         System.out.println(num);
     }
 
-    public static void main(String[] args) throws Exception {
-        writeToFile();
-//        writeToNt();
+    public static void neighboursToFile() {
+        String file = "Data/src/main/resources/data/sw/neighbours.rdf";
+        WriteUtils writeUtils = new WriteUtils(file, true);
+        TimeUtils timeUtils = new TimeUtils();
+        timeUtils.start();
+        ContentDao contentDao = new ContentDao("neighbours");
+        Rdf rdf = new Rdf();
+        List<Content> contents = contentDao.getAll();
+        int num = 0;
+        for (Content content : contents)
+            if (!rdf.isEmpty(content.getContent())) {
+                writeUtils.write(content.getContent());
+                num++;
+            } else {
+                System.out.println(content.getContent());
+            }
+        writeUtils.flush();
+        writeUtils.close();
+        timeUtils.end();
+        timeUtils.print();
+        System.out.println(num);
     }
+
+    public static void nearbyToFile() {
+        NearbyDao nearbyDao = new NearbyDao();
+        String file = "Data/src/main/resources/data/sw/nearby.rdf";
+        WriteUtils writeUtils = new WriteUtils(file, true);
+        TimeUtils timeUtils = new TimeUtils();
+        timeUtils.start();
+        Rdf rdf = new Rdf();
+        int start = 0;
+        int num = 0;
+        int size = 0;
+        while (true) {
+            List<Nearby> nearbies = nearbyDao.getAll(start, 40000);
+            if (nearbies == null || nearbies.size() == 0) {
+                System.out.println("over");
+                break;
+            }
+
+            size += nearbies.size();
+            System.out.println(size);
+
+            for (int i = 0; i < nearbies.size(); i++) {
+                Nearby nearby = nearbies.get(i);
+
+                if (i == nearbies.size() - 1) {
+                    start = nearby.getId();
+                }
+
+                if (nearby.getContent() != null && !rdf.isEmpty(nearby.getContent())) {
+                    writeUtils.write(nearby.getContent());
+                    num++;
+                }
+
+            }
+            writeUtils.flush();
+        }
+        writeUtils.close();
+        timeUtils.end();
+        timeUtils.print();
+        System.out.println(num);
+    }
+
+    public static void main(String[] args) throws Exception {
+//        writeToFile();
+//        writeToNt();
+
+//        neighboursToFile();
+        nearbyToFile();
+    }
+
 
 }

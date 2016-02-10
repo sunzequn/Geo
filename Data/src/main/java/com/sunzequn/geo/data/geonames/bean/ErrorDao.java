@@ -18,4 +18,10 @@ public class ErrorDao extends BaseDao {
         Object[] params = {error.getId()};
         return execute(sql, params);
     }
+
+    public int delete(int id) {
+        String sql = "delete from " + TABLENAME + " where id = ?";
+        Object[] params = {id};
+        return execute(sql, params);
+    }
 }

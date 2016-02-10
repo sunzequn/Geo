@@ -17,8 +17,8 @@ import java.util.Set;
  */
 public class NearbyCrawler {
 
-    private static final int THREAD_NUM = 30;
-    private static final int TIMEOUT = 8000;
+    private static final int THREAD_NUM = 80;
+    private static final int TIMEOUT = 6000;
     private static final int DURATION = 1000;
     private static final String PREFIX = "http://sws.geonames.org/";
     private static final String SUFFIX = "/nearby.rdf";
@@ -26,7 +26,6 @@ public class NearbyCrawler {
     private static GetProxy getProxy = new GetProxy();
     private static LinkedList<ProxyBean> proxyBeans = null;
     private static LinkedList<Integer> ids = new LinkedList<>();
-    //    private static ResourceDao resourceDao = new ResourceDao("nearby_url");
     private static NearbyDao nearbyDao = new NearbyDao();
     private static NoIdDao noIdDao = new NoIdDao();
     private static ErrorDao errorDao = new ErrorDao();
@@ -38,6 +37,7 @@ public class NearbyCrawler {
             new Thread(() -> {
                 Rdf rdf = new Rdf();
                 ProxyBean proxy = getProxy();
+                NearbyDao threadDao = new NearbyDao();
                 while (true) {
                     try {
                         HttpConnector httpConnector = new HttpConnector();
@@ -45,14 +45,13 @@ public class NearbyCrawler {
                         if (id == 0) {
                             return;
                         }
-//                            System.out.println(id);
                         String url = PREFIX + id + SUFFIX;
                         Response response = httpConnector.setUrl(url)
                                 .setProxy(proxy.getHost(), proxy.getPort())
                                 .getConnection().setTimeout(TIMEOUT).getContent();
-//                            System.out.println(response.getCode() + ": " + url);
                         if (response.getCode() != 200) {
-                            saveError(id);
+//                            saveError(id);
+                            addId(id);
                             proxy = getProxy();
                             continue;
                         }
@@ -61,11 +60,13 @@ public class NearbyCrawler {
 
                             if (!rdf.isEmpty(string)) {
                                 Nearby nearby = new Nearby(id, string, 0);
-                                save(nearby);
+//                                save(nearby);
+                                threadDao.save(nearby);
                                 System.out.println("+++ " + id);
                             } else {
                                 Nearby nearby = new Nearby(id, null, 0);
-                                save(nearby);
+//                                save(nearby);
+                                threadDao.save(nearby);
                                 System.out.println("--- " + id);
                             }
 
@@ -74,17 +75,22 @@ public class NearbyCrawler {
                             System.out.println(string);
                             if (!string.contains("the hourly limit of 2000 credits for")) {
                                 saveNoId(id);
+                            } else {
+                                addId(id);
                             }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-//                        break;
                     }
                 }
 
             }, "thread" + i).start();
         }
 
+    }
+
+    private static synchronized void addId(int id) {
+        ids.add(id);
     }
 
     private static synchronized void refreshProxy() {
@@ -108,31 +114,39 @@ public class NearbyCrawler {
 
     private static void initIds() {
         Set<Integer> idset = new HashSet<>();
-        for (int i = 3000000; i < 1000 * 10000; i++) {
+        for (int i = 10210000; i <= 10226959; i++) {
             idset.add(i);
         }
         Set<Integer> handledIdset = new HashSet<>();
-        int start = 0;
-        while (true) {
-            List<Nearby> nearbies = nearbyDao.getAll(start, 20000);
-            if (nearbies == null || nearbies.size() == 0) {
-                System.out.println("over");
-                break;
-            }
-            for (int i = 0; i < nearbies.size(); i++) {
+        List<Nearby> nearbies = nearbyDao.getAll(10209999, 40000);
+        for (int i = 0; i < nearbies.size(); i++) {
                 Nearby nearby = nearbies.get(i);
                 handledIdset.add(nearby.getId());
-                if (i == nearbies.size() - 1) {
-                    start = nearby.getId();
-                }
-            }
-            System.out.println("success");
         }
+
+//        Set<Integer> handledIdset = new HashSet<>();
+//        int start = 0;
+//        while (true) {
+//            List<Nearby> nearbies = nearbyDao.getAll(start, 40000);
+//            if (nearbies == null || nearbies.size() == 0) {
+//                System.out.println("over");
+//                break;
+//            }
+//            for (int i = 0; i < nearbies.size(); i++) {
+//                Nearby nearby = nearbies.get(i);
+//                handledIdset.add(nearby.getId());
+//                if (i == nearbies.size() - 1) {
+//                    start = nearby.getId();
+//                }
+//            }
+//            System.out.println("success");
+//        }
+
         System.out.println("idset: " + idset.size());
         System.out.println("handledIdset: " + handledIdset.size());
         idset.removeAll(handledIdset);
         System.out.println("idset: " + idset.size());
-
+//
         List<NoId> noIds = noIdDao.getAll();
         if (noIds != null || noIds.size() != 0) {
             Set<Integer> nosets = new HashSet<>();
@@ -144,12 +158,15 @@ public class NearbyCrawler {
             System.out.println("idset: " + idset.size());
         }
 
-
         ids.addAll(idset);
         System.out.println("ids: " + ids.size());
     }
 
     private static synchronized int getId() {
+        if (ids.size() == 0) {
+            System.out.println("over!");
+            return 0;
+        }
         return ids.pop();
     }
 
