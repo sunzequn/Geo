@@ -169,6 +169,7 @@ public class DataHandler {
 
                 if (i == nearbies.size() - 1) {
                     start = nearby.getId();
+                    System.out.println("------: " + nearby.getId());
                 }
 
                 if (nearby.getContent() != null && !rdf.isEmpty(nearby.getContent())) {

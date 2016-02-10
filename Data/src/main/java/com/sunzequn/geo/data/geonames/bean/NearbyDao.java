@@ -24,7 +24,7 @@ public class NearbyDao extends BaseDao{
     }
 
     public List<Nearby> getAll(int start, int limit) {
-        String sql = "select * from " + TABLENAME  + " where id > ? and ifhandled = 0 order by id limit " + limit;
+        String sql = "select * from " + TABLENAME + " where id > ? order by id limit " + limit;
         Object[] params = {start};
         return query(sql, params, Nearby.class);
     }
