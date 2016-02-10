@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.crawler.simple.parser;
+package com.sunzequn.geo.data.crawler.parser;
 
 /**
  * Created by Sloriac on 15/12/20.

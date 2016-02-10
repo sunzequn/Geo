@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.crawler.simple.wrapper;
+package com.sunzequn.geo.data.crawler.wrapper;
 
 import com.sunzequn.geo.data.exception.QueueException;
 

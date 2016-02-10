@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.crawler.simple.parser;
+package com.sunzequn.geo.data.crawler.parser;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

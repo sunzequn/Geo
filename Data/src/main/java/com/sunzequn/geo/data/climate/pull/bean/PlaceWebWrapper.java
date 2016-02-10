@@ -34,4 +34,12 @@ public class PlaceWebWrapper {
     public void setNexts(List<String> nexts) {
         this.nexts = nexts;
     }
+
+    @Override
+    public String toString() {
+        return "PlaceWebWrapper{" +
+                "places=" + places +
+                ", nexts=" + nexts +
+                '}';
+    }
 }

@@ -2,8 +2,8 @@ package com.sunzequn.geo.data.china.geonames;
 
 import com.google.gson.Gson;
 import com.sunzequn.geo.data.utils.WriteUtils;
-import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
-import com.sunzequn.geo.data.crawler.simple.parser.PullText;
+import com.sunzequn.geo.data.crawler.parser.HttpMethod;
+import com.sunzequn.geo.data.crawler.parser.PullText;
 import com.sunzequn.geo.data.utils.ReadUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;

@@ -1,7 +1,7 @@
 package com.sunzequn.geo.data.climate.amount;
 
-import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
-import com.sunzequn.geo.data.crawler.simple.parser.PullText;
+import com.sunzequn.geo.data.crawler.parser.HttpMethod;
+import com.sunzequn.geo.data.crawler.parser.PullText;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

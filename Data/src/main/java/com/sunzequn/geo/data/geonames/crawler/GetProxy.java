@@ -1,17 +1,12 @@
 package com.sunzequn.geo.data.geonames.crawler;
 
-import com.sunzequn.geo.data.crawler.simple.parser.HttpMethod;
-import com.sunzequn.geo.data.crawler.simple.parser.PullText;
-import com.sunzequn.geo.data.utils.ListUtils;
+import com.sunzequn.geo.data.crawler.parser.HttpMethod;
+import com.sunzequn.geo.data.crawler.parser.PullText;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.junit.Test;
-import org.omg.CORBA.INTERNAL;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;

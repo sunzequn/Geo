@@ -1,7 +1,9 @@
 package com.sunzequn.geo.data.climate.pull.parser;
 
 import com.sunzequn.geo.data.climate.pull.bean.Place;
-import com.sunzequn.geo.data.crawler.simple.parser.PullText;
+import com.sunzequn.geo.data.climate.pull.bean.PlaceWebWrapper;
+import com.sunzequn.geo.data.crawler.parser.HttpMethod;
+import com.sunzequn.geo.data.crawler.parser.PullText;
 import com.sunzequn.geo.data.utils.ListUtils;
 import com.sunzequn.geo.data.utils.MyStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,10 +28,11 @@ public class RegionParser extends PullText {
     private static final String FROM_COUNTRY_TABLE_NAME = "climate_seed_place_from_country";
     private static final String TABLE_NAME = "climate_seed_place";
 
-    private List<Place> parser(int parentid, Document document) {
+    private PlaceWebWrapper parser(String url, int parentid, Document document) {
         if (document == null) {
             return null;
         }
+
         Elements as = document.select("a");
         List<Place> places = new ArrayList<>();
         for (Element a : as) {
@@ -69,9 +72,26 @@ public class RegionParser extends PullText {
                 places.add(place);
             }
         }
-        if (places.size() > 0)
-            return places;
-        return null;
+
+        List<String> nexts = new ArrayList<>();
+        Elements elements = document.select("div.pagination");
+        System.out.println(elements);
+        if ((elements != null ? elements.size() : 0) > 0) {
+            Element page = elements.first();
+            Elements nextPages = page.select("a[href]");
+            if (nextPages.size() > 0) {
+                for (Element nextPage : nextPages) {
+                    String pageUrl = nextPage.attr("href");
+                    pageUrl = url + StringUtils.removeStart(pageUrl, "./");
+                    if (!nexts.contains(pageUrl)) {
+                        nexts.add(pageUrl);
+                    }
+                }
+            }
+        }
+
+        PlaceWebWrapper placeWebWrapper = new PlaceWebWrapper(places, nexts);
+        return placeWebWrapper;
     }
 
 //    private void getFromCountry() {
@@ -109,10 +129,17 @@ public class RegionParser extends PullText {
 
     public static void main(String[] args) {
 
-        RegionParser regionParser = new RegionParser();
+//        RegionParser regionParser = new RegionParser();
 //        regionParser.getFromCountry();
         //这个方法还没有测试,有空跑一下有没有问题,后面再修改,因为有反爬
-        regionParser.getFromRegion();
+//        regionParser.getFromRegion();
+
+        RegionParser regionParser = new RegionParser();
+        String url = "http://en.climate-data.org/region/1/?page=2";
+        Document document = regionParser.pullFromUrl(url, 5000, HttpMethod.Get);
+        PlaceWebWrapper placeWebWrapper = regionParser.parser(url, 2, document);
+        System.out.println(placeWebWrapper.getNexts());
+
     }
 
 }
