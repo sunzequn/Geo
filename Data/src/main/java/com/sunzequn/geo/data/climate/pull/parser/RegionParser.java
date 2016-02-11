@@ -28,7 +28,7 @@ public class RegionParser extends PullText {
     private static final String FROM_COUNTRY_TABLE_NAME = "climate_seed_place_from_country";
     private static final String TABLE_NAME = "climate_seed_place";
 
-    private PlaceWebWrapper parser(String url, int parentid, Document document) {
+    public PlaceWebWrapper parser(String url, int parentid, Document document) {
         if (document == null) {
             return null;
         }

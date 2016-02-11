@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.geonames.crawler;
+package com.sunzequn.geo.data.crawler.proxy;
 
 import java.util.LinkedList;
 

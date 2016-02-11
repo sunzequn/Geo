@@ -1,7 +1,9 @@
-package com.sunzequn.geo.data.geonames.crawler;
+package com.sunzequn.geo.data.crawler.proxy;
 
 import com.sunzequn.geo.data.crawler.parser.HttpMethod;
 import com.sunzequn.geo.data.crawler.parser.PullText;
+import com.sunzequn.geo.data.geonames.crawler.HttpConnector;
+import com.sunzequn.geo.data.geonames.crawler.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

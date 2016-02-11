@@ -8,11 +8,14 @@ import com.sunzequn.geo.data.dao.BaseDao;
  */
 public class PlaceDao extends BaseDao {
 
-    public PlaceDao() {
+    private String table;
+
+    public PlaceDao(String table) {
         getConnection();
+        this.table = table;
     }
 
-    public int save(Place place, String table) {
+    public int save(Place place) {
         String sql = "insert into " + table + " values (?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] params = {place.getId(), place.getName(), place.getUrl(), place.getParentid(),
                 place.getIfvisited(), place.getClimate(), place.getTemperature(), place.getPrecipitation()};

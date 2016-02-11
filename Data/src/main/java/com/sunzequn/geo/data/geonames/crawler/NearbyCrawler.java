@@ -1,11 +1,11 @@
 package com.sunzequn.geo.data.geonames.crawler;
 
-import com.sunzequn.geo.data.exception.HttpException;
+import com.sunzequn.geo.data.crawler.proxy.GetProxy;
+import com.sunzequn.geo.data.crawler.proxy.ProxyBean;
+import com.sunzequn.geo.data.crawler.proxy.ProxyHandler;
 import com.sunzequn.geo.data.geonames.bean.*;
 import com.sunzequn.geo.data.geonames.bean.Error;
 import com.sunzequn.geo.data.jena.Rdf;
-import com.sunzequn.geo.data.utils.TimeUtils;
-import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -24,6 +24,7 @@ public class NearbyCrawler {
     private static final String SUFFIX = "/nearby.rdf";
 
     private static GetProxy getProxy = new GetProxy();
+    private static ProxyHandler proxyHandler = new ProxyHandler();
     private static LinkedList<ProxyBean> proxyBeans = null;
     private static LinkedList<Integer> ids = new LinkedList<>();
     private static NearbyDao nearbyDao = new NearbyDao();
@@ -94,22 +95,11 @@ public class NearbyCrawler {
     }
 
     private static synchronized void refreshProxy() {
-        proxyBeans = getProxy.get666();
-        System.out.println(proxyBeans);
+        proxyHandler.refreshProxy();
     }
 
     private static synchronized ProxyBean getProxy() {
-        if (proxyBeans.size() == 0) {
-            refreshProxy();
-        }
-        ProxyBean proxyBean = proxyBeans.getFirst();
-        if (proxyBean.getVisitedNum() == 0) {
-            proxyBeans.pop();
-            return getProxy();
-        } else {
-            proxyBean.desc();
-            return proxyBean;
-        }
+        return proxyHandler.getProxy();
     }
 
     private static void initIds() {

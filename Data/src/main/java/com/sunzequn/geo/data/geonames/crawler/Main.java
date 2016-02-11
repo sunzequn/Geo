@@ -1,5 +1,7 @@
 package com.sunzequn.geo.data.geonames.crawler;
 
+import com.sunzequn.geo.data.crawler.proxy.GetProxy;
+import com.sunzequn.geo.data.crawler.proxy.ProxyBean;
 import com.sunzequn.geo.data.exception.HttpException;
 import com.sunzequn.geo.data.geonames.bean.Content;
 import com.sunzequn.geo.data.geonames.bean.ContentDao;
