@@ -33,13 +33,11 @@ public class PlaceMian {
     private static final String SUFFIX = "/";
     private static final String TABLE_NAME = "climate_seed_place";
 
-
     private static LinkedList<Integer> ids = new LinkedList<>();
     private static ProxyHandler proxyHandler = new ProxyHandler();
     private static PlaceDao placeDao = new PlaceDao(TABLE_NAME);
     private static RegionDao regionDao = new RegionDao();
     private static PageUrlsDao pageUrlsDao = new PageUrlsDao();
-
 
     public static void main(String[] args) {
         initIds();
@@ -77,6 +75,7 @@ public class PlaceMian {
                             if (!ListUtils.isEmpty(nexts)) {
                                 addPageUrls(nexts);
                             }
+                            updateId(id, 1);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -133,6 +132,10 @@ public class PlaceMian {
         for (Place place : places) {
             placeDao.save(place);
         }
+    }
+
+    private static synchronized void updateId(int id, int status) {
+        regionDao.update(id, status);
     }
 
 }
