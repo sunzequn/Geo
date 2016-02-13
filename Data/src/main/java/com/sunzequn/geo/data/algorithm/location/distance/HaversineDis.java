@@ -1,17 +1,14 @@
 package com.sunzequn.geo.data.algorithm.location.distance;
 
+import com.sunzequn.geo.data.algorithm.Earth;
 import com.sunzequn.geo.data.algorithm.location.DegreeUtils;
 
 /**
- * Created by Sloriac on 16/1/5.
+ * Created by Sloriac on 16/2/5.
  * <p>
- * 球面半正矢公式(haversine formula)计算地球两点之间距离等.
- * 开源库spatial4j有相应实现,具体应用的时候也可以直接使用spatial4j.
+ * 使用球面半正矢公式(haversine formula)计算地球两点之间距离等.
  */
-public class Haversine {
-
-    //地球平均半径,以米为单位,来源百度百科
-    private static final int EARTH_RADIUS = 6371393;
+public class HaversineDis {
 
     /**
      * 根据经纬度计算两点在水平面的距离(参考开源库spatial4j源码)
@@ -42,7 +39,7 @@ public class Haversine {
         if (h > 1) {
             h = 1;
         }
-        return 2 * EARTH_RADIUS * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
+        return 2 * Earth.RADIUS * Math.atan2(Math.sqrt(h), Math.sqrt(1 - h));
     }
 
     /**
@@ -53,5 +50,9 @@ public class Haversine {
      */
     public static double haversine(double radians) {
         return Math.pow(Math.sin(radians * 0.5), 2);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(distance(39.26, 115.25, 41.04, 117.30));
     }
 }

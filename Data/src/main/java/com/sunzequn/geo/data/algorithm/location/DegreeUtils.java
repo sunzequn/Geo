@@ -1,9 +1,9 @@
 package com.sunzequn.geo.data.algorithm.location;
 
 /**
- * Created by Sloriac on 16/1/5.
+ * Created by Sloriac on 16/2/5.
  * <p>
- * 计算工具类
+ * 角度计算工具类
  */
 public class DegreeUtils {
 
