@@ -1,38 +1,30 @@
-package com.sunzequn.geo.data.algorithm.location.direction;
-
-import com.sunzequn.geo.data.algorithm.location.DegreeUtils;
+package com.sunzequn.geo.data.algorithm.location;
 
 /**
- * Created by Sloriac on 16/2/13.
- * 方向计算类
+ * Created by Sloriac on 16/2/5.
+ * <p>
+ * 角度计算工具类
  */
-public class Direction {
+public class LatLngUtils {
 
     /**
-     * @param lat1
-     * @param lng1
-     * @param lat2
-     * @param lng2
-     * @return
+     * 将角度转换为弧度
+     *
+     * @param degree 角度值
+     * @return 对应的弧度值
      */
-    public static double calculateAzimuth(double lat1, double lng1, double lat2, double lng2) {
+    public static double deg2rad(double degree) {
+        return degree * Math.PI / 180;
+    }
 
-        lat1 = DegreeUtils.deg2rad(lat1);
-        lat2 = DegreeUtils.deg2rad(lat2);
-        lng1 = DegreeUtils.deg2rad(lng1);
-        lng2 = DegreeUtils.deg2rad(lng2);
-
-        double cos = Math.sin(lat2) * Math.sin(lat1) + Math.cos(lat2) * Math.cos(lat1) * Math.cos(lng2 - lng1);
-        double sin = Math.sqrt(1 - cos * cos);
-        double radians = Math.asin(Math.cos(lat2) * Math.sin(lng2 - lng1) / sin);
-        double degree = DegreeUtils.rad2deg(radians);
-        int quadrant = calculateQuadrant(lat1, lng1, lat2, lng2);
-        if (quadrant == 2) {
-            degree += 360;
-        } else if (quadrant == 3 || quadrant == 4) {
-            degree = 180.0 - degree;
-        }
-        return degree;
+    /**
+     * 将弧度转换为角度
+     *
+     * @param radians 弧度值
+     * @return 对应的角度值
+     */
+    public static double rad2deg(double radians) {
+        return radians * 180 / Math.PI;
     }
 
     /**
@@ -74,7 +66,9 @@ public class Direction {
             else {
                 return 3;
             }
-        } else {
+        }
+        //两个点在一个经线圈上
+        else {
             return 7;
         }
     }
@@ -124,12 +118,4 @@ public class Direction {
             }
         }
     }
-
-
-    public static void main(String[] args) {
-
-        System.out.println(calculateAzimuth(32, 120, 31, 150));
-
-    }
-
 }
