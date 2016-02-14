@@ -1,0 +1,2 @@
+@prefix gn: <http://www.geonames.org/ontology#>.@include <RDFS>.@include <OWL>.
+[rule1: (?a gn:parentFeature ?b)(?b gn:parentFeature ?c)->(?a gn:parentFeature ?c)]
