@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.query.latlng;
+package com.sunzequn.geo.data.geonames.dao;
 
 import java.util.Date;
 

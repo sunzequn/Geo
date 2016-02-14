@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.query.latlng;
+package com.sunzequn.geo.data.geonames.dao;
 
 import com.sunzequn.geo.data.dao.BaseDao;
 import com.sunzequn.geo.data.utils.ListUtils;
@@ -34,11 +34,17 @@ public class GeonameDao extends BaseDao {
         return query(sql, params, Geoname.class);
     }
 
+    public List<Geoname> countryChildren(String country, String fcode) {
+        String sql = "select * from " + TABLE + " where country = ? and fcode = ?";
+        Object[] params = {country, fcode};
+        return query(sql, params, Geoname.class);
+    }
+
 
     public static void main(String[] args) {
         GeonameDao geonameDao = new GeonameDao();
 //        System.out.println(geonameDao.getById(10));
-
-        System.out.println(geonameDao.fuzzyMatching(32, 30, 120, 110, "PPL").size());
+//        System.out.println(geonameDao.fuzzyMatching(32, 30, 120, 110, "ADM1").size());
+        System.out.println(geonameDao.countryChildren("CN", "ADM3").size());
     }
 }
