@@ -33,6 +33,16 @@ public class DataHandler {
             regionPageHandler.addPageNumber(pageNumber);
         }
 
+        for (Map.Entry<Integer, RegionPageHandler> entry : regionPageHandlerMap.entrySet()) {
+            List<Integer> pageNumbers = entry.getValue().getUnExisted();
+            if (pageNumbers.size() > 0) {
+                for (Integer pageNumber : pageNumbers) {
+                    String unurl = PREFIX + entry.getKey() + SUFFIX + pageNumber;
+                    System.out.println(unurl);
+                    pageUrlsDao.save(new PageUrls(unurl, 1));
+                }
+            }
+        }
 
     }
 

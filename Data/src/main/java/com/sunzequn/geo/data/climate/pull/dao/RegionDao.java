@@ -37,4 +37,12 @@ public class RegionDao extends BaseDao {
         Object[] params = {ifvisited, id};
         return execute(sql, params);
     }
+
+    public static void main(String[] args) {
+        Region region = new Region(0, "name", "url", 136, 0);
+        RegionDao regionDao = new RegionDao();
+        regionDao.save(region);
+        region.setName("name2");
+        regionDao.save(region);
+    }
 }

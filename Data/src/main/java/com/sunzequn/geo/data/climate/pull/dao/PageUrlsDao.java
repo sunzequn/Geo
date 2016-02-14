@@ -29,7 +29,7 @@ public class PageUrlsDao extends BaseDao {
     }
 
     public List<PageUrls> getUnvisited() {
-        String sql = "select * from " + table + " where ifvisited = 0";
+        String sql = "select * from " + table + " where ifvisited <> 2";
         return query(sql, null, PageUrls.class);
     }
 
