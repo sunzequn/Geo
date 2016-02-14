@@ -1,7 +1,6 @@
 package com.sunzequn.geo.data.virtuoso;
 
 import com.sunzequn.geo.data.geonames.GeoNameUtil;
-import org.apache.commons.dbutils.QueryRunner;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
