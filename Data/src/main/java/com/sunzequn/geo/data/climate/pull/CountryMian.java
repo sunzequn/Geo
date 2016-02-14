@@ -1,9 +1,7 @@
 package com.sunzequn.geo.data.climate.pull;
 
-import com.sunzequn.geo.data.climate.pull.bean.PageUrls;
-import com.sunzequn.geo.data.climate.pull.bean.Place;
-import com.sunzequn.geo.data.climate.pull.bean.PlaceWebWrapper;
-import com.sunzequn.geo.data.climate.pull.bean.Region;
+import com.sunzequn.geo.data.climate.pull.bean.*;
+import com.sunzequn.geo.data.climate.pull.dao.CountryDao;
 import com.sunzequn.geo.data.climate.pull.dao.PageUrlsDao;
 import com.sunzequn.geo.data.climate.pull.dao.PlaceDao;
 import com.sunzequn.geo.data.climate.pull.dao.RegionDao;
@@ -13,7 +11,6 @@ import com.sunzequn.geo.data.crawler.proxy.ProxyHandler;
 import com.sunzequn.geo.data.geonames.crawler.HttpConnector;
 import com.sunzequn.geo.data.geonames.crawler.Response;
 import com.sunzequn.geo.data.utils.ListUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -23,7 +20,7 @@ import java.util.List;
 /**
  * Created by Sloriac on 16/2/11.
  */
-public class PageUrlMian {
+public class CountryMian {
 
     private static final int THREAD_NUM = 60;
     private static final int TIMEOUT = 7000;
@@ -31,13 +28,14 @@ public class PageUrlMian {
     private static final String SUFFIX = "/";
     private static final String TABLE_NAME = "climate_seed_place_from_country";
 
-    private static LinkedList<String> urls = new LinkedList<>();
+    private static LinkedList<Integer> ids = new LinkedList<>();
     private static ProxyHandler proxyHandler = new ProxyHandler();
     private static PlaceDao placeDao = new PlaceDao(TABLE_NAME);
+    private static CountryDao countryDao = new CountryDao();
     private static PageUrlsDao pageUrlsDao = new PageUrlsDao();
 
     public static void main(String[] args) {
-        initUrls();
+        initIds();
         for (int i = 0; i < THREAD_NUM; i++) {
             new Thread(() -> {
                 ProxyBean proxy = getProxy();
@@ -45,30 +43,34 @@ public class PageUrlMian {
                 while (true) {
                     try {
                         HttpConnector httpConnector = new HttpConnector();
-                        String url = getUrl();
-                        if (url == null) {
+                        int id = getId();
+                        if (id == 0) {
                             System.out.println(Thread.currentThread().getName() + "is over");
                             return;
                         }
+                        String url = PREFIX + id + SUFFIX;
                         Response response = httpConnector.setUrl(url)
                                 .setProxy(proxy.getHost(), proxy.getPort())
                                 .getConnection().setTimeout(TIMEOUT).getContent();
 
                         if (response.getCode() != 200) {
-                            addUrl(url);
+                            addId(id);
                             proxy = getProxy();
                             continue;
                         }
-                        int id = parseId(url);
                         String string = response.getContent().trim();
                         Document document = Jsoup.parse(string);
                         PlaceWebWrapper placeWebWrapper = regionParser.parser(url, id, document);
                         if (placeWebWrapper != null) {
                             List<Place> places = placeWebWrapper.getPlaces();
+                            List<String> nexts = placeWebWrapper.getNexts();
                             if (!ListUtils.isEmpty(places)) {
                                 addPlace(places);
                             }
-                            updateId(url, 2);
+                            if (!ListUtils.isEmpty(nexts)) {
+                                addPageUrls(nexts);
+                            }
+                            updateId(id, 1);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -79,30 +81,39 @@ public class PageUrlMian {
         }
     }
 
-    private static void initUrls() {
-        List<PageUrls> pageUrlses = pageUrlsDao.getUnvisited();
-        if (pageUrlses != null || pageUrlses.size() > 0) {
-            for (PageUrls pageUrls : pageUrlses) {
-                urls.add(pageUrls.getUrl());
+    private static void initIds() {
+        List<Country> countries = countryDao.getUnvisited();
+        if (countries != null || countries.size() > 0) {
+            for (Country country : countries) {
+                ids.add(country.getId());
             }
         }
-        System.out.println("unvisited pageurl : " + urls.size());
+        System.out.println("unvisited country : " + ids.size());
     }
 
     private static synchronized ProxyBean getProxy() {
         return proxyHandler.getProxy();
     }
 
-
-    private static synchronized String getUrl() {
-        if (urls.size() > 0) {
-            return urls.pop();
+    private static synchronized void addPageUrls(List<String> urls) {
+        if (urls == null || urls.size() == 0) {
+            return;
         }
-        return null;
+        for (String url : urls) {
+            PageUrls pageUrls = new PageUrls(url, 0);
+            pageUrlsDao.save(pageUrls);
+        }
     }
 
-    private static synchronized void addUrl(String url) {
-        urls.add(url);
+    private static synchronized int getId() {
+        if (ids.size() > 0) {
+            return ids.pop();
+        }
+        return 0;
+    }
+
+    private static synchronized void addId(int id) {
+        ids.add(id);
     }
 
     private static synchronized void addPlace(List<Place> places) {
@@ -114,14 +125,8 @@ public class PageUrlMian {
         }
     }
 
-    private static synchronized void updateId(String url, int status) {
-        pageUrlsDao.update(url, status);
-    }
-
-    private static int parseId(String url) {
-        url = StringUtils.removeStart(url, PREFIX);
-        String[] params = StringUtils.split(url, "/");
-        return Integer.parseInt(params[0]);
+    private static synchronized void updateId(int id, int status) {
+        countryDao.update(id, status);
     }
 
 }

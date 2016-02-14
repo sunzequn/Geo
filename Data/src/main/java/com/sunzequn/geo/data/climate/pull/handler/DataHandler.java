@@ -13,14 +13,14 @@ import java.util.Map;
  */
 public class DataHandler {
 
-    private static final String PREFIX = "http://en.climate-data.org/region/";
+    private static final String PREFIX = "http://en.climate-data.org/country/";
     private static final String SUFFIX = "/?page=";
     private static PageUrlsDao pageUrlsDao = new PageUrlsDao();
 
     public static void main(String[] args) {
 
         Map<Integer, RegionPageHandler> regionPageHandlerMap = new HashMap<>();
-        List<PageUrls> pageUrlses = pageUrlsDao.getAll();
+        List<PageUrls> pageUrlses = pageUrlsDao.getUnvisited();
         for (PageUrls pageUrls : pageUrlses) {
             String url = pageUrls.getUrl();
             int id = parseId(url);
