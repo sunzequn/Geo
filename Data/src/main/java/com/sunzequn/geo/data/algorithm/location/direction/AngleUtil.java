@@ -4,13 +4,11 @@ package com.sunzequn.geo.data.algorithm.location.direction;
 public class AngleUtil {
 
     public static void main(String[] args) {
+
         MyLatLng A = new MyLatLng(120, 32);
-        MyLatLng B = new MyLatLng(-30, 32);
+        MyLatLng B = new MyLatLng(121, -33);
         System.out.println(getAngle(A, B));
 
-        A = new MyLatLng(120, -32);
-        B = new MyLatLng(140, 32);
-        System.out.println(getAngle(A, B));
 
 
     }
@@ -44,6 +42,8 @@ public class AngleUtil {
         double dx = (B.m_RadLo - A.m_RadLo) * A.Ed;
         double dy = (B.m_RadLa - A.m_RadLa) * A.Ec;
         double angle = Math.atan(Math.abs(dx / dy)) * 180. / Math.PI;
+
+        System.out.println("angle : " + angle);
         double dLo = B.m_Longitude - A.m_Longitude;
         double dLa = B.m_Latitude - A.m_Latitude;
         if (dLo > 0 && dLa <= 0) {
@@ -59,21 +59,21 @@ public class AngleUtil {
     static class MyLatLng {
         final static double Rc = 6378137;
         final static double Rj = 6356725;
-        double m_LoDeg, m_LoMin, m_LoSec;
-        double m_LaDeg, m_LaMin, m_LaSec;
+        //        double m_LoDeg, m_LoMin, m_LoSec;
+//        double m_LaDeg, m_LaMin, m_LaSec;
         double m_Longitude, m_Latitude;
         double m_RadLo, m_RadLa;
         double Ec;
         double Ed;
 
         public MyLatLng(double longitude, double latitude) {
-            m_LoDeg = (int) longitude;
-            m_LoMin = (int) ((longitude - m_LoDeg) * 60);
-            m_LoSec = (longitude - m_LoDeg - m_LoMin / 60.) * 3600;
+//            m_LoDeg = (int) longitude;
+//            m_LoMin = (int) ((longitude - m_LoDeg) * 60);
+//            m_LoSec = (longitude - m_LoDeg - m_LoMin / 60.) * 3600;
 
-            m_LaDeg = (int) latitude;
-            m_LaMin = (int) ((latitude - m_LaDeg) * 60);
-            m_LaSec = (latitude - m_LaDeg - m_LaMin / 60.) * 3600;
+//            m_LaDeg = (int) latitude;
+//            m_LaMin = (int) ((latitude - m_LaDeg) * 60);
+//            m_LaSec = (latitude - m_LaDeg - m_LaMin / 60.) * 3600;
 
             m_Longitude = longitude;
             m_Latitude = latitude;

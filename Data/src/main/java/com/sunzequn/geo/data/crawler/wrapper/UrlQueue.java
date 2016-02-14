@@ -39,16 +39,6 @@ public class UrlQueue {
      * Default constructor for <code>UrlQueue</code> with variable initializations.
      */
     private UrlQueue() {
-
-        String number;
-        number = PropertiesUtils.getValue("maxVisitedUrlNumber");
-        if (number != null) {
-            maxVisitedUrlNumber = Integer.parseInt(number);
-        }
-        number = PropertiesUtils.getValue("maxUnvisitedUrlNumber");
-        if (number != null) {
-            maxUnvisitedUrlNumber = Integer.parseInt(number);
-        }
         unvisitedUrls = new LimitedQueue<>(maxUnvisitedUrlNumber);
         visitedUrls = new LimitedSet<>(maxVisitedUrlNumber);
     }
