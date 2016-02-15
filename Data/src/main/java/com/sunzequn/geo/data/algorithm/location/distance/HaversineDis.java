@@ -1,6 +1,7 @@
 package com.sunzequn.geo.data.algorithm.location.distance;
 
 import com.sunzequn.geo.data.algorithm.Earth;
+import com.sunzequn.geo.data.algorithm.location.DegreeUtils;
 import com.sunzequn.geo.data.algorithm.location.LatLngUtils;
 
 /**
@@ -28,10 +29,10 @@ public class HaversineDis {
         /*
         角度转弧度
          */
-        lat1 = LatLngUtils.deg2rad(lat1);
-        lat2 = LatLngUtils.deg2rad(lat2);
-        lon1 = LatLngUtils.deg2rad(lon1);
-        lon2 = LatLngUtils.deg2rad(lon2);
+        lat1 = DegreeUtils.deg2rad(lat1);
+        lat2 = DegreeUtils.deg2rad(lat2);
+        lon1 = DegreeUtils.deg2rad(lon1);
+        lon2 = DegreeUtils.deg2rad(lon2);
 
         double havLat = haversine(lat2 - lat1);
         double havLon = haversine(lon2 - lon1);
@@ -54,9 +55,9 @@ public class HaversineDis {
         if (radius < 0) {
             return 0;
         }
-        lat = LatLngUtils.deg2rad(lat);
+        lat = DegreeUtils.deg2rad(lat);
         double radians = 2 * Math.asin(Math.sin(radius / (2 * Earth.RADIUS)) / Math.cos(lat));
-        return LatLngUtils.rad2deg(radians);
+        return DegreeUtils.rad2deg(radians);
     }
 
     /**
@@ -71,7 +72,7 @@ public class HaversineDis {
             return 0;
         }
         double radians = radius / Earth.RADIUS;
-        return LatLngUtils.rad2deg(radians);
+        return DegreeUtils.rad2deg(radians);
     }
 
     /**

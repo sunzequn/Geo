@@ -1,11 +1,11 @@
 package com.sunzequn.geo.data.algorithm.location.direction;
 
 import com.sunzequn.geo.data.algorithm.Earth;
-import com.sunzequn.geo.data.algorithm.location.LatLngUtils;
+import com.sunzequn.geo.data.algorithm.location.DegreeUtils;
 
 /**
  * Created by Sloriac on 16/2/15.
- * 地球上一个具体的点(经纬度)的封装.
+ * 对地球上一个具体的点(经纬度)的封装.
  */
 public class Point {
 
@@ -31,8 +31,8 @@ public class Point {
     public Point(double lat, double lng) {
         this.lat = lat;
         this.lng = lng;
-        radLat = LatLngUtils.deg2rad(lat);
-        radLng = LatLngUtils.deg2rad(lng);
+        radLat = DegreeUtils.deg2rad(lat);
+        radLng = DegreeUtils.deg2rad(lng);
         actualRadius = Earth.RADIUS_POLAR + (Earth.RADIUS_EQUATOR - Earth.RADIUS_POLAR) * (90.0 - lat) / 90.0;
         latRadius = actualRadius * Math.cos(radLat);
     }

@@ -3,29 +3,9 @@ package com.sunzequn.geo.data.algorithm.location;
 /**
  * Created by Sloriac on 16/2/5.
  * <p>
- * 角度计算工具类
+ * 地点经纬度相关计算的工具类
  */
 public class LatLngUtils {
-
-    /**
-     * 将角度转换为弧度
-     *
-     * @param degree 角度值
-     * @return 对应的弧度值
-     */
-    public static double deg2rad(double degree) {
-        return degree * Math.PI / 180;
-    }
-
-    /**
-     * 将弧度转换为角度
-     *
-     * @param radians 弧度值
-     * @return 对应的角度值
-     */
-    public static double rad2deg(double radians) {
-        return radians * 180 / Math.PI;
-    }
 
     /**
      * 以第一个点为原点, 以正南北(经度线)为y轴, 以正东西(纬度线)为x轴, 判断第二个点在哪个象限或者坐标轴.

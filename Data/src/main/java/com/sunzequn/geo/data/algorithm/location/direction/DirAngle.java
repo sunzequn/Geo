@@ -1,9 +1,13 @@
 package com.sunzequn.geo.data.algorithm.location.direction;
 
+import com.sunzequn.geo.data.algorithm.location.AngleUtils;
+import com.sunzequn.geo.data.algorithm.location.DegreeUtils;
 import com.sunzequn.geo.data.algorithm.location.LatLngUtils;
 
 /**
  * Created by Sloriac on 16/2/15.
+ *
+ * 方向角计算类
  */
 public class DirAngle {
 
@@ -27,27 +31,9 @@ public class DirAngle {
         //就算方向角
         double dx = (point2.getRadLng() - point1.getRadLng()) * point1.getLatRadius();
         double dy = (point2.getRadLat() - point1.getRadLat()) * point1.getActualRadius();
-        double angle = LatLngUtils.rad2deg(Math.atan(Math.abs(dx / dy)));
-
-        //判断象限
-        int quadrant = LatLngUtils.calculateQuadrant(lat1, lng1, lat2, lng2);
-        //第二象限或者x轴负半轴
-        if (quadrant == 2 || quadrant == 6) {
-            angle = 360.0 - angle;
-        }
-        //第三象限或者y轴负半轴
-        else if (quadrant == 3 || quadrant == 8) {
-            angle = 180.0 + angle;
-        }
-        //第四象限或者x轴正半轴或者对称经线南部
-        else if (quadrant == 4 || quadrant == 5 || quadrant == 10) {
-            angle = 180.0 - angle;
-        }
-
-
-        //其他情况不需要处理
-
-        return angle;
+        double angle = DegreeUtils.rad2deg(Math.atan(Math.abs(dx / dy)));
+        //考虑象限问题
+        return AngleUtils.newAngleAccordingToQuadrant(angle, lat1, lng1, lat2, lng2);
     }
 
     public static void main(String[] args) {
