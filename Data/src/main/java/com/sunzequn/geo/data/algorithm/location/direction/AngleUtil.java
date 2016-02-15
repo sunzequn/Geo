@@ -6,7 +6,7 @@ public class AngleUtil {
     public static void main(String[] args) {
 
         MyLatLng A = new MyLatLng(120, 32);
-        MyLatLng B = new MyLatLng(121, -33);
+        MyLatLng B = new MyLatLng(121, 33);
         System.out.println(getAngle(A, B));
 
 

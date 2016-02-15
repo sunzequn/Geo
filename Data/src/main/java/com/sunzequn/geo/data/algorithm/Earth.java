@@ -2,7 +2,7 @@ package com.sunzequn.geo.data.algorithm;
 
 /**
  * Created by Sloriac on 16/2/13.
- * 地球常量
+ * 地球相关常量
  */
 public final class Earth {
 
@@ -13,8 +13,18 @@ public final class Earth {
     }
 
     /**
-     * 地球半径,单位是米
+     * 地球平均半径,单位是米,数据来源维基百科:https://en.wikipedia.org/wiki/Earth_radius.
      */
-    public static final double RADIUS = 6367000.0;
+    public static final double RADIUS = 6371000.0;
+
+    /**
+     * 地球赤道半径,单位是米,数据来源维基百科:https://en.wikipedia.org/wiki/Earth_radius#Equatorial_radius
+     */
+    public static final double RADIUS_EQUATOR = 6378137.0;
+
+    /**
+     * 地球极地半径,单位是米,数据来源维基百科:https://en.wikipedia.org/wiki/Earth_radius#Polar_radius
+     */
+    public static final double RADIUS_POLAR = 6356752.3;
 
 }

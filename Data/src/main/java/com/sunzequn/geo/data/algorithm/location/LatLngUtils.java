@@ -33,7 +33,8 @@ public class LatLngUtils {
      * 0代表两点重合;
      * 5代表在x轴正半轴, 6代表在x轴负半轴;
      * 7代表在y轴正半轴, 8代表在y轴负半轴;
-     * 9代表在同一个经线圈.
+     * 9代表在对称经线,且水平偏北, 10代表在对称经线,且水平偏南, 11代表在对称经线, 且同一个纬线圈.
+     * 这里double的精度问题未做考虑,因为一般计算的时候,经纬度的值是直接给出的,应该不需要考虑精度问题.
      *
      * @param lat1 第一个点的纬度(角度)
      * @param lng1 第一个点的经度(角度)
@@ -42,23 +43,22 @@ public class LatLngUtils {
      * @return 第二个点所在的象限或者坐标轴的代号.
      */
     public static int calculateQuadrant(double lat1, double lng1, double lat2, double lng2) {
-        if (lat1 == lat2) {
-            return 5;
-        }
-        if (lng1 == lng2) {
-            return 6;
-        }
 
         int isEastOrWest = calculateEastOrWest(lng1, lng2);
-        //东边,一,四象限
+
+        //东边,一,四象限和x轴正半轴
         if (isEastOrWest == 1) {
             //北边,第一象限
             if (lat2 > lat1) {
                 return 1;
             }
             //南边,第四象限
-            else {
+            else if (lat2 < lat1) {
                 return 4;
+            }
+            //x轴正半轴
+            else {
+                return 5;
             }
         }
         //西边,二,三象限
@@ -68,13 +68,43 @@ public class LatLngUtils {
                 return 2;
             }
             //南边,第三象限
-            else {
+            else if (lat2 < lat1) {
                 return 3;
             }
+            //x轴负半轴
+            else {
+                return 6;
+            }
         }
-        //两个点在一个经线圈上
+        //两点在同一条经线
+        else if (isEastOrWest == -1) {
+            //北边,y轴正半轴
+            if (lat2 > lat1) {
+                return 7;
+            }
+            //南边,y轴负半轴
+            else if (lat2 < lat1) {
+                return 8;
+            }
+            //原点
+            else {
+                return 0;
+            }
+        }
+        //两点在同一个经线圈
         else {
-            return 7;
+            //北边
+            if (lat2 > lat1) {
+                return 9;
+            }
+            //南边
+            else if (lat2 < lat1) {
+                return 10;
+            }
+            //同一个纬线圈
+            else {
+                return 11;
+            }
         }
     }
 
