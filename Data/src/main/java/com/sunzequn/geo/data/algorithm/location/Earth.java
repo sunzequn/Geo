@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.algorithm;
+package com.sunzequn.geo.data.algorithm.location;
 
 /**
  * Created by Sloriac on 16/2/13.

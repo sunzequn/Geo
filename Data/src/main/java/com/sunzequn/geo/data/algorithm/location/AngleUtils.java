@@ -8,7 +8,7 @@ package com.sunzequn.geo.data.algorithm.location;
 public class AngleUtils {
 
     /**
-     * 考虑象限问题之后,对角度进行修正
+     * 对于两条直线的夹角,考虑象限问题之后,对角度进行修正
      *
      * @param angle 两条线的夹角,取值范围一般是0-90
      * @param lat1  第一个点的纬度(角度)
@@ -38,4 +38,36 @@ public class AngleUtils {
 
         return angle;
     }
+
+    /**
+     * 根据角度(方向角或者方位角)判断属于哪个基本方向.
+     * 基本方向有8个,参考枚举类型Direction.
+     *
+     * @param angle          角度,正常范围是[0,360)
+     * @param halfNorthAngle 正北方向夹角范围的一半
+     * @return 这个角度所属的基本方向
+     */
+    public static Direction judgeDirectionByAngle(double angle, double halfNorthAngle) {
+        if (angle < 0 || angle >= 360 || halfNorthAngle < 0 || halfNorthAngle >= 45.0) {
+            return null;
+        }
+        if (angle >= halfNorthAngle && angle <= (90 - halfNorthAngle)) {
+            return Direction.NORTHEAST;
+        } else if (angle > (90 - halfNorthAngle) && angle < (90 + halfNorthAngle)) {
+            return Direction.EAST;
+        } else if (angle >= (90 + halfNorthAngle) && angle <= (180 - halfNorthAngle)) {
+            return Direction.SOUTHEAST;
+        } else if (angle > (180 - halfNorthAngle) && angle < (180 + halfNorthAngle)) {
+            return Direction.SOUTH;
+        } else if (angle >= (180 + halfNorthAngle) && angle <= (270 - halfNorthAngle)) {
+            return Direction.SOUTHWEST;
+        } else if (angle > (270 - halfNorthAngle) && angle < (270 + halfNorthAngle)) {
+            return Direction.WEST;
+        } else if (angle >= (270 + halfNorthAngle) && angle <= (360 - halfNorthAngle)) {
+            return Direction.NORTHWEST;
+        } else {
+            return Direction.NORTH;
+        }
+    }
+
 }

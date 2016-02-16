@@ -16,7 +16,7 @@ public class LongLatCalculator {
      * @param lon2 第二个点的经度(角度)
      * @return 两个点之间的距离, 单位是米
      */
-    public static double distance(double lat1, double lon1, double lat2, double lon2) {
+    public double distance(double lat1, double lon1, double lat2, double lon2) {
         return HaversineDis.distance(lat1, lon1, lat2, lon2);
     }
 
@@ -30,7 +30,7 @@ public class LongLatCalculator {
      * @param threshold 设定的距离阈值,单位是米
      * @return 如果两点距离小于或等于设定的阈值, 则返回真, 否则返回假
      */
-    public static boolean isNear(double lat1, double lon1, double lat2, double lon2, double threshold) {
+    public boolean isNear(double lat1, double lon1, double lat2, double lon2, double threshold) {
         if (HaversineDis.distance(lat1, lon1, lat2, lon2) <= threshold) {
             return true;
         }

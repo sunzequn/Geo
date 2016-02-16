@@ -1,6 +1,6 @@
 package com.sunzequn.geo.data.algorithm.location.direction;
 
-import com.sunzequn.geo.data.algorithm.Earth;
+import com.sunzequn.geo.data.algorithm.location.Earth;
 import com.sunzequn.geo.data.algorithm.location.DegreeUtils;
 
 /**

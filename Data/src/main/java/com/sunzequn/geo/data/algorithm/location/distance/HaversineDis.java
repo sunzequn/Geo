@@ -1,8 +1,7 @@
 package com.sunzequn.geo.data.algorithm.location.distance;
 
-import com.sunzequn.geo.data.algorithm.Earth;
+import com.sunzequn.geo.data.algorithm.location.Earth;
 import com.sunzequn.geo.data.algorithm.location.DegreeUtils;
-import com.sunzequn.geo.data.algorithm.location.LatLngUtils;
 
 /**
  * Created by Sloriac on 16/2/5.
