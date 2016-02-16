@@ -1,7 +1,7 @@
 package com.sunzequn.geo.data.geonames.handler;
 
-import com.sunzequn.geo.data.geonames.bean.*;
-import com.sunzequn.geo.data.geonames.bean.Error;
+import com.sunzequn.geo.data.geonames.filebean.*;
+import com.sunzequn.geo.data.geonames.filebean.Error;
 import com.sunzequn.geo.data.jena.Rdf;
 import com.sunzequn.geo.data.utils.StringUtils;
 import com.sunzequn.geo.data.utils.TimeUtils;

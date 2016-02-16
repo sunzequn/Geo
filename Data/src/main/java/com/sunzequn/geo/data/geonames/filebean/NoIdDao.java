@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.geonames.bean;
+package com.sunzequn.geo.data.geonames.filebean;
 
 import com.sunzequn.geo.data.dao.BaseDao;
 

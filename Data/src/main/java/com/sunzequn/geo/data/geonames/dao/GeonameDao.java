@@ -1,6 +1,7 @@
 package com.sunzequn.geo.data.geonames.dao;
 
 import com.sunzequn.geo.data.dao.BaseDao;
+import com.sunzequn.geo.data.geonames.bean.Geoname;
 import com.sunzequn.geo.data.utils.ListUtils;
 
 import java.util.List;

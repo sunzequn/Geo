@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.geonames.bean;
+package com.sunzequn.geo.data.geonames.filebean;
 
 /**
  * Created by Sloriac on 16/1/21.

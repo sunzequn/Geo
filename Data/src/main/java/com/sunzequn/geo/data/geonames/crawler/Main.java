@@ -3,10 +3,10 @@ package com.sunzequn.geo.data.geonames.crawler;
 import com.sunzequn.geo.data.crawler.proxy.GetProxy;
 import com.sunzequn.geo.data.crawler.proxy.ProxyBean;
 import com.sunzequn.geo.data.exception.HttpException;
-import com.sunzequn.geo.data.geonames.bean.Content;
-import com.sunzequn.geo.data.geonames.bean.ContentDao;
-import com.sunzequn.geo.data.geonames.bean.Resource;
-import com.sunzequn.geo.data.geonames.bean.ResourceDao;
+import com.sunzequn.geo.data.geonames.filebean.Content;
+import com.sunzequn.geo.data.geonames.filebean.ContentDao;
+import com.sunzequn.geo.data.geonames.filebean.Resource;
+import com.sunzequn.geo.data.geonames.filebean.ResourceDao;
 import com.sunzequn.geo.data.jena.Rdf;
 import com.sunzequn.geo.data.utils.TimeUtils;
 

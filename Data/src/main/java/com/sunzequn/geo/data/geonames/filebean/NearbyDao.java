@@ -1,10 +1,8 @@
-package com.sunzequn.geo.data.geonames.bean;
+package com.sunzequn.geo.data.geonames.filebean;
 
 import com.sunzequn.geo.data.dao.BaseDao;
 
-import java.nio.channels.NonReadableChannelException;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by sloriac on 16-2-2.

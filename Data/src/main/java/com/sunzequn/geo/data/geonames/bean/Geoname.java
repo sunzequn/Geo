@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.geonames.dao;
+package com.sunzequn.geo.data.geonames.bean;
 
 import java.util.Date;
 

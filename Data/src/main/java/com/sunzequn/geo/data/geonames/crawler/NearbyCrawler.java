@@ -3,8 +3,8 @@ package com.sunzequn.geo.data.geonames.crawler;
 import com.sunzequn.geo.data.crawler.proxy.GetProxy;
 import com.sunzequn.geo.data.crawler.proxy.ProxyBean;
 import com.sunzequn.geo.data.crawler.proxy.ProxyHandler;
-import com.sunzequn.geo.data.geonames.bean.*;
-import com.sunzequn.geo.data.geonames.bean.Error;
+import com.sunzequn.geo.data.geonames.filebean.*;
+import com.sunzequn.geo.data.geonames.filebean.Error;
 import com.sunzequn.geo.data.jena.Rdf;
 
 import java.util.HashSet;
