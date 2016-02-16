@@ -1,7 +1,7 @@
 package com.sunzequn.geo.data.algorithm.location.direction;
 
-import com.sunzequn.geo.data.algorithm.location.AngleUtils;
-import com.sunzequn.geo.data.algorithm.location.DegreeUtils;
+import com.sunzequn.geo.data.algorithm.location.utils.AngleUtils;
+import com.sunzequn.geo.data.algorithm.location.utils.DegreeUtils;
 
 /**
  * Created by Sloriac on 16/2/15.

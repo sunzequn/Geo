@@ -1,4 +1,6 @@
-package com.sunzequn.geo.data.algorithm.location;
+package com.sunzequn.geo.data.algorithm.location.utils;
+
+import com.sunzequn.geo.data.algorithm.location.constant.Direction;
 
 /**
  * Created by Sloriac on 16/2/15.
