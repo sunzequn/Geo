@@ -1,5 +1,6 @@
 package com.sunzequn.geo.data.climate.dao;
 
+import com.sunzequn.geo.data.climate.bean.Country;
 import com.sunzequn.geo.data.climate.bean.Region;
 import com.sunzequn.geo.data.dao.BaseDao;
 
@@ -19,8 +20,8 @@ public class RegionDao extends BaseDao {
     }
 
     public int save(Region region) {
-        String sql = "insert into " + TABLE_NAME + " values (?, ?, ?, ?, ?)";
-        Object[] params = {region.getId(), region.getName(), region.getUrl(), region.getParentid(), region.getIfvisited()};
+        String sql = "insert into " + TABLE_NAME + " values (?, ?, ?, ?, ?, ?)";
+        Object[] params = {region.getId(), region.getName(), region.getUrl(), region.getParentid(), region.getIfvisited(), region.getMatch()};
         return execute(connection, sql, params);
     }
 
@@ -29,9 +30,25 @@ public class RegionDao extends BaseDao {
         return query(connection, sql, null, Region.class);
     }
 
+    public List<Region> getByParentId(int id) {
+        String sql = "select * from " + TABLE_NAME + " where parentid = " + id;
+        return query(connection, sql, null, Region.class);
+    }
+
     public List<Region> getUnvisited() {
         String sql = "select * from " + TABLE_NAME + " where ifvisited = 0";
         return query(connection, sql, null, Region.class);
+    }
+
+    public List<Region> getUnmatched() {
+        String sql = "select * from " + TABLE_NAME + " where match = 0";
+        return query(connection, sql, null, Region.class);
+    }
+
+    public int updateMatch(int id, int match) {
+        String sql = "update " + TABLE_NAME + " set match = ? where id = ?";
+        Object[] params = {match, id};
+        return execute(connection, sql, params);
     }
 
     public int update(int id, int ifvisited) {
@@ -41,10 +58,12 @@ public class RegionDao extends BaseDao {
     }
 
     public static void main(String[] args) {
-        Region region = new Region(0, "name", "url", 136, 0);
+//        Region region = new Region(0, "name", "url", 136, 0);
         RegionDao regionDao = new RegionDao();
-        regionDao.save(region);
-        region.setName("name2");
-        regionDao.save(region);
+//        regionDao.save(region);
+//        region.setName("name2");
+//        regionDao.save(region);
+        System.out.println(regionDao.getByParentId(136));
+
     }
 }

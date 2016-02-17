@@ -23,6 +23,15 @@ public class CountryInfoDao extends BaseDao {
         return query(connection, sql, null, Countryinfo.class);
     }
 
+    public Countryinfo getById(int id) {
+        String sql = "select * from " + TABLE + " where geonameid = " + id;
+        List<Countryinfo> countryinfos = query(connection, sql, null, Countryinfo.class);
+        if (countryinfos == null) {
+            return null;
+        }
+        return countryinfos.get(0);
+    }
+
     public List<Countryinfo> getByContinent(String code) {
         String sql = "select * from " + TABLE + " where continent = ?";
         Object[] params = {code};
@@ -31,6 +40,6 @@ public class CountryInfoDao extends BaseDao {
 
     public static void main(String[] args) {
         CountryInfoDao countryInfoDao = new CountryInfoDao();
-        System.out.println(countryInfoDao.getAll());
+        System.out.println(countryInfoDao.getById(1814991).getName());
     }
 }

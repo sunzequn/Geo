@@ -10,16 +10,18 @@ public class Region {
     private String url;
     private int parentid;
     private int ifvisited;
+    private int match;
 
     public Region() {
     }
 
-    public Region(int id, String name, String url, int parentid, int ifvisited) {
+    public Region(int id, String name, String url, int parentid, int ifvisited, int match) {
         this.id = id;
         this.name = name;
         this.url = url;
         this.parentid = parentid;
         this.ifvisited = ifvisited;
+        this.match = match;
     }
 
     public String getName() {
@@ -62,6 +64,14 @@ public class Region {
         this.ifvisited = ifvisited;
     }
 
+    public int getMatch() {
+        return match;
+    }
+
+    public void setMatch(int match) {
+        this.match = match;
+    }
+
     @Override
     public String toString() {
         return "Region{" +
@@ -70,6 +80,7 @@ public class Region {
                 ", url='" + url + '\'' +
                 ", parentid=" + parentid +
                 ", ifvisited=" + ifvisited +
+                ", match=" + match +
                 '}';
     }
 }

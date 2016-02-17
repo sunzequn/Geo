@@ -73,7 +73,7 @@ public class CountryParser extends PullText {
             return null;
         }
         int id = Integer.parseInt(parts[parts.length - 1]);
-        Region region = new Region(id, name, url, parentid, 0);
+        Region region = new Region(id, name, url, parentid, 0, 0);
         return region;
     }
 

@@ -13,7 +13,7 @@ public class RegionDaoTest {
 
     @Test
     public void saveTest() {
-        Region region = new Region(1, "nanjing", "url", 1, 0);
+        Region region = new Region(1, "nanjing", "url", 1, 0, 0);
         regionDao.save(region);
     }
 

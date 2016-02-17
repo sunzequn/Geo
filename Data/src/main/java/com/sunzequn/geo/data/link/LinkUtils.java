@@ -8,6 +8,24 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LinkUtils {
 
+    public static String clear(String name) {
+        String[] removeEnds = {"Province", "Governorate", "Oblast", "County", "City", "Region", "District", "Department", "İnzibati Ərazisi"};
+        for (String remove : removeEnds) {
+            if (name.endsWith(remove)) {
+                name = StringUtils.removeEnd(name, remove).trim();
+                return name;
+            }
+        }
+        String[] removeStarts = {"Region of"};
+        for (String remove : removeStarts) {
+            if (name.startsWith(remove)) {
+                name = StringUtils.removeStart(name, remove).trim();
+                return name;
+            }
+        }
+        return name;
+    }
+
     /**
      * 判断名字是否相等（忽略英文大小写）
      *

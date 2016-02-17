@@ -37,9 +37,15 @@ public class GeonameDao extends BaseDao {
         return query(connection, sql, params, Geoname.class);
     }
 
-    public List<Geoname> countryChildren(String country, String fcode) {
+    public List<Geoname> countryChildrenByFcode(String country, String fcode) {
         String sql = "select * from " + TABLE + " where country = ? and fcode = ?";
         Object[] params = {country, fcode};
+        return query(connection, sql, params, Geoname.class);
+    }
+
+    public List<Geoname> countryChildrenByFclass(String country, String fclass) {
+        String sql = "select * from " + TABLE + " where country = ? and fclass = ?";
+        Object[] params = {country, fclass};
         return query(connection, sql, params, Geoname.class);
     }
 
@@ -48,6 +54,6 @@ public class GeonameDao extends BaseDao {
         GeonameDao geonameDao = new GeonameDao();
 //        System.out.println(geonameDao.getById(10));
 //        System.out.println(geonameDao.fuzzyMatching(32, 30, 120, 110, "ADM1").size());
-        System.out.println(geonameDao.countryChildren("CN", "ADM3").size());
+        System.out.println(geonameDao.countryChildrenByFcode("CN", "ADM3").size());
     }
 }
