@@ -1,6 +1,5 @@
 package com.sunzequn.geo.data.climate.dao;
 
-import com.sunzequn.geo.data.climate.bean.Country;
 import com.sunzequn.geo.data.climate.bean.Region;
 import com.sunzequn.geo.data.dao.BaseDao;
 
@@ -21,7 +20,7 @@ public class RegionDao extends BaseDao {
 
     public int save(Region region) {
         String sql = "insert into " + TABLE_NAME + " values (?, ?, ?, ?, ?, ?)";
-        Object[] params = {region.getId(), region.getName(), region.getUrl(), region.getParentid(), region.getIfvisited(), region.getMatch()};
+        Object[] params = {region.getId(), region.getName(), region.getUrl(), region.getParentid(), region.getIfvisited(), region.getIfmatched()};
         return execute(connection, sql, params);
     }
 
@@ -46,7 +45,7 @@ public class RegionDao extends BaseDao {
     }
 
     public int updateMatch(int id, int match) {
-        String sql = "update " + TABLE_NAME + " set match = ? where id = ?";
+        String sql = "update " + TABLE_NAME + " set ifmatched = ? where id = ?";
         Object[] params = {match, id};
         return execute(connection, sql, params);
     }

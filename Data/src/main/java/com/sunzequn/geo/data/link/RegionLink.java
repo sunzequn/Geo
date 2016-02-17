@@ -14,59 +14,60 @@ import java.util.List;
  */
 public class RegionLink {
 
+    private static LinkDao countryLinkDao = new LinkDao("country_link");
+    private static LinkDao regionLinkDao = new LinkDao("region_link");
+    private static CountryInfoDao countryInfoDao = new CountryInfoDao();
+    private static GeonameDao geonameDao = new GeonameDao();
+    private static RegionDao regionDao = new RegionDao();
+
     public static void main(String[] args) {
         calculate();
     }
 
     private static void calculate() {
 
-        LinkDao linkDao = new LinkDao("country_link");
-        List<LinkBean> linkedCountries = linkDao.getAll();
-
-        CountryInfoDao countryInfoDao = new CountryInfoDao();
-        GeonameDao geonameDao = new GeonameDao();
-
-        RegionDao regionDao = new RegionDao();
-
+        List<LinkBean> linkedCountries = countryLinkDao.getAll();
         int matchedNum = 1;
-
         for (LinkBean linkedCountry : linkedCountries) {
             Countryinfo countryinfo = countryInfoDao.getById(linkedCountry.getGeonameid());
-
-            String adm = "ADM1";
-
-            List<Geoname> geonamesADM = geonameDao.countryChildrenByFcode(countryinfo.getIso_alpha2(), adm);
             List<Region> regions = regionDao.getByParentId(linkedCountry.getClimateid());
-
-            if (geonamesADM != null && regions != null) {
-
-                for (Region region : regions) {
-
-                    String name = region.getName();
-                    name = LinkUtils.clear(name);
-                    Geoname matchGeo = null;
-
-                    for (Geoname geo : geonamesADM) {
-                        String name2 = geo.getName();
-                        String asciiname = geo.getAsciiname();
-                        String alterName = geo.getAlternatenames();
-
-                        if (LinkUtils.isNameEqual(name, name2) || LinkUtils.isNameEqual(name, asciiname) || LinkUtils.isAlternameEqual(name, alterName)) {
-                            matchedNum++;
-                            matchGeo = geo;
-                            break;
-                        }
-                    }
-
-                    if (matchGeo != null) {
-                        geonamesADM.remove(matchGeo);
-                    } else {
-                        System.out.println(region);
-                    }
-                }
-
-            }
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM1", regions);
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM2", regions);
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM3", regions);
         }
         System.out.println(matchedNum);
+    }
+
+    private static int calculateFcode(String country, String fcode, List<Region> regions) {
+        int matchedNum = 0;
+        List<Geoname> geonames = geonameDao.countryChildrenByFcode(country, fcode);
+        if (geonames != null && regions != null) {
+            for (Region region : regions) {
+                String name = region.getName();
+                name = LinkUtils.clear(name);
+                Geoname matchGeo = null;
+                for (Geoname geo : geonames) {
+                    String name2 = geo.getName();
+                    String asciiname = geo.getAsciiname();
+                    String alterName = geo.getAlternatenames();
+                    if (LinkUtils.isNameEqual(name, name2) || LinkUtils.isNameEqual(name, asciiname) || LinkUtils.isAlternameEqual(name, alterName)) {
+                        matchedNum++;
+                        matchGeo = geo;
+                        //1表示有完全匹配的
+                        save(geo, region, 1);
+                        break;
+                    }
+                }
+                if (matchGeo != null) {
+                    geonames.remove(matchGeo);
+                }
+            }
+        }
+        return matchedNum;
+    }
+
+    private static void save(Geoname geoname, Region region, int state) {
+        regionLinkDao.save(new LinkBean(geoname.getGeonameid(), region.getId()));
+        regionDao.updateMatch(region.getId(), state);
     }
 }
