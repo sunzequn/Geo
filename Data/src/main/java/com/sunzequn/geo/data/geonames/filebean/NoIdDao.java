@@ -2,6 +2,7 @@ package com.sunzequn.geo.data.geonames.filebean;
 
 import com.sunzequn.geo.data.dao.BaseDao;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -10,20 +11,21 @@ import java.util.List;
 public class NoIdDao extends BaseDao {
 
     private static final String TABLENAME = "no_id";
+    private Connection connection;
 
     public NoIdDao() {
-        getConnection("geonames_file");
+        connection = getConnection("geonames_file");
     }
 
     public int save(NoId noId) {
         String sql = "insert into " + TABLENAME + " values (?)";
         Object[] params = {noId.getId()};
-        return execute(sql, params);
+        return execute(connection, sql, params);
     }
 
     public List<NoId> getAll() {
         String sql = "select * from " + TABLENAME;
-        return query(sql, null, NoId.class);
+        return query(connection, sql, null, NoId.class);
     }
 
     public static void main(String[] args) {

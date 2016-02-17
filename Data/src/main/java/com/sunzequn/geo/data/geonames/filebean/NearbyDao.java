@@ -2,6 +2,7 @@ package com.sunzequn.geo.data.geonames.filebean;
 
 import com.sunzequn.geo.data.dao.BaseDao;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -10,31 +11,32 @@ import java.util.List;
 public class NearbyDao extends BaseDao{
 
     private static final String TABLENAME = "nearby";
+    private Connection connection;
 
     public NearbyDao() {
-        getConnection("geonames_file");
+        connection = getConnection("geonames_file");
     }
 
     public int save(Nearby nearby) {
         String sql = "insert into " + TABLENAME + " values (?, ?, ?)";
         Object[] params = {nearby.getId(), nearby.getContent(), nearby.getIfhandled()};
-        return execute(sql, params);
+        return execute(connection, sql, params);
     }
 
     public List<Nearby> getAll(int start, int limit) {
         String sql = "select * from " + TABLENAME + " where id > ? order by id limit " + limit;
         Object[] params = {start};
-        return query(sql, params, Nearby.class);
+        return query(connection, sql, params, Nearby.class);
     }
 
     public int update(int id, int ifhandled){
         String sql = "update " + TABLENAME + " set ifhandled = ? where id = ?";
         Object[] params = {ifhandled, id};
-        return execute(sql, params);
+        return execute(connection, sql, params);
     }
 
     public void close() {
-        closeConnection();
+        closeConnection(connection);
     }
 
     public static void main(String[] args) {

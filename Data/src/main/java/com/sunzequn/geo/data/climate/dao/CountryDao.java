@@ -1,8 +1,9 @@
-package com.sunzequn.geo.data.climate.pull.dao;
+package com.sunzequn.geo.data.climate.dao;
 
-import com.sunzequn.geo.data.climate.pull.bean.Country;
+import com.sunzequn.geo.data.climate.bean.Country;
 import com.sunzequn.geo.data.dao.BaseDao;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -11,27 +12,33 @@ import java.util.List;
  * 对实体Country的数据库操作
  */
 public class CountryDao extends BaseDao {
-
+    private static final String DATABASE = "geocities";
     private static final String TABLE_NAME = "climate_seed_country";
+    private Connection connection;
 
     public CountryDao() {
-        getConnection();
+        connection = getConnection(DATABASE);
     }
 
     public int save(Country country) {
         String sql = "insert into " + TABLE_NAME + " values (?, ?, ?, ?, ?)";
         Object[] params = {country.getId(), country.getName(), country.getUrl(), country.getParentid(), country.getIfvisited()};
-        return execute(sql, params);
+        return execute(connection, sql, params);
     }
 
     public List<Country> getAll() {
         String sql = "select * from " + TABLE_NAME;
-        return query(sql, null, Country.class);
+        return query(connection, sql, null, Country.class);
+    }
+
+    public List<Country> getByParentId(int id) {
+        String sql = "select * from " + TABLE_NAME + " where parentid = " + id;
+        return query(connection, sql, null, Country.class);
     }
 
     public List<Country> getUnvisited() {
         String sql = "select * from " + TABLE_NAME + " where ifvisited = 0";
-        return query(sql, null, Country.class);
+        return query(connection, sql, null, Country.class);
     }
 
     /**
@@ -44,7 +51,7 @@ public class CountryDao extends BaseDao {
     public int update(int id, int ifvisited) {
         String sql = "update " + TABLE_NAME + " set ifvisited = ? where id = ?";
         Object[] params = {ifvisited, id};
-        return execute(sql, params);
+        return execute(connection, sql, params);
     }
 
     public int deleteById(int id) {

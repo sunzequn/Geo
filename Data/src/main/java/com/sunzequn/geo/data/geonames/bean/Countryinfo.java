@@ -3,7 +3,7 @@ package com.sunzequn.geo.data.geonames.bean;
 /**
  * Created by Sloriac on 16/2/16.
  */
-public class CountryInfo {
+public class Countryinfo {
 
     private String iso_alpha2;
     private String iso_alpha3;

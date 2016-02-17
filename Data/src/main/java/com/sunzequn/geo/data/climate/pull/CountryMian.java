@@ -1,10 +1,9 @@
 package com.sunzequn.geo.data.climate.pull;
 
-import com.sunzequn.geo.data.climate.pull.bean.*;
-import com.sunzequn.geo.data.climate.pull.dao.CountryDao;
-import com.sunzequn.geo.data.climate.pull.dao.PageUrlsDao;
-import com.sunzequn.geo.data.climate.pull.dao.PlaceDao;
-import com.sunzequn.geo.data.climate.pull.dao.RegionDao;
+import com.sunzequn.geo.data.climate.bean.*;
+import com.sunzequn.geo.data.climate.dao.CountryDao;
+import com.sunzequn.geo.data.climate.dao.PageUrlsDao;
+import com.sunzequn.geo.data.climate.dao.PlaceDao;
 import com.sunzequn.geo.data.climate.pull.parser.RegionParser;
 import com.sunzequn.geo.data.crawler.proxy.ProxyBean;
 import com.sunzequn.geo.data.crawler.proxy.ProxyHandler;

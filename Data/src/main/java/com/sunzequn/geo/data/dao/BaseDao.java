@@ -11,44 +11,35 @@ import java.util.List;
 /**
  * Created by Sloriac on 16/1/6.
  */
-public abstract class BaseDao {
+public class BaseDao {
 
     private static final String CLASS_NAME = "com.mysql.jdbc.Driver";
     private static final String JDBC_URL_PREFIX = "jdbc:mysql://localhost:3306/";
     private static final String JDBC_URL_SUFFIX = "?useUnicode=true&characterEncoding=UTF-8";
-    private static final String DATABASE = "geocities";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
-    protected static Connection connection;
 
-    protected void getConnection() {
+    protected Connection getConnection(String databaseName) {
         try {
             Class.forName(CLASS_NAME);
-            connection = DriverManager.getConnection(JDBC_URL_PREFIX + DATABASE + JDBC_URL_SUFFIX, USER, PASSWORD);
+            return DriverManager.getConnection(JDBC_URL_PREFIX + databaseName + JDBC_URL_SUFFIX, USER, PASSWORD);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    protected void getConnection(String databaseName) {
+    protected Connection getConnection(String databaseName, String user, String password) {
         try {
             Class.forName(CLASS_NAME);
-            connection = DriverManager.getConnection(JDBC_URL_PREFIX + databaseName + JDBC_URL_SUFFIX, USER, PASSWORD);
+            return DriverManager.getConnection(JDBC_URL_PREFIX + databaseName + JDBC_URL_SUFFIX, user, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    protected void getConnection(String databaseName, String user, String password) {
-        try {
-            Class.forName(CLASS_NAME);
-            connection = DriverManager.getConnection(JDBC_URL_PREFIX + databaseName + JDBC_URL_SUFFIX, user, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void closeConnection() {
+    protected void closeConnection(Connection connection) {
         try {
             connection.close();
         } catch (SQLException e) {
@@ -56,7 +47,7 @@ public abstract class BaseDao {
         }
     }
 
-    protected <T> List<T> query(String sql, Object[] params, Class clazz) {
+    protected <T> List<T> query(Connection connection, String sql, Object[] params, Class clazz) {
         QueryRunner queryRunner = new QueryRunner();
         try {
             List<T> ts = queryRunner.query(connection, sql, new BeanListHandler<T>(clazz), params);
@@ -69,7 +60,7 @@ public abstract class BaseDao {
         return null;
     }
 
-    protected int execute(String sql, Object[] params) {
+    protected int execute(Connection connection, String sql, Object[] params) {
         QueryRunner queryRunner = new QueryRunner();
         try {
             int res = queryRunner.update(connection, sql, params);

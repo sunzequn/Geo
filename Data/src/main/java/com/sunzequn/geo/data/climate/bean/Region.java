@@ -1,22 +1,24 @@
-package com.sunzequn.geo.data.climate.pull.bean;
+package com.sunzequn.geo.data.climate.bean;
 
 /**
  * Created by Sloriac on 16/1/6.
  */
-public class Continent {
+public class Region {
 
     private int id;
     private String name;
     private String url;
+    private int parentid;
     private int ifvisited;
 
-    public Continent() {
+    public Region() {
     }
 
-    public Continent(int id, String name, String url, int ifvisited) {
+    public Region(int id, String name, String url, int parentid, int ifvisited) {
         this.id = id;
         this.name = name;
         this.url = url;
+        this.parentid = parentid;
         this.ifvisited = ifvisited;
     }
 
@@ -44,6 +46,14 @@ public class Continent {
         this.id = id;
     }
 
+    public int getParentid() {
+        return parentid;
+    }
+
+    public void setParentid(int parentid) {
+        this.parentid = parentid;
+    }
+
     public int getIfvisited() {
         return ifvisited;
     }
@@ -54,10 +64,11 @@ public class Continent {
 
     @Override
     public String toString() {
-        return "Continent{" +
+        return "Region{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
+                ", parentid=" + parentid +
                 ", ifvisited=" + ifvisited +
                 '}';
     }

@@ -1,31 +1,25 @@
-package com.sunzequn.geo.data.climate.pull.bean;
+package com.sunzequn.geo.data.climate.bean;
 
 /**
  * Created by Sloriac on 16/1/6.
  */
-public class Place {
+public class Country {
 
     private int id;
     private String name;
     private String url;
     private int parentid;
     private int ifvisited;
-    private String climate;
-    private double temperature;
-    private double precipitation;
 
-    public Place() {
+    public Country() {
     }
 
-    public Place(int id, String name, String url, int parentid, int ifvisited, String climate, double temperature, double precipitation) {
+    public Country(int id, String name, String url, int parentid, int ifvisited) {
+        this.id = id;
         this.name = name;
         this.url = url;
-        this.id = id;
         this.parentid = parentid;
         this.ifvisited = ifvisited;
-        this.climate = climate;
-        this.temperature = temperature;
-        this.precipitation = precipitation;
     }
 
     public int getId() {
@@ -68,42 +62,14 @@ public class Place {
         this.ifvisited = ifvisited;
     }
 
-    public String getClimate() {
-        return climate;
-    }
-
-    public void setClimate(String climate) {
-        this.climate = climate;
-    }
-
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
-    }
-
-    public double getPrecipitation() {
-        return precipitation;
-    }
-
-    public void setPrecipitation(double precipitation) {
-        this.precipitation = precipitation;
-    }
-
-
     @Override
     public String toString() {
-        return "Place{" +
+        return "Country{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", parentid=" + parentid +
                 ", ifvisited=" + ifvisited +
-                ", climate='" + climate + '\'' +
-                ", temperature=" + temperature +
-                ", precipitation=" + precipitation +
                 '}';
     }
 }

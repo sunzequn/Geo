@@ -1,7 +1,7 @@
 package com.sunzequn.geo.data.climate.pull.handler;
 
-import com.sunzequn.geo.data.climate.pull.bean.PageUrls;
-import com.sunzequn.geo.data.climate.pull.dao.PageUrlsDao;
+import com.sunzequn.geo.data.climate.bean.PageUrls;
+import com.sunzequn.geo.data.climate.dao.PageUrlsDao;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;

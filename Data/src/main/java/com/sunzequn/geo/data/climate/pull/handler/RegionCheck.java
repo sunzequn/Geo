@@ -1,7 +1,7 @@
 package com.sunzequn.geo.data.climate.pull.handler;
 
-import com.sunzequn.geo.data.climate.pull.bean.Region;
-import com.sunzequn.geo.data.climate.pull.dao.RegionDao;
+import com.sunzequn.geo.data.climate.bean.Region;
+import com.sunzequn.geo.data.climate.dao.RegionDao;
 
 import java.util.HashSet;
 import java.util.List;

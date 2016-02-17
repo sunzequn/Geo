@@ -154,10 +154,10 @@ public class GenEntityMysql {
         if (sqlType.equalsIgnoreCase("bit")) {
             return "boolean";
         } else if (sqlType.equalsIgnoreCase("tinyint")) {
-            return "byte";
+            return "int";
         } else if (sqlType.equalsIgnoreCase("smallint")) {
             return "short";
-        } else if (sqlType.equalsIgnoreCase("int")) {
+        } else if (sqlType.equalsIgnoreCase("int") || sqlType.equalsIgnoreCase("INT UNSIGNED")) {
             return "int";
         } else if (sqlType.equalsIgnoreCase("bigint")) {
             return "long";
@@ -188,7 +188,7 @@ public class GenEntityMysql {
      */
     public static void main(String[] args) {
 
-        new GenEntityMysql("geonames", "countryinfo");
+        new GenEntityMysql("geonames", "continentCodes");
 
     }
 

@@ -1,7 +1,7 @@
 package com.sunzequn.geo.data.climate.pull.parser;
 
-import com.sunzequn.geo.data.climate.pull.bean.Place;
-import com.sunzequn.geo.data.climate.pull.bean.PlaceWebWrapper;
+import com.sunzequn.geo.data.climate.bean.Place;
+import com.sunzequn.geo.data.climate.bean.PlaceWebWrapper;
 import com.sunzequn.geo.data.crawler.parser.HttpMethod;
 import com.sunzequn.geo.data.crawler.parser.PullText;
 import com.sunzequn.geo.data.utils.ListUtils;

@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.climate.pull.bean;
+package com.sunzequn.geo.data.climate.bean;
 
 import java.util.ArrayList;
 import java.util.List;

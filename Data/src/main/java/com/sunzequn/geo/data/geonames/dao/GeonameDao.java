@@ -4,6 +4,7 @@ import com.sunzequn.geo.data.dao.BaseDao;
 import com.sunzequn.geo.data.geonames.bean.Geoname;
 import com.sunzequn.geo.data.utils.ListUtils;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -13,14 +14,15 @@ public class GeonameDao extends BaseDao {
 
     private static final String DATABASE = "geonames";
     private static final String TABLE = "geoname";
+    private Connection connection;
 
     public GeonameDao() {
-        getConnection(DATABASE);
+        connection = getConnection(DATABASE);
     }
 
     public Geoname getById(int geonameId) {
         String sql = "select * from " + TABLE + " where geonameid = " + geonameId;
-        List<Geoname> geonames = query(sql, null, Geoname.class);
+        List<Geoname> geonames = query(connection, sql, null, Geoname.class);
         if (ListUtils.isEmpty(geonames))
             return null;
         return geonames.get(0);
@@ -32,13 +34,13 @@ public class GeonameDao extends BaseDao {
             sql += " and fcode = '" + fcode + "'";
         }
         Object[] params = {latUpper, latLower, lngUpper, lngLower};
-        return query(sql, params, Geoname.class);
+        return query(connection, sql, params, Geoname.class);
     }
 
     public List<Geoname> countryChildren(String country, String fcode) {
         String sql = "select * from " + TABLE + " where country = ? and fcode = ?";
         Object[] params = {country, fcode};
-        return query(sql, params, Geoname.class);
+        return query(connection, sql, params, Geoname.class);
     }
 
 

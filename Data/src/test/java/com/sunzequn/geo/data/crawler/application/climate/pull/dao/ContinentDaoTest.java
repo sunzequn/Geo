@@ -1,6 +1,6 @@
 package com.sunzequn.geo.data.crawler.application.climate.pull.dao;
 
-import com.sunzequn.geo.data.climate.pull.dao.ContinentDao;
+import com.sunzequn.geo.data.climate.dao.ContinentDao;
 import org.junit.Test;
 
 /**
