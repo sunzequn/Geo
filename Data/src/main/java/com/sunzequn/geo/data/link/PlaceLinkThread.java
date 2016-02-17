@@ -25,13 +25,17 @@ public class PlaceLinkThread {
 
         for (int i = 0; i < linkedCountries.size(); i++) {
             new Thread(() -> {
-                PlaceLink placeLink = new PlaceLink();
+
                 CountryInfoDao countryInfoDao = new CountryInfoDao();
                 LinkBean linkedCountry = getLinkedCountry();
+                Countryinfo countryinfo = countryInfoDao.getById(linkedCountry.getGeonameid());
+                PlaceLink placeLink = new PlaceLink(countryinfo.getIso_alpha2());
+
                 List<Place> places = placeLink.getClimatePlaces(linkedCountry.getClimateid());
                 System.out.println(Thread.currentThread().getName() + ": place num: " + places.size());
-                Countryinfo countryinfo = countryInfoDao.getById(linkedCountry.getGeonameid());
                 int num = 0;
+                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM1", places);
+                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM2", places);
                 num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM3", places);
                 num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM4", places);
                 num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM5", places);
@@ -39,7 +43,9 @@ public class PlaceLinkThread {
                 num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM4H", places);
                 num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADMD", places);
                 num += placeLink.calculateFclass(countryinfo.getIso_alpha2(), "P", places);
+
                 System.out.println(Thread.currentThread().getName() + ": matched num: " + num);
+                System.out.println(Thread.currentThread().getName() + ": 差值: " + (num - places.size()));
 
             }, "thread" + i).start();
         }

@@ -8,6 +8,7 @@ import com.sunzequn.geo.data.geonames.bean.Countryinfo;
 import com.sunzequn.geo.data.geonames.bean.Geoname;
 import com.sunzequn.geo.data.geonames.dao.CountryInfoDao;
 import com.sunzequn.geo.data.geonames.dao.GeonameDao;
+import com.sunzequn.geo.data.utils.WriteUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,42 +18,30 @@ import java.util.List;
  */
 public class PlaceLink {
 
-    private static LinkDao placeLinkDao = new LinkDao("place_link");
+    private static final String FOLDER = "Data/src/main/resources/data/link/";
+    private static WriteUtils writeUtils;
     private static GeonameDao geonameDao = new GeonameDao();
     private static RegionDao regionDao = new RegionDao();
     private static PlaceDao placeFromCountryDao = new PlaceDao("climate_seed_place_from_country");
     private static PlaceDao placeDao = new PlaceDao("climate_seed_place");
 
+    public PlaceLink(String file) {
+        writeUtils = new WriteUtils(FOLDER + file, true);
+    }
+
     public int calculateFcode(String country, String fcode, List<Place> places) {
-        int matchedNum = 0;
         List<Geoname> geonames = geonameDao.countryChildrenByFcode(country, fcode);
-        if (geonames != null && places != null) {
-            for (Place place : places) {
-                String name = place.getName();
-                name = LinkUtils.climateNameClear(name);
-                Geoname matchGeo = null;
-                for (Geoname geo : geonames) {
-                    String name2 = geo.getName();
-                    String asciiname = geo.getAsciiname();
-                    String alterName = geo.getAlternatenames();
-                    if (LinkUtils.isNameEqual(name, name2) || LinkUtils.isNameEqual(name, asciiname) || LinkUtils.isAlternameEqual(name, alterName)) {
-                        matchedNum++;
-                        matchGeo = geo;
-                        //1表示有完全匹配的
-                        save(geo, place);
-                    }
-                }
-                if (matchGeo != null) {
-                    geonames.remove(matchGeo);
-                }
-            }
-        }
-        return matchedNum;
+        return calculate(geonames, places);
     }
 
     public int calculateFclass(String country, String fclass, List<Place> places) {
-        int matchedNum = 0;
+
         List<Geoname> geonames = geonameDao.countryChildrenByFclass(country, fclass);
+        return calculate(geonames, places);
+    }
+
+    private int calculate(List<Geoname> geonames, List<Place> places) {
+        int matchedNum = 0;
         if (geonames != null && places != null) {
             for (Place place : places) {
                 String name = place.getName();
@@ -74,11 +63,12 @@ public class PlaceLink {
                 }
             }
         }
+        writeUtils.flush();
         return matchedNum;
     }
 
     private void save(Geoname geoname, Place place) {
-        placeLinkDao.save(new LinkBean(geoname.getGeonameid(), place.getId()));
+        writeUtils.write(geoname.getGeonameid() + "/" + place.getId());
     }
 
     public List<Place> getClimatePlaces(int countryId) {
@@ -98,13 +88,4 @@ public class PlaceLink {
         }
         return places;
     }
-
-    public static void main(String[] args) {
-        PlaceLink placeLink = new PlaceLink();
-        List<Place> places = placeLink.getClimatePlaces(110);
-        for (Place place : places) {
-            System.out.println(place.getName());
-        }
-    }
-
 }
