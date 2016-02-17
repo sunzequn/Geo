@@ -1,0 +1,55 @@
+package com.sunzequn.geo.data.link;
+
+import com.sunzequn.geo.data.climate.bean.Place;
+import com.sunzequn.geo.data.climate.bean.Region;
+import com.sunzequn.geo.data.climate.dao.PlaceDao;
+import com.sunzequn.geo.data.climate.dao.RegionDao;
+import com.sunzequn.geo.data.geonames.bean.Countryinfo;
+import com.sunzequn.geo.data.geonames.bean.Geoname;
+import com.sunzequn.geo.data.geonames.dao.CountryInfoDao;
+import com.sunzequn.geo.data.geonames.dao.GeonameDao;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * Created by sloriac on 16-2-17.
+ */
+public class PlaceLinkThread {
+
+    private static LinkDao countryLinkDao = new LinkDao("country_link");
+    private static LinkedList<LinkBean> linkedCountries = new LinkedList(countryLinkDao.getAll());
+
+    public static void main(String[] args) {
+
+        for (int i = 0; i < linkedCountries.size(); i++) {
+            new Thread(() -> {
+                PlaceLink placeLink = new PlaceLink();
+                CountryInfoDao countryInfoDao = new CountryInfoDao();
+                LinkBean linkedCountry = getLinkedCountry();
+                List<Place> places = placeLink.getClimatePlaces(linkedCountry.getClimateid());
+                System.out.println(Thread.currentThread().getName() + ": place num: " + places.size());
+                Countryinfo countryinfo = countryInfoDao.getById(linkedCountry.getGeonameid());
+                int num = 0;
+                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM3", places);
+                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM4", places);
+                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM5", places);
+                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM3H", places);
+                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM4H", places);
+                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADMD", places);
+                num += placeLink.calculateFclass(countryinfo.getIso_alpha2(), "P", places);
+                System.out.println(Thread.currentThread().getName() + ": matched num: " + num);
+
+            }, "thread" + i).start();
+        }
+    }
+
+    private static synchronized LinkBean getLinkedCountry() {
+        if (linkedCountries.size() > 0) {
+            return linkedCountries.pop();
+        }
+        return null;
+    }
+
+}

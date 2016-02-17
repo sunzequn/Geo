@@ -31,9 +31,19 @@ public class RegionLink {
         for (LinkBean linkedCountry : linkedCountries) {
             Countryinfo countryinfo = countryInfoDao.getById(linkedCountry.getGeonameid());
             List<Region> regions = regionDao.getByParentId(linkedCountry.getClimateid());
+
             matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM1", regions);
             matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM2", regions);
             matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM3", regions);
+
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM1H", regions);
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM2H", regions);
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM3H", regions);
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM4", regions);
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM4H", regions);
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM5", regions);
+            matchedNum += calculateFcode(countryinfo.getIso_alpha2(), "ADM5H", regions);
+
         }
         System.out.println(matchedNum);
     }
@@ -44,7 +54,7 @@ public class RegionLink {
         if (geonames != null && regions != null) {
             for (Region region : regions) {
                 String name = region.getName();
-                name = LinkUtils.clear(name);
+                name = LinkUtils.climateNameClear(name);
                 Geoname matchGeo = null;
                 for (Geoname geo : geonames) {
                     String name2 = geo.getName();
@@ -55,7 +65,6 @@ public class RegionLink {
                         matchGeo = geo;
                         //1表示有完全匹配的
                         save(geo, region, 1);
-                        break;
                     }
                 }
                 if (matchGeo != null) {

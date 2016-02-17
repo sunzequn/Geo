@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LinkUtils {
 
-    public static String clear(String name) {
+    public static String climateNameClear(String name) {
         String[] removeEnds = {"Province", "Governorate", "Oblast", "County", "City", "Region", "District", "Department", "İnzibati Ərazisi"};
         for (String remove : removeEnds) {
             if (name.endsWith(remove)) {
@@ -20,6 +20,17 @@ public class LinkUtils {
         for (String remove : removeStarts) {
             if (name.startsWith(remove)) {
                 name = StringUtils.removeStart(name, remove).trim();
+                return name;
+            }
+        }
+        return name;
+    }
+
+    public static String geonameClear(String name) {
+        String[] removeEnds = {"District"};
+        for (String remove : removeEnds) {
+            if (name.endsWith(remove)) {
+                name = StringUtils.removeEnd(name, remove).trim();
                 return name;
             }
         }
