@@ -8,6 +8,64 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LinkUtils {
 
+    private static final double THRESHOLD = 0.8;
+
+    /**
+     * 计算名称之间的匹配程度
+     *
+     * @param geoName
+     * @param climateName
+     * @return
+     */
+    public static double isNameEqual(String geoName, String climateName) {
+        geoName = geoName.trim();
+        climateName = climateName.trim();
+        //完全匹配
+        if (geoName.equals(climateName)) {
+            return 3.0;
+        }
+        //忽略大小写下的匹配
+        else if (geoName.equalsIgnoreCase(climateName)) {
+            return 2.0;
+        }
+        //去除一些地点区划名称之后完全匹配
+        else if (geoName.equals(climateNameClear(climateName))) {
+            return 1.8;
+        }
+        //去除一些地点区划名称并且忽略大小写完全匹配
+        else if (geoName.equalsIgnoreCase(climateNameClear(climateName))) {
+            return 1.5;
+        }
+        //模糊相似度(忽略大小写)大于阈值
+        else {
+            double similarity = nameSimilarity(geoName, climateName);
+            if (similarity >= THRESHOLD) {
+                return similarity;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    /**
+     * 判断名字和别名的最大相似度
+     *
+     * @param climateName
+     * @param alterName   未处理的别名，以，分开
+     * @return
+     */
+    public static double isAlternameEqual(String climateName, String alterName) {
+        String[] alterNames = StringUtils.split(alterName, ",");
+        double res = 0.0;
+        for (String geoName : alterNames) {
+            double similarity = isNameEqual(geoName, climateName);
+            if (similarity > res) {
+                res = similarity;
+            }
+        }
+        return res;
+    }
+
     public static String climateNameClear(String name) {
         String[] removeEnds = {"Province", "Governorate", "Oblast", "County", "City", "Region", "District", "Department", "İnzibati Ərazisi"};
         for (String remove : removeEnds) {
@@ -35,35 +93,6 @@ public class LinkUtils {
             }
         }
         return name;
-    }
-
-    /**
-     * 判断名字是否相等（忽略英文大小写）
-     *
-     * @param name1 第一个名字
-     * @param name2 第一个名字
-     * @return
-     */
-    public static boolean isNameEqual(String name1, String name2) {
-        return name1.trim().equalsIgnoreCase(name2.trim());
-    }
-
-    /**
-     * 判断名字和别名是否相等（忽略英文大小写）
-     *
-     * @param name
-     * @param alterName 未处理的别名，以，分开
-     * @return
-     */
-    public static boolean isAlternameEqual(String name, String alterName) {
-        String[] alterNames = StringUtils.split(alterName, ",");
-        name = name.trim();
-        for (String str : alterNames) {
-            if (name.equalsIgnoreCase(str.trim())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
