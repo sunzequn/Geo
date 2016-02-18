@@ -23,11 +23,11 @@ public class CountryLink {
 //        calculate();
         LinkDao linkDao = new LinkDao("country_link");
         //Russian Federation
-        linkDao.save(new LinkBean(2017370, 136));
-        //East Timor
-        linkDao.save(new LinkBean(1966436, 170));
-        //Cyprus
-        linkDao.save(new LinkBean(146669, 106));
+//        linkDao.save(new LinkBean(2017370, 136));
+//        //East Timor
+//        linkDao.save(new LinkBean(1966436, 170));
+//        //Cyprus
+//        linkDao.save(new LinkBean(146669, 106));
 
         //上面三个是因为所属大洲错误
 
@@ -73,7 +73,7 @@ public class CountryLink {
                 String name1 = country.getName();
                 Geoname matchedGeoCountry = null;
                 for (Geoname geoCountry : geoCountries) {
-                    if (LinkUtils.isNameEqual(name1, geoCountry.getName())) {
+                    if (LinkUtils.isNameEqual(name1, geoCountry.getName()) > 0) {
                         System.out.println(++matchedNum);
                         save(geoCountry, country, 1);
                         matchedGeoCountry = geoCountry;
@@ -103,11 +103,11 @@ public class CountryLink {
     private static void save(Geoname geoname, Country country, int state) {
 
         LinkDao linkDao = new LinkDao("country_link");
-        LinkBean linkBean = new LinkBean(geoname.getGeonameid(), country.getId());
+        LinkBean linkBean = new LinkBean(geoname.getGeonameid(), country.getId(), state);
         linkDao.save(linkBean);
 
         /*
-        剩下5个，气候数据的层级关系有误
+        剩下5个，气候数据的层级关系有误,所属大洲有错误
 Country{id=251, name='Sahrawi Arab Democratic Republic', url='/country/251/', parentid=1, ifvisited=0}
 Country{id=252, name='Saint Helena, Ascension and Tristan da Cunha', url='/country/252/', parentid=1, ifvisited=0}
 Country{id=106, name='Cyprus', url='/country/106/', parentid=4, ifvisited=0}

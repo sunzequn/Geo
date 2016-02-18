@@ -7,13 +7,15 @@ public class LinkBean {
 
     private int geonameid;
     private int climateid;
+    private double confidence;
 
     public LinkBean() {
     }
 
-    public LinkBean(int geonameid, int climateid) {
+    public LinkBean(int geonameid, int climateid, double confidence) {
         this.geonameid = geonameid;
         this.climateid = climateid;
+        this.confidence = confidence;
     }
 
     public int getClimateid() {
@@ -30,5 +32,22 @@ public class LinkBean {
 
     public void setGeonameid(int geonameid) {
         this.geonameid = geonameid;
+    }
+
+    public double getConfidence() {
+        return confidence;
+    }
+
+    public void setConfidence(double confidence) {
+        this.confidence = confidence;
+    }
+
+    @Override
+    public String toString() {
+        return "LinkBean{" +
+                "geonameid=" + geonameid +
+                ", climateid=" + climateid +
+                ", confidence=" + confidence +
+                '}';
     }
 }
