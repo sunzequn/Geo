@@ -50,7 +50,6 @@ public class CountryLink {
 
         for (LinkBean continentLink : continentLinks) {
             int geonameid = continentLink.getGeonameid();
-            System.out.println(geonameid);
             ContinentCodes continentCodes = continentCodesDao.getById(geonameid);
             int climateid = continentLink.getClimateid();
             Continent continent = continentDao.getById(climateid);
@@ -73,16 +72,14 @@ public class CountryLink {
                 String name1 = country.getName();
                 Geoname matchedGeoCountry = null;
                 for (Geoname geoCountry : geoCountries) {
-                    if (LinkUtils.isNameEqual(name1, geoCountry.getName()) > 0) {
-                        System.out.println(++matchedNum);
-                        save(geoCountry, country, 1);
-                        matchedGeoCountry = geoCountry;
-                        break;
-                    } else if (LinkUtils.isAlternameEqual(name1, geoCountry.getAlternatenames())) {
-                        System.out.println(++matchedNum);
-                        save(geoCountry, country, 2);
-                        matchedGeoCountry = geoCountry;
-                        break;
+                    double similarity = LinkUtils.isNameEqual(geoCountry.getName(), name1);
+                    double alterSimilarity = LinkUtils.isAlternameEqual(name1, geoCountry.getAlternatenames());
+                    if (similarity < alterSimilarity) {
+                        similarity = alterSimilarity;
+                    }
+                    if (similarity > 0) {
+                        System.out.println("matched: " + geoCountry.getName() + " , " + name1);
+                        save(geoCountry, country, similarity);
                     }
                 }
                 if (matchedGeoCountry == null) {
@@ -100,7 +97,7 @@ public class CountryLink {
         }
     }
 
-    private static void save(Geoname geoname, Country country, int state) {
+    private static void save(Geoname geoname, Country country, double state) {
 
         LinkDao linkDao = new LinkDao("country_link");
         LinkBean linkBean = new LinkBean(geoname.getGeonameid(), country.getId(), state);
