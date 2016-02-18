@@ -19,15 +19,17 @@ import java.util.List;
  */
 public class CountryLink {
 
+    private static LinkDao linkDao = new LinkDao("country_link");
+
     public static void main(String[] args) {
 //        calculate();
         LinkDao linkDao = new LinkDao("country_link");
         //Russian Federation
-//        linkDao.save(new LinkBean(2017370, 136));
-//        //East Timor
-//        linkDao.save(new LinkBean(1966436, 170));
-//        //Cyprus
-//        linkDao.save(new LinkBean(146669, 106));
+        linkDao.save(new LinkBean(2017370, 136, 3));
+        //East Timor
+        linkDao.save(new LinkBean(1966436, 170, 3));
+        //Cyprus
+        linkDao.save(new LinkBean(146669, 106, 3));
 
         //上面三个是因为所属大洲错误
 
@@ -45,7 +47,6 @@ public class CountryLink {
         ContinentCodesDao continentCodesDao = new ContinentCodesDao();
         GeonameDao geonameDao = new GeonameDao();
 
-        int matchedNum = 0;
         List<Country> allNoMatchedCountries = new ArrayList<>();
 
         for (LinkBean continentLink : continentLinks) {
@@ -78,8 +79,9 @@ public class CountryLink {
                         similarity = alterSimilarity;
                     }
                     if (similarity > 0) {
-                        System.out.println("matched: " + geoCountry.getName() + " , " + name1);
+                        System.out.println("matched: " + geoCountry.getName() + " , " + name1 + "相似度:" + similarity);
                         save(geoCountry, country, similarity);
+                        matchedGeoCountry = geoCountry;
                     }
                 }
                 if (matchedGeoCountry == null) {
@@ -98,11 +100,8 @@ public class CountryLink {
     }
 
     private static void save(Geoname geoname, Country country, double state) {
-
-        LinkDao linkDao = new LinkDao("country_link");
         LinkBean linkBean = new LinkBean(geoname.getGeonameid(), country.getId(), state);
         linkDao.save(linkBean);
-
         /*
         剩下5个，气候数据的层级关系有误,所属大洲有错误
 Country{id=251, name='Sahrawi Arab Democratic Republic', url='/country/251/', parentid=1, ifvisited=0}

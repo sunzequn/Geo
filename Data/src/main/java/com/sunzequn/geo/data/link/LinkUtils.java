@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LinkUtils {
 
-    private static final double THRESHOLD = 0.8;
+    private static final double THRESHOLD = 0.9;
 
     /**
      * 计算名称之间的匹配程度
@@ -63,7 +63,12 @@ public class LinkUtils {
                 res = similarity;
             }
         }
-        return res;
+        //不允许模糊匹配
+        if (res > 1.0) {
+            res = res / 10.0 + 1;
+            return res;
+        }
+        return 0.0;
     }
 
     public static String climateNameClear(String name) {
@@ -124,5 +129,9 @@ public class LinkUtils {
             }
         }
         return res;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(1.2 / 10.0);
     }
 }
