@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LinkUtils {
 
-    private static final double THRESHOLD = 0.9;
+    private static final double THRESHOLD = 0.8;
 
     /**
      * 计算名称之间的匹配程度
@@ -28,14 +28,25 @@ public class LinkUtils {
         else if (geoName.equalsIgnoreCase(climateName)) {
             return 2.0;
         }
-        //去除一些地点区划名称之后完全匹配
+        //去除climateName一些地点区划名称之后完全匹配
         else if (geoName.equals(climateNameClear(climateName))) {
             return 1.8;
         }
-        //去除一些地点区划名称并且忽略大小写完全匹配
+        //去除geoName一些地点区划名称之后完全匹配
+        else if (geonameClear(geoName).equals(climateName)) {
+            return 1.7;
+        }
+        //去除climateName一些地点区划名称并且忽略大小写完全匹配
         else if (geoName.equalsIgnoreCase(climateNameClear(climateName))) {
+            return 1.6;
+        }
+        //去除geoName一些地点区划名称并且忽略大小写之后完全匹配
+        else if (geonameClear(geoName).equalsIgnoreCase(climateName)) {
             return 1.5;
         }
+
+        //不考虑两边都clear
+
         //模糊相似度(忽略大小写)大于阈值
         else {
             double similarity = nameSimilarity(geoName, climateName);
@@ -66,20 +77,22 @@ public class LinkUtils {
         //不允许模糊匹配
         if (res > 1.0) {
             res = res / 10.0 + 1;
-            return res;
+        } else {
+            res = res / 10.0;
         }
-        return 0.0;
+        return res;
     }
 
     public static String climateNameClear(String name) {
-        String[] removeEnds = {"Province", "Governorate", "Oblast", "County", "City", "Region", "District", "Department", "İnzibati Ərazisi"};
+        name = name.trim();
+        String[] removeEnds = {"Province", "province", "Governorate", "Oblast", "County", "City", "Region", "region", "District", "Department", "İnzibati Ərazisi", "(state)"};
         for (String remove : removeEnds) {
             if (name.endsWith(remove)) {
                 name = StringUtils.removeEnd(name, remove).trim();
                 return name;
             }
         }
-        String[] removeStarts = {"Region of"};
+        String[] removeStarts = {"Region of", "Districts of"};
         for (String remove : removeStarts) {
             if (name.startsWith(remove)) {
                 name = StringUtils.removeStart(name, remove).trim();
@@ -90,7 +103,8 @@ public class LinkUtils {
     }
 
     public static String geonameClear(String name) {
-        String[] removeEnds = {"District"};
+        name = name.trim();
+        String[] removeEnds = {"District", "Province"};
         for (String remove : removeEnds) {
             if (name.endsWith(remove)) {
                 name = StringUtils.removeEnd(name, remove).trim();
@@ -132,6 +146,7 @@ public class LinkUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(1.2 / 10.0);
+        System.out.println(isNameEqual("Karas", "||Karas Region"));
+        System.out.println(isAlternameEqual("||Karas Region", "Karas Region,sdk"));
     }
 }
