@@ -8,6 +8,13 @@ import java.io.InputStream;
  */
 public class StringUtils {
 
+    public static boolean isNullOrEmpty(String string) {
+        if (string == null || string.equals("")) {
+            return true;
+        }
+        return false;
+    }
+
     public static String removeEnd(String string, String remove) {
         string = string.trim();
         return org.apache.commons.lang3.StringUtils.removeEnd(string, remove);
