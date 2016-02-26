@@ -24,7 +24,6 @@ public class WriteUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void write(String content) {

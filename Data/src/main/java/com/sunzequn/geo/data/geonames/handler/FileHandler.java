@@ -74,7 +74,7 @@ public class FileHandler {
 
     private static void handleLine(ResourceDao resourceDao, String line, String type, String suffix) {
         Rdf rdf = new Rdf();
-        List<String> strings = rdf.getObject(line, GN + type);
+        List<String> strings = rdf.getObject(line, GN + type, null);
         if (strings.size() == 1) {
             String string = StringUtils.removeStart(strings.get(0), PREFIX);
             string = StringUtils.removeEnd(string, suffix);
@@ -86,7 +86,7 @@ public class FileHandler {
 
     private static void handleNearby(String line) {
         Rdf rdf = new Rdf();
-        List<String> strings = rdf.getObject(line, RDFS + "isDefinedBy");
+        List<String> strings = rdf.getObject(line, RDFS + "isDefinedBy", null);
         if (strings.size() == 1) {
             String string = StringUtils.removeStart(strings.get(0), PREFIX);
             string = StringUtils.removeEnd(string, "/about.rdf");
