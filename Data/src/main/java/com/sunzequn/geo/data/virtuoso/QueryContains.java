@@ -21,7 +21,7 @@ import java.util.Set;
 public class QueryContains {
 
     private VirtGraphLoader virtGraphLoader = VirtGraphLoader.getInstance();
-    private VirtGraph virtGraph = virtGraphLoader.getVirtGraph();
+    private VirtGraph virtGraph = virtGraphLoader.getGeonamesVirtGraph();
 
     /**
      * 根据id查询直接包含的地区.
