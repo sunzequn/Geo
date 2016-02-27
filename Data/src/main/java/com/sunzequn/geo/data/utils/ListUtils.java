@@ -13,4 +13,12 @@ public class ListUtils {
     public static <T extends List> boolean isEmpty(T t) {
         return t == null || t.size() == 0;
     }
+
+    public static <T extends List> long size(T t) {
+        if (t == null) {
+            return -1;
+        } else {
+            return t.size();
+        }
+    }
 }

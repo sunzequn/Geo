@@ -11,6 +11,7 @@ public class Clazz {
 
     private String uri;
     private List<String> superClasses = null;
+    private List<String> equivalentClasses = null;
 
     public Clazz(String uri) {
         this.uri = uri;
@@ -32,11 +33,20 @@ public class Clazz {
         this.superClasses = superClasses;
     }
 
+    public List<String> getEquivalentClasses() {
+        return equivalentClasses;
+    }
+
+    public void setEquivalentClasses(List<String> equivalentClasses) {
+        this.equivalentClasses = equivalentClasses;
+    }
+
     @Override
     public String toString() {
         return "Clazz{" +
                 "uri='" + uri + '\'' +
                 ", superClasses=" + superClasses +
+                ", equivalentClasses=" + equivalentClasses +
                 '}';
     }
 }
