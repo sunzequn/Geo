@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class JaroWinklerDis {
 
-    //用于添加额外奖励的阈值,默认=取0.7
+    //用于添加额外奖励的阈值,默认取0.7
     private static double threshold = 0.7;
 
     /**

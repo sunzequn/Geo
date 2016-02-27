@@ -16,8 +16,6 @@ import java.util.Properties;
  */
 public class PropertiesUtils {
 
-    private static final String VIRTUOSO_CONF_FILE = "Data/src/main/resources/conf/virtuoso.properties";
-
     private Properties properties = new Properties();
 
     public PropertiesUtils(String filePath) {

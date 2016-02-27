@@ -11,9 +11,6 @@ import java.util.List;
 public class ListUtils {
 
     public static <T extends List> boolean isEmpty(T t) {
-        if (t == null || t.size() == 0) {
-            return true;
-        }
-        return false;
+        return t == null || t.size() == 0;
     }
 }

@@ -77,13 +77,7 @@ public class RegionLink {
             String geoName = geo.getName();
             String asciiname = geo.getAsciiname();
             String alterName = geo.getAlternatenames();
-            double similarity = 0.0;
-            double[] similaryArr = new double[]{LinkUtils.isNameEqual(geoName, name), LinkUtils.isNameEqual(asciiname, name), LinkUtils.isAlternameEqual(name, alterName)};
-            for (double aSimilaryArr : similaryArr) {
-                if (aSimilaryArr > similarity) {
-                    similarity = aSimilaryArr;
-                }
-            }
+            double similarity = LinkUtils.isEqual(geoName, asciiname, alterName, name);
             if (similarity > 0.0) {
                 save(geo, region, similarity);
                 hasMatch = true;

@@ -10,6 +10,17 @@ public class LinkUtils {
 
     private static final double THRESHOLD = 0.8;
 
+    public static double isEqual(String geoName, String asciiname, String alterName, String climateName) {
+        double similarity = 0.0;
+        double[] similaryArr = new double[]{isNameEqual(geoName, climateName), isNameEqual(asciiname, climateName), isAlternameEqual(climateName, alterName)};
+        for (double aSimilaryArr : similaryArr) {
+            if (aSimilaryArr > similarity) {
+                similarity = aSimilaryArr;
+            }
+        }
+        return similarity;
+    }
+
     /**
      * 计算名称之间的匹配程度
      *

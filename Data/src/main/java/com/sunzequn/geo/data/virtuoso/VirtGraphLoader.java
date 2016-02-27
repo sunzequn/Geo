@@ -19,20 +19,26 @@ public class VirtGraphLoader {
     /**
      * 配置文件地址
      */
-    private static final String VIRTUOSO_CONF_FILE = "Data/src/main/resources/conf/virtuoso.properties";
+    private static final String VIRTUOSO_GEONAMES_CONF_FILE = "Data/src/main/resources/conf/virtuoso_geonames.properties";
+    private static final String VIRTUOSO_DBPEIDA_CONF_FILE = "Data/src/main/resources/conf/virtuoso_dbpedia.properties";
 
     /**
      * Virtuoso图
      */
-    private VirtGraph virtGraph = null;
-
+    private VirtGraph geonamesVirtGraph = null;
+    private VirtGraph dbpediaVirtGraph = null;
 
     public static VirtGraphLoader getInstance() {
         return ourInstance;
     }
 
     private VirtGraphLoader() {
-        PropertiesUtils properties = new PropertiesUtils(VIRTUOSO_CONF_FILE);
+//        geonamesVirtGraph = loader(VIRTUOSO_GEONAMES_CONF_FILE);
+        dbpediaVirtGraph = loader(VIRTUOSO_DBPEIDA_CONF_FILE);
+    }
+
+    private VirtGraph loader(String confFile) {
+        PropertiesUtils properties = new PropertiesUtils(confFile);
         try {
             String serverHost = properties.getValue("ServerHost");
             String serverPort = properties.getValue("ServerPort");
@@ -40,16 +46,21 @@ public class VirtGraphLoader {
             String password = properties.getValue("Password");
             if (serverHost != null && serverPort != null && userName != null && password != null) {
                 String url = "jdbc:virtuoso://" + serverHost + ":" + serverPort;
-                virtGraph = new VirtGraph(url, userName, password);
+                return new VirtGraph(url, userName, password);
             } else {
                 throw new ConfigException("Virtuoso配置文件出错!");
             }
         } catch (ConfigException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    public VirtGraph getVirtGraph() {
-        return virtGraph;
+    public VirtGraph getGeonamesVirtGraph() {
+        return geonamesVirtGraph;
+    }
+
+    public VirtGraph getDbpediaVirtGraph() {
+        return dbpediaVirtGraph;
     }
 }

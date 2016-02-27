@@ -1,17 +1,10 @@
 package com.sunzequn.geo.data.virtuoso;
 
-import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.reasoner.Reasoner;
-import org.apache.jena.reasoner.ReasonerFactory;
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner;
-import org.apache.jena.reasoner.rulesys.RDFSRuleReasonerFactory;
 import org.apache.jena.reasoner.rulesys.Rule;
 import virtuoso.jena.driver.VirtGraph;
-import virtuoso.jena.driver.VirtModel;
 import virtuoso.jena.driver.VirtuosoQueryExecution;
 import virtuoso.jena.driver.VirtuosoQueryExecutionFactory;
 
@@ -28,7 +21,7 @@ public class Test {
     public static void main(String[] args) {
 
         VirtGraphLoader virtGraphLoader = VirtGraphLoader.getInstance();
-        VirtGraph set = virtGraphLoader.getVirtGraph();
+        VirtGraph set = virtGraphLoader.getGeonamesVirtGraph();
         String construct = "SELECT * WHERE { GRAPH ?graph { ?s <http://www.geonames.org/ontology#parentFeature> ?o } } limit 1000";
         VirtuosoQueryExecution vqe2 = VirtuosoQueryExecutionFactory.create(construct, set);
         Model m = vqe2.execConstruct();
