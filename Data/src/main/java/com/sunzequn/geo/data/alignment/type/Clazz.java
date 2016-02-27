@@ -9,10 +9,8 @@ import java.util.List;
  */
 public class Clazz {
 
-    //简写的实体(instance或者class)的uri
     private String uri;
-    private List<Clazz> superClasses = null;
-    private List<Clazz> equivalentClasses = null;
+    private List<String> superClasses = null;
 
     public Clazz(String uri) {
         this.uri = uri;
@@ -26,20 +24,12 @@ public class Clazz {
         this.uri = uri;
     }
 
-    public List<Clazz> getSuperClasses() {
+    public List<String> getSuperClasses() {
         return superClasses;
     }
 
-    public void setSuperClasses(List<Clazz> superClasses) {
+    public void setSuperClasses(List<String> superClasses) {
         this.superClasses = superClasses;
-    }
-
-    public List<Clazz> getEquivalentClasses() {
-        return equivalentClasses;
-    }
-
-    public void setEquivalentClasses(List<Clazz> equivalentClasses) {
-        this.equivalentClasses = equivalentClasses;
     }
 
     @Override
@@ -47,7 +37,6 @@ public class Clazz {
         return "Clazz{" +
                 "uri='" + uri + '\'' +
                 ", superClasses=" + superClasses +
-                ", equivalentClasses=" + equivalentClasses +
                 '}';
     }
 }

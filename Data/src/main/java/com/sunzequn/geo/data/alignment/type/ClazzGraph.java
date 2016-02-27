@@ -1,51 +1,38 @@
 package com.sunzequn.geo.data.alignment.type;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by Sloriac on 16/2/26.
+ * Created by Sloriac on 16/2/27.
  */
 public class ClazzGraph {
 
-    //简写的类(class)的uri
-    private String uri;
-    private Clazz directSuperClass = null;
-    private List<Clazz> equivalentClasses = null;
+    private List<String> superClassRels;
+    private Map<String, String> equivalents = new HashMap<>();
 
-    public ClazzGraph(String uri) {
-        this.uri = uri;
+    public ClazzGraph() {
     }
 
-    public String getUri() {
-        return uri;
+    public void putEquivalents(String uri1, String uri2) {
+        equivalents.put(uri1, uri2);
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public List<String> getSuperClassRels() {
+        return superClassRels;
     }
 
-    public Clazz getDirectSuperClass() {
-        return directSuperClass;
+    public void setSuperClassRels(List<String> superClassRels) {
+        this.superClassRels = superClassRels;
     }
 
-    public void setDirectSuperClass(Clazz directSuperClass) {
-        this.directSuperClass = directSuperClass;
+    public Map<String, String> getEquivalents() {
+        return equivalents;
     }
 
-    public List<Clazz> getEquivalentClasses() {
-        return equivalentClasses;
-    }
-
-    public void setEquivalentClasses(List<Clazz> equivalentClasses) {
-        this.equivalentClasses = equivalentClasses;
-    }
-
-    @Override
-    public String toString() {
-        return "ClazzGraph{" +
-                "uri='" + uri + '\'' +
-                ", directSuperClass=" + directSuperClass +
-                ", equivalentClasses=" + equivalentClasses +
-                '}';
+    public void setEquivalents(Map<String, String> equivalents) {
+        this.equivalents = equivalents;
     }
 }
