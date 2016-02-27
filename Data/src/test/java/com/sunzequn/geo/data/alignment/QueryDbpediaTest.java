@@ -12,7 +12,8 @@ public class QueryDbpediaTest {
         QueryDbpedia queryDbpedia = new QueryDbpedia();
 //        String uri = "http://dbpedia.org/resource/France";
 //        System.out.println(queryDbpedia.queryType(uri));
-        String uri = "http://dbpedia.org/ontology/Place";
+        String uri = "http://dbpedia.org/ontology/Country";
         System.out.println(queryDbpedia.queryEquivalentClass(uri));
+        System.out.println(queryDbpedia.querySuperClass(uri));
     }
 }

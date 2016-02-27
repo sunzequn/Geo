@@ -19,7 +19,7 @@ public class EntityHandler {
             List<Clazz> clazzs = new ArrayList<>();
             for (String typeUri : typeUris) {
                 Clazz clazz = new Clazz(typeUri);
-                List<String> superClasses = query.queryEquivalentClass(typeUri);
+                List<String> superClasses = query.querySuperClass(typeUri);
                 if (!ListUtils.isEmpty(superClasses)) {
                     clazz.setSuperClasses(superClasses);
                 }
