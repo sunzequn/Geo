@@ -1,5 +1,7 @@
 package com.sunzequn.geo.data.alignment.sameas;
 
+import com.sunzequn.geo.data.alignment.bean.EquivalentClass;
+import com.sunzequn.geo.data.alignment.dao.EquivalentClassDao;
 import com.sunzequn.geo.data.alignment.query.QueryDbpedia;
 import com.sunzequn.geo.data.alignment.type.Clazz;
 import com.sunzequn.geo.data.alignment.type.ClazzGraph;
@@ -17,16 +19,17 @@ public class EntityHandler {
 
     private QueryDbpedia query = new QueryDbpedia();
     private ClazzGraphConstructor constructor = new ClazzGraphConstructor();
+    private EquivalentClassDao equivalentClassDao = new EquivalentClassDao();
 
     public ClazzGraph getGraph(String uri) {
         List<Clazz> clazzs = getTypes(uri);
         clazzs = removeEquivalent(clazzs);
         List<String> types = constructor.contructGraph(clazzs);
-        if (types == null) {
+        if (ListUtils.isEmpty(types)) {
             System.out.println(uri);
             System.out.println(types);
+            return null;
         }
-
         ClazzGraph clazzGraph = new ClazzGraph();
         clazzGraph.setSuperClassRels(types);
         return clazzGraph;
@@ -74,10 +77,14 @@ public class EntityHandler {
                         if (equivalents.contains(clazzs.get(j).getUri())) {
                             long isize = ListUtils.size(clazzs.get(i).getSuperClasses());
                             long jsize = ListUtils.size(clazzs.get(j).getSuperClasses());
+                            String iuri = DbpediaUtils.dbo(clazzs.get(i).getUri());
+                            String juri = DbpediaUtils.dbo(clazzs.get(j).getUri());
                             if (isize < jsize) {
                                 idsToRemove.add(i);
+                                equivalentClassDao.save(new EquivalentClass(juri, iuri));
                             } else if (jsize < isize) {
                                 idsToRemove.add(j);
+                                equivalentClassDao.save(new EquivalentClass(iuri, juri));
                             }
                         }
                     }

@@ -10,6 +10,9 @@ public class EntityType {
     private String uri;
     private String typeclass;
 
+    public EntityType() {
+    }
+
     public EntityType(String uri, String typeclass) {
         this.uri = uri;
         this.typeclass = typeclass;

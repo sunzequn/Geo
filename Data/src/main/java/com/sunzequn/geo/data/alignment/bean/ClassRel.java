@@ -10,6 +10,9 @@ public class ClassRel {
     private String uri;
     private String superuri;
 
+    public ClassRel() {
+    }
+
     public ClassRel(String uri, String superuri) {
         this.uri = uri;
         this.superuri = superuri;

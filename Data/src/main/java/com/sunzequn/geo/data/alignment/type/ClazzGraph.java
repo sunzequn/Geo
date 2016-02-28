@@ -11,13 +11,12 @@ import java.util.Map;
 public class ClazzGraph {
 
     private List<String> superClassRels;
-    private Map<String, String> equivalents = new HashMap<>();
 
     public ClazzGraph() {
     }
 
-    public void putEquivalents(String uri1, String uri2) {
-        equivalents.put(uri1, uri2);
+    public ClazzGraph(List<String> superClassRels) {
+        this.superClassRels = superClassRels;
     }
 
     public List<String> getSuperClassRels() {
@@ -28,11 +27,10 @@ public class ClazzGraph {
         this.superClassRels = superClassRels;
     }
 
-    public Map<String, String> getEquivalents() {
-        return equivalents;
-    }
-
-    public void setEquivalents(Map<String, String> equivalents) {
-        this.equivalents = equivalents;
+    @Override
+    public String toString() {
+        return "ClazzGraph{" +
+                "superClassRels=" + superClassRels +
+                '}';
     }
 }

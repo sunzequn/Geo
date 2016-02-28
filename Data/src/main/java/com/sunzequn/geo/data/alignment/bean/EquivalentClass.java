@@ -8,6 +8,9 @@ public class EquivalentClass {
     private String uri1;
     private String uri2;
 
+    public EquivalentClass() {
+    }
+
     public EquivalentClass(String uri1, String uri2) {
         this.uri1 = uri1;
         this.uri2 = uri2;
