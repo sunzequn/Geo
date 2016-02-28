@@ -30,7 +30,7 @@ public class QueryDbpedia {
     private static final String DBO = "http://dbpedia.org/ontology/";
 
     public List<String> queryType(String uri) {
-        String sparql = "SELECT * FROM " + DBPEDIA_ORG + " WHERE { <" + uri + "> " + TYPE + " ?o }";
+        String sparql = "SELECT * WHERE { GRAPH ?graph { <" + uri + "> " + TYPE + " ?o } }";
         return typeFilter(queryO(sparql));
     }
 
@@ -64,10 +64,15 @@ public class QueryDbpedia {
     }
 
     private List<String> typeFilter(List<String> types) {
+
+        String exclusion = "http://dbpedia.org/ontology/Article";
         if (!ListUtils.isEmpty(types)) {
             List<String> newTypes = new ArrayList<>();
             for (String type : types) {
                 type = type.trim();
+                if (type.equals(exclusion)) {
+                    continue;
+                }
                 if (type.equals(THING) || type.startsWith(DBO)) {
                     newTypes.add(type);
                 }

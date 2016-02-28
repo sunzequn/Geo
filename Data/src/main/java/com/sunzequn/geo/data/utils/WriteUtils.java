@@ -37,6 +37,7 @@ public class WriteUtils {
 
     public void close() {
         try {
+            flush();
             bufferedWriter.close();
             fileWriter.close();
         } catch (IOException e) {

@@ -25,8 +25,10 @@ import java.util.List;
  */
 public class SameModel {
 
-    private static final String GEONAMES_LINK = "Data/src/main/resources/data/sw/geonames_links.nt";
-    private static final String GEONAMES_LINK_EN = "Data/src/main/resources/data/sw/geonames_links_en.nt";
+//    private static final String GEONAMES_LINK = "Data/src/main/resources/data/sw/geonames_links.nt";
+//    private static final String GEONAMES_LINK_EN = "Data/src/main/resources/data/sw/geonames_links_en.nt";
+
+    private static final String NEW_LINK = "Data/src/main/resources/data/sw/geonames_new_links.nt";
 
     private EntityHandler entityHandler = new EntityHandler();
     private GeonameDao geonameDao = new GeonameDao();
@@ -38,6 +40,7 @@ public class SameModel {
         Rdf rdf = new Rdf();
         return rdf.getModel(file, "N-TRIPLE");
     }
+
 
     public ClazzGraph dbpediaGraphHandler(String uri) {
         return entityHandler.getGraph(uri);
@@ -87,7 +90,7 @@ public class SameModel {
     public static void main(String[] args) {
         SameModel sameModel = new SameModel();
 
-        Model model = sameModel.getModel(GEONAMES_LINK);
+        Model model = sameModel.getModel(NEW_LINK);
         StmtIterator iter = model.listStatements();
         TimeUtils timeUtils = new TimeUtils();
         timeUtils.start();
