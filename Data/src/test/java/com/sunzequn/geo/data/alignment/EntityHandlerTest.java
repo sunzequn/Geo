@@ -14,7 +14,7 @@ public class EntityHandlerTest {
     private static EntityHandler entityHandler = new EntityHandler();
 
     public static void main(String[] args) {
-        String uri = "http://dbpedia.org/resource/France";
+        String uri = "http://dbpedia.org/resource/Loaita_Island";
 //        List<Clazz> clazzs = entityHandler.getTypes(uri);
 //        System.out.println(clazzs);
 //        System.out.println(entityHandler.removeEquivalent(clazzs));

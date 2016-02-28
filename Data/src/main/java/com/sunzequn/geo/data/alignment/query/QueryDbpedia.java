@@ -30,8 +30,13 @@ public class QueryDbpedia {
     private static final String DBO = "http://dbpedia.org/ontology/";
 
     public List<String> queryType(String uri) {
-        String sparql = "SELECT * WHERE { GRAPH ?graph { <" + uri + "> " + TYPE + " ?o } }";
-        return typeFilter(queryO(sparql));
+        //所有库
+//        String sparql = "SELECT * WHERE { GRAPH ?graph { <" + uri + "> " + TYPE + " ?o } }";
+
+        //核心库
+        String sparql = "SELECT * FROM " + DBPEDIA_ORG + " WHERE { <" + uri + "> " + TYPE + " ?o }";
+//        return typeFilter(queryO(sparql));
+        return typeHandler(typeFilter(queryO(sparql)));
     }
 
     public List<String> querySuperClass(String uri) {
@@ -82,6 +87,33 @@ public class QueryDbpedia {
             }
         }
         return null;
+    }
+
+
+    /**
+     * 对上述得到的type进行细化处理，好多情况下，super类是不全的，要补全
+     *
+     * @return
+     */
+    public List<String> typeHandler(List<String> types) {
+        if (ListUtils.isEmpty(types)) {
+            return null;
+        }
+        Set<String> typeSet = new HashSet<>();
+        typeSet.addAll(types);
+        Set<String> superClasses = new HashSet<>();
+        for (String type : types) {
+            List<String> superClazz = querySuperClass(type);
+            if (!ListUtils.isEmpty(superClazz)) {
+                superClasses.addAll(superClazz);
+            }
+        }
+        if (typeSet.containsAll(superClasses)) {
+            return new ArrayList<>(typeSet);
+        } else {
+            typeSet.addAll(superClasses);
+            return typeHandler(new ArrayList<>(typeSet));
+        }
     }
 
 
