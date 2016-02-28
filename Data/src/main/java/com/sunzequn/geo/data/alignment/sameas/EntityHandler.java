@@ -1,6 +1,9 @@
-package com.sunzequn.geo.data.alignment.query;
+package com.sunzequn.geo.data.alignment.sameas;
 
+import com.sunzequn.geo.data.alignment.query.QueryDbpedia;
 import com.sunzequn.geo.data.alignment.type.Clazz;
+import com.sunzequn.geo.data.alignment.type.ClazzGraph;
+import com.sunzequn.geo.data.alignment.type.ClazzGraphConstructor;
 import com.sunzequn.geo.data.utils.ListUtils;
 import org.neo4j.cypher.internal.compiler.v2_2.ast.In;
 import org.neo4j.cypher.internal.compiler.v2_2.functions.Str;
@@ -13,6 +16,21 @@ import java.util.*;
 public class EntityHandler {
 
     private QueryDbpedia query = new QueryDbpedia();
+    private ClazzGraphConstructor constructor = new ClazzGraphConstructor();
+
+    public ClazzGraph getGraph(String uri) {
+        List<Clazz> clazzs = getTypes(uri);
+        clazzs = removeEquivalent(clazzs);
+        List<String> types = constructor.contructGraph(clazzs);
+        if (types == null) {
+            System.out.println(uri);
+            System.out.println(types);
+        }
+
+        ClazzGraph clazzGraph = new ClazzGraph();
+        clazzGraph.setSuperClassRels(types);
+        return clazzGraph;
+    }
 
     /**
      * 根据实体的uri获取它的type类
@@ -42,7 +60,7 @@ public class EntityHandler {
     }
 
     /**
-     * 去掉等价类
+     * 去掉等价类,后面考虑保存等价类，但是不参与计算
      *
      * @param clazzs
      */
@@ -51,14 +69,16 @@ public class EntityHandler {
             Set<Integer> idsToRemove = new HashSet<>();
             for (int i = 0; i < clazzs.size(); i++) {
                 List<String> equivalents = clazzs.get(i).getEquivalentClasses();
-                for (int j = 0; j < clazzs.size(); j++) {
-                    if (equivalents.contains(clazzs.get(j).getUri())) {
-                        long isize = ListUtils.size(clazzs.get(i).getSuperClasses());
-                        long jsize = ListUtils.size(clazzs.get(j).getSuperClasses());
-                        if (isize < jsize) {
-                            idsToRemove.add(i);
-                        } else if (jsize < isize) {
-                            idsToRemove.add(j);
+                if (equivalents != null) {
+                    for (int j = 0; j < clazzs.size(); j++) {
+                        if (equivalents.contains(clazzs.get(j).getUri())) {
+                            long isize = ListUtils.size(clazzs.get(i).getSuperClasses());
+                            long jsize = ListUtils.size(clazzs.get(j).getSuperClasses());
+                            if (isize < jsize) {
+                                idsToRemove.add(i);
+                            } else if (jsize < isize) {
+                                idsToRemove.add(j);
+                            }
                         }
                     }
                 }
@@ -67,10 +87,10 @@ public class EntityHandler {
                 clazzs.remove(index.intValue());
             }
             return clazzs;
-
         }
         return null;
     }
+
 
     public static void main(String[] args) {
 

@@ -26,6 +26,9 @@ public class ClazzGraphConstructor {
         //一次取一个
         for (int i = 0; i < clazzs.size(); i++) {
             String root = getRoot(clazzs, res);
+            if (root == null) {
+                return null;
+            }
             res.add(root);
             for (Clazz clazz : clazzs) {
                 if (clazz.getSuperClasses() != null) {
@@ -55,6 +58,8 @@ public class ClazzGraphConstructor {
                 }
                 //第二次即以后,检查后面的root节点是否相同,不相同就不对了
                 else if (!root.equals(clazz.getUri())) {
+                    System.out.println(root);
+                    System.out.println(clazz.getUri());
                     System.out.println("root节点不唯一");
                     return null;
                 }

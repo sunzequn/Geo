@@ -1,6 +1,5 @@
 package com.sunzequn.geo.data.alignment.sameas;
 
-import com.sunzequn.geo.data.alignment.query.EntityHandler;
 import com.sunzequn.geo.data.alignment.type.Clazz;
 import com.sunzequn.geo.data.alignment.type.ClazzGraph;
 import com.sunzequn.geo.data.jena.Rdf;
@@ -23,15 +22,12 @@ public class SameModel {
     }
 
     public ClazzGraph graphHandler(String uri) {
-        List<Clazz> clazzs = entityHandler.getTypes(uri);
-        System.out.println(uri);
-        System.out.println(clazzs);
-        return null;
+        return entityHandler.getGraph(uri);
     }
 
     public static void main(String[] args) {
         SameModel sameModel = new SameModel();
-        Model model = sameModel.getModel(GEONAMES_LINK_EN);
+        Model model = sameModel.getModel(GEONAMES_LINK);
         StmtIterator iter = model.listStatements();
         TimeUtils timeUtils = new TimeUtils();
         timeUtils.start();
