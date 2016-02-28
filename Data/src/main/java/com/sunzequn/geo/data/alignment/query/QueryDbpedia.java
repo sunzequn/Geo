@@ -111,8 +111,9 @@ public class QueryDbpedia {
         if (typeSet.containsAll(superClasses)) {
             return new ArrayList<>(typeSet);
         } else {
-            typeSet.addAll(superClasses);
-            return typeHandler(new ArrayList<>(typeSet));
+            superClasses.removeAll(typeSet);
+            typeSet.addAll(typeHandler(new ArrayList<>(superClasses)));
+            return new ArrayList<>(typeSet);
         }
     }
 
