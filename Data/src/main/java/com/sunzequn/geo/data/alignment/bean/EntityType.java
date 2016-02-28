@@ -2,6 +2,8 @@ package com.sunzequn.geo.data.alignment.bean;
 
 /**
  * Created by Sloriac on 16/2/27.
+ *
+ * 类的直接type
  */
 public class EntityType {
 

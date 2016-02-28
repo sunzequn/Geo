@@ -2,15 +2,19 @@ package com.sunzequn.geo.data.alignment.bean;
 
 /**
  * Created by Sloriac on 16/2/27.
- * 等价类,把参与计算的类存放在uri1
  */
-public class EquivalentClass {
+public class ClassLink {
+    //dbpedia的class
     private String uri1;
+    //geonames的class
     private String uri2;
+    //关联的权重
+    private int weight;
 
-    public EquivalentClass(String uri1, String uri2) {
+    public ClassLink(String uri1, String uri2, int weight) {
         this.uri1 = uri1;
         this.uri2 = uri2;
+        this.weight = weight;
     }
 
     public String getUri1() {
@@ -29,11 +33,20 @@ public class EquivalentClass {
         this.uri2 = uri2;
     }
 
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
     @Override
     public String toString() {
-        return "EquivalentClass{" +
+        return "ClassLink{" +
                 "uri1='" + uri1 + '\'' +
                 ", uri2='" + uri2 + '\'' +
+                ", weight=" + weight +
                 '}';
     }
 }

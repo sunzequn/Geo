@@ -1,6 +1,6 @@
 package com.sunzequn.geo.data.alignment.dao;
 
-import com.sunzequn.geo.data.alignment.bean.TypeRel;
+import com.sunzequn.geo.data.alignment.bean.ClassRel;
 import com.sunzequn.geo.data.dao.BaseDao;
 
 import java.sql.Connection;
@@ -8,25 +8,25 @@ import java.sql.Connection;
 /**
  * Created by Sloriac on 16/2/27.
  */
-public class TypeRelDao extends BaseDao {
+public class ClassRelDao extends BaseDao {
 
     private static final String DATABASE = "alignment";
-    private static final String TABLE = "type_rel";
+    private static final String TABLE = "class_rel";
     private Connection connection;
 
-    public TypeRelDao() {
+    public ClassRelDao() {
         connection = getConnection(DATABASE);
     }
 
-    public int save(TypeRel typeRel) {
+    public int save(ClassRel classRel) {
         String sql = "insert into " + TABLE + " values(?, ?)";
-        Object[] params = {typeRel.getUri(), typeRel.getSuperuri()};
+        Object[] params = {classRel.getUri(), classRel.getSuperuri()};
         return execute(connection, sql, params);
     }
 
     public static void main(String[] args) {
-        TypeRelDao dao = new TypeRelDao();
-        dao.save(new TypeRel("ddd", "sss"));
+        ClassRelDao dao = new ClassRelDao();
+        dao.save(new ClassRel("ddd", "sss"));
     }
 
 }
