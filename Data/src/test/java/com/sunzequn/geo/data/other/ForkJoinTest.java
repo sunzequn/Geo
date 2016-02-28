@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data;
+package com.sunzequn.geo.data.other;
 
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;

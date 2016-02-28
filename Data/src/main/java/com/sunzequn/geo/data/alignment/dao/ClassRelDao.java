@@ -39,6 +39,18 @@ public class ClassRelDao extends BaseDao {
         return classRels.get(0);
     }
 
+    public List<ClassRel> getSuperClasses(String uri) {
+        String sql = "select * from " + TABLE + " where uri = ?";
+        Object[] params = {uri};
+        return query(connection, sql, params, ClassRel.class);
+    }
+
+    public List<ClassRel> getSubClasses(String superuri) {
+        String sql = "select * from " + TABLE + " where superuri = ?";
+        Object[] params = {superuri};
+        return query(connection, sql, params, ClassRel.class);
+    }
+
     public static void main(String[] args) {
         ClassRelDao dao = new ClassRelDao();
         dao.save(new ClassRel("ddd", "sss"));

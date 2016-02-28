@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data;
+package com.sunzequn.geo.data.other;
 
 import com.sunzequn.geo.data.utils.MyStringUtils;
 import org.apache.commons.io.FileUtils;

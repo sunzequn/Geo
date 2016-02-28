@@ -1,5 +1,8 @@
 package com.sunzequn.geo.data.algorithm.similarity;
 
+import com.wcohen.ss.JaroWinkler;
+import com.wcohen.ss.WinklerRescorer;
+
 import java.util.Arrays;
 
 /**
@@ -98,5 +101,12 @@ public class JaroWinklerDis {
         }
         //返回匹配字符串的长度,置换次数,前缀和较大字符串长度
         return new int[]{matches, transpositions / 2, prefix, max.length};
+    }
+
+    public static void main(String[] args) {
+        System.out.println(JaroWinklerDis.compute("sunzequn".toCharArray(), "zequnsun".toCharArray()));
+        JaroWinkler jaroWinkler = new JaroWinkler();
+        System.out.println(jaroWinkler.score("sunzequn", "sunzeun"));
+
     }
 }

@@ -1,12 +1,12 @@
 package com.sunzequn.geo.data.alignment.dao;
 
-import com.sunzequn.geo.data.alignment.bean.ClassLink;
-import com.sunzequn.geo.data.alignment.bean.ClassRel;
-import com.sunzequn.geo.data.alignment.bean.EquivalentClass;
+import com.sunzequn.geo.data.alignment.bean.*;
 import com.sunzequn.geo.data.dao.BaseDao;
 import com.sunzequn.geo.data.utils.ListUtils;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,6 +41,96 @@ public class ClassLinkDao extends BaseDao {
         if (ListUtils.isEmpty(classLinks))
             return null;
         return classLinks.get(0);
+    }
+
+    public List<DbpediaClass> getAllDbpediaClasses() {
+        String sql = "select distinct uri1 from " + TABLE;
+        List<DbpediaClass> classes = query(connection, sql, null, DbpediaClass.class);
+        if (ListUtils.isEmpty(classes)) {
+            return null;
+        }
+        for (DbpediaClass dbpediaClass : classes) {
+            List<Relation> relatedGeonames = new ArrayList<>();
+            List<ClassLink> clazzs = getByUri(dbpediaClass.getUri1(), 1);
+            int weight = 0;
+            if (!ListUtils.isEmpty(clazzs)) {
+                for (ClassLink clazz : clazzs) {
+                    weight += clazz.getWeight();
+                    int allweight = getWeightCount(clazz.getUri2(), 2);
+                    relatedGeonames.add(new Relation(clazz.getUri2(), clazz.getWeight(), allweight));
+                }
+            }
+            dbpediaClass.setWeight(weight);
+            //排序
+            Collections.sort(relatedGeonames);
+            dbpediaClass.setRelatedGeonames(relatedGeonames);
+        }
+        //排序
+        Collections.sort(classes);
+        return classes;
+    }
+
+    public List<GeonamesClass> getAllGeonamesClasses() {
+        String sql = "select distinct uri2 from " + TABLE;
+        List<GeonamesClass> classes = query(connection, sql, null, GeonamesClass.class);
+        if (ListUtils.isEmpty(classes)) {
+            return null;
+        }
+        for (GeonamesClass geonamesClass : classes) {
+            List<Relation> relatedDbpedias = new ArrayList<>();
+            List<ClassLink> clazzs = getByUri(geonamesClass.getUri2(), 2);
+            int weight = 0;
+            if (!ListUtils.isEmpty(clazzs)) {
+                for (ClassLink clazz : clazzs) {
+                    weight += clazz.getWeight();
+                    int allweight = getWeightCount(clazz.getUri1(), 1);
+                    relatedDbpedias.add(new Relation(clazz.getUri1(), clazz.getWeight(), allweight));
+                }
+            }
+            geonamesClass.setWeight(weight);
+            //排序
+            Collections.sort(relatedDbpedias);
+            geonamesClass.setRelatedDbpedias(relatedDbpedias);
+        }
+        Collections.sort(classes);
+        return classes;
+    }
+
+    /**
+     * 查询某个uri的全部边的权重
+     *
+     * @param uri
+     * @param i   为1表示按照uri1来查询
+     * @return
+     */
+    private int getWeightCount(String uri, int i) {
+        List<ClassLink> classLinks = getByUri(uri, i);
+        if (ListUtils.isEmpty(classLinks)) {
+            return -1;
+        }
+        int weight = 0;
+        for (ClassLink classLink : classLinks) {
+            weight += classLink.getWeight();
+        }
+        return weight;
+    }
+
+    /**
+     * 按照uri来查询
+     *
+     * @param uri
+     * @param i   为1表示按照uri1来查询
+     * @return
+     */
+    public List<ClassLink> getByUri(String uri, int i) {
+        String sql;
+        if (i == 1) {
+            sql = "select * from " + TABLE + " where uri1 = ?";
+        } else {
+            sql = "select * from " + TABLE + " where uri2 = ?";
+        }
+        Object[] params = {uri};
+        return query(connection, sql, params, ClassLink.class);
     }
 
     public static void main(String[] args) {

@@ -21,4 +21,12 @@ public class ListUtils {
             return t.size();
         }
     }
+
+    public static <T extends List> void print(T ts) {
+        if (ts != null) {
+            for (Object t : ts) {
+                System.out.println(t);
+            }
+        }
+    }
 }
