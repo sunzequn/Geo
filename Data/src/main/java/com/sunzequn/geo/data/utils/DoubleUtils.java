@@ -1,6 +1,7 @@
 package com.sunzequn.geo.data.utils;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * Created by Sloriac on 16/2/13.
@@ -22,5 +23,13 @@ public class DoubleUtils {
         return data1.compareTo(data2);
     }
 
+    public static String m4(double d) {
+        DecimalFormat df = new DecimalFormat("0.0000");
+        return df.format(d);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(DoubleUtils.m4(200.99982287362163214124123213213));
+    }
 
 }

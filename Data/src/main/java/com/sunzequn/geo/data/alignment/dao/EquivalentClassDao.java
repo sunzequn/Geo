@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class EquivalentClassDao extends BaseDao {
 
-    private static final String DATABASE = "alignment";
+    private static final String DATABASE = DataBaseName.database;
     private static final String TABLE = "equivalent_class";
     private Connection connection;
 

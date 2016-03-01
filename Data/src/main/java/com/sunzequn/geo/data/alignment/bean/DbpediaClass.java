@@ -9,7 +9,7 @@ public class DbpediaClass implements Comparable<DbpediaClass> {
 
     //简写的dbpedia类的Uri
     private String uri1;
-    //该类所有的边的权重的和
+    //该类所有的直接link的边的权重的和
     private int weight;
 
     private List<Relation> relatedGeonames;

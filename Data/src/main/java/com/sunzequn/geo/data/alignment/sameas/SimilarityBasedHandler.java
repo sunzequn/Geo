@@ -1,10 +1,12 @@
 package com.sunzequn.geo.data.alignment.sameas;
 
 import com.sunzequn.geo.data.algorithm.similarity.JaroWinklerDis;
+import com.sunzequn.geo.data.algorithm.similarity.LevenshteinDis;
 import com.sunzequn.geo.data.alignment.bean.DbpediaClass;
 import com.sunzequn.geo.data.alignment.dao.ClassLinkDao;
 import com.sunzequn.geo.data.geonames.bean.FeatureCodes;
 import com.sunzequn.geo.data.geonames.dao.FeatureCodesDao;
+import com.sunzequn.geo.data.utils.DoubleUtils;
 import com.sunzequn.geo.data.utils.ListUtils;
 import com.sunzequn.geo.data.utils.StringUtils;
 import com.wcohen.ss.JaroWinkler;
@@ -33,9 +35,10 @@ public class SimilarityBasedHandler {
         for (FeatureCodes featureCodes : featureCodesList) {
             for (DbpediaClass dbpediaClass : dbpediaClasses) {
                 String localName = StringUtils.removeStart(dbpediaClass.getUri1(), "dbo:");
-                double dis = jaroWinkler.score(featureCodes.getName(), localName);
-                if (dis > THRESHOLD) {
-                    System.out.println(featureCodes.getCode() + "(" + featureCodes.getName() + ") 近似于 " + dbpediaClass.getUri1() + "  / " + dis);
+                double jaroWinklerDis = jaroWinkler.score(featureCodes.getName(), localName);
+                double editDis = LevenshteinDis.compute(featureCodes.getName().toCharArray(), localName.toCharArray());
+                if (jaroWinklerDis > THRESHOLD) {
+                    System.out.println(featureCodes.getCode() + "(" + featureCodes.getName() + ")  相似度  " + dbpediaClass.getUri1() + "  / " + DoubleUtils.m4(jaroWinklerDis));//+ "  / " + DoubleUtils.m4(editDis)
                 }
             }
         }

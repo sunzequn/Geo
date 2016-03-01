@@ -1,12 +1,9 @@
-package com.sunzequn.geo.data.alignment;
+package com.sunzequn.geo.data.alignment.sameas;
 
 import com.sunzequn.geo.data.jena.Rdf;
 import com.sunzequn.geo.data.utils.ReadUtils;
 import com.sunzequn.geo.data.utils.WriteUtils;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.*;
 import org.neo4j.cypher.internal.compiler.v2_2.functions.Str;
 
 import java.util.HashSet;
@@ -25,8 +22,8 @@ public class DataHandler {
     private static final String NEW_LINK = "Data/src/main/resources/data/sw/geonames_new_links.nt";
 
     public static void main(String[] args) {
-//        countMappings();
-        countLinks();
+        countMappings();
+//        countLinks();
     }
 
     public static void countLinks() {
@@ -65,17 +62,12 @@ public class DataHandler {
             i++;
             Statement stmt = stmtIterator.nextStatement();
             Resource subject = stmt.getSubject();
-            resources.add(subject);
-            String uri = subject.getURI();
-            if (uri != null) {
-                subjects.add(uri);
-            } else {
-                num++;
+            RDFNode object = stmt.getObject();
+            if (subject.getURI().contains("http://dbpedia.org/ontology") && object.toString().contains("http://www.geonames.org/ontology")) {
+                System.out.println(subject.getURI() + " / " + object.toString());
+
             }
         }
-        System.out.println(i);
-        System.out.println(num);
-        System.out.println(subjects.size());
-        System.out.println(resources.size());
+
     }
 }

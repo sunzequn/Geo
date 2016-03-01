@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ClassLinkDao extends BaseDao {
 
-    private static final String DATABASE = "alignment";
+    private static final String DATABASE = DataBaseName.database;
     private static final String TABLE = "class_link";
     private Connection connection;
 
@@ -103,10 +103,10 @@ public class ClassLinkDao extends BaseDao {
      * @param i   为1表示按照uri1来查询
      * @return
      */
-    private int getWeightCount(String uri, int i) {
+    public int getWeightCount(String uri, int i) {
         List<ClassLink> classLinks = getByUri(uri, i);
         if (ListUtils.isEmpty(classLinks)) {
-            return -1;
+            return 0;
         }
         int weight = 0;
         for (ClassLink classLink : classLinks) {
@@ -119,7 +119,7 @@ public class ClassLinkDao extends BaseDao {
      * 按照uri来查询
      *
      * @param uri
-     * @param i   为1表示按照uri1来查询
+     * @param i   为1表示按照uri1来查询(dbpedia)
      * @return
      */
     public List<ClassLink> getByUri(String uri, int i) {

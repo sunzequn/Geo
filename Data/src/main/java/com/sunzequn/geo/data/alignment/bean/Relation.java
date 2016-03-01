@@ -55,6 +55,13 @@ public class Relation implements Comparable<Relation> {
 
     @Override
     public int compareTo(Relation o) {
-        return o.getWeight() / o.getAllWeight() - this.weight / this.allWeight;
+        double res = ((double) o.getWeight() / (double) o.getAllWeight() - (double) this.weight / (double) this.allWeight);
+        if (res < 0) {
+            return -1;
+        } else if (res > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }
