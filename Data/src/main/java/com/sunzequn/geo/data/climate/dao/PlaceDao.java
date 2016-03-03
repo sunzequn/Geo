@@ -33,4 +33,9 @@ public class PlaceDao extends BaseDao {
         return query(connection, sql, null, Place.class);
     }
 
+    public List<Place> getAllUrls() {
+        String sql = "select url from " + table;
+        return query(connection, sql, null, Place.class);
+    }
+
 }
