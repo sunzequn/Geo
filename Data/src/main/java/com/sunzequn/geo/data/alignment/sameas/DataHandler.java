@@ -17,13 +17,16 @@ import java.util.stream.Collectors;
  */
 public class DataHandler {
     private static final String MAPPINTS_FILE = "Data/src/main/resources/data/sw/geonames_mappings.rdf";
+    private static final String GEONAMES_ONTOLOGY_FILE = "Data/src/main/resources/data/sw/geonames_ontology.rdf";
+
     private static final String GEONAMES_LINK = "Data/src/main/resources/data/sw/geonames_links.nt";
     private static final String GEONAMES_LINK_EN = "Data/src/main/resources/data/sw/geonames_links_en.nt";
     private static final String NEW_LINK = "Data/src/main/resources/data/sw/geonames_new_links.nt";
 
     public static void main(String[] args) {
-        countMappings();
-//        countLinks();
+//        countMappings();
+        countLinks();
+//        printGeonamesOntology();
     }
 
     public static void countLinks() {
@@ -39,13 +42,13 @@ public class DataHandler {
         linkNoSames.addAll(enlinks);
         System.out.println(linkNoSames.size());
 
-        WriteUtils writeUtils = new WriteUtils(NEW_LINK, true);
-        Iterator<String> iterator = linkNoSames.iterator();
-        while (iterator.hasNext()) {
-            String line = iterator.next();
-            writeUtils.write(line);
-        }
-        writeUtils.close();
+//        WriteUtils writeUtils = new WriteUtils(NEW_LINK, true);
+//        Iterator<String> iterator = linkNoSames.iterator();
+//        while (iterator.hasNext()) {
+//            String line = iterator.next();
+//            writeUtils.write(line);
+//        }
+//        writeUtils.close();
 
     }
 
@@ -68,6 +71,10 @@ public class DataHandler {
 
             }
         }
+    }
 
+    public static void printGeonamesOntology() {
+        Rdf rdf = new Rdf();
+        rdf.print(GEONAMES_ONTOLOGY_FILE, "RDF/XML");
     }
 }
