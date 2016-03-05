@@ -9,7 +9,7 @@ public class ProxyBean {
 
     private String host;
     private int port;
-    private int visitedNum = 10;
+    private int visitedNum = 60;
 
     public ProxyBean() {
     }

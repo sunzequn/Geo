@@ -4,6 +4,7 @@ import com.sunzequn.geo.data.climate.bean.PlaceDetail;
 import com.sunzequn.geo.data.dao.BaseDao;
 
 import java.sql.Connection;
+import java.util.List;
 
 /**
  * Created by Sloriac on 16/3/3.
@@ -22,5 +23,15 @@ public class PlaceDetailDao extends BaseDao {
         String sql = "insert into " + table + " values (?, ?)";
         Object[] params = {placeDetail.getUrl(), placeDetail.getDetail()};
         return execute(connection, sql, params);
+    }
+
+    public List<PlaceDetail> getAllUrls() {
+        String sql = "select url from " + table;
+        return query(connection, sql, null, PlaceDetail.class);
+    }
+
+    public static void main(String[] args) {
+        PlaceDetailDao placeDetailDao = new PlaceDetailDao();
+        System.out.println(placeDetailDao.getAllUrls().size());
     }
 }
