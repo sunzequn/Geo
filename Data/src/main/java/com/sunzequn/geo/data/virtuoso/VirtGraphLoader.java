@@ -46,6 +46,7 @@ public class VirtGraphLoader {
             String password = properties.getValue("Password");
             if (serverHost != null && serverPort != null && userName != null && password != null) {
                 String url = "jdbc:virtuoso://" + serverHost + ":" + serverPort;
+                System.out.println(url);
                 return new VirtGraph(url, userName, password);
             } else {
                 throw new ConfigException("Virtuoso配置文件出错!");
