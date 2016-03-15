@@ -55,7 +55,7 @@ public class GetProxy extends PullText {
         System.out.println("------ : " + new Date());
         try {
             //all
-//            String url ="http://qsdrk.daili666api.com/ip/?tid=558067874820839&num=5&delay=5&category=2";
+//            String url ="http://qsdrk.daili666api.com/ip/?tid=558067874820839&num=20&delay=5&category=2";
 
             //foreign
 //            String url = "http://xvre.daili666api.com/ip/?tid=558067874820839&num=5&delay=5&category=2&foreign=only&filter=on";
