@@ -44,33 +44,33 @@ public class Test {
 //        System.out.println(virtModel.size());
 //
 //
-        List<Rule> rules = Rule.rulesFromURL(RULE);
-        for (Rule rule : rules) {
-            System.out.println(rule.toString());
-        }
-
-        Reasoner reasoner = new GenericRuleReasoner(rules);
-        reasoner = reasoner.bindSchema(m);
-        reasoner.setDerivationLogging(true);
-        InfModel infModel = ModelFactory.createInfModel(reasoner, m);
-//        infModel.commit();
-
-        Resource c = m.createResource("http://sws.geonames.org/1814991/");//china
-        Resource a = m.createResource("http://sws.geonames.org/10630003/");
-        Property property = m.createProperty("http://www.geonames.org/ontology#parentFeature");
-
-        StmtIterator stmtIter = infModel.listStatements(a, property, c);
-        if (!stmtIter.hasNext()) {
-            System.out.println("there is no relation");
-        }
-        while (stmtIter.hasNext()) {
-            Statement s = stmtIter.nextStatement();
-            System.out.println("Relation between " + c.getLocalName() + " and "
-                    + a.getLocalName() + " is :");
-            System.out.println(c.getLocalName() + " "
-                    + s.getPredicate().getLocalName() + " " + a.getLocalName());
-            System.out.println("\n-------------------\n");
-        }
+//        List<Rule> rules = Rule.rulesFromURL(RULE);
+//        for (Rule rule : rules) {
+//            System.out.println(rule.toString());
+//        }
+//
+//        Reasoner reasoner = new GenericRuleReasoner(rules);
+//        reasoner = reasoner.bindSchema(m);
+//        reasoner.setDerivationLogging(true);
+//        InfModel infModel = ModelFactory.createInfModel(reasoner, m);
+////        infModel.commit();
+//
+//        Resource c = m.createResource("http://sws.geonames.org/1814991/");//china
+//        Resource a = m.createResource("http://sws.geonames.org/10630003/");
+//        Property property = m.createProperty("http://www.geonames.org/ontology#parentFeature");
+//
+//        StmtIterator stmtIter = infModel.listStatements(a, property, c);
+//        if (!stmtIter.hasNext()) {
+//            System.out.println("there is no relation");
+//        }
+//        while (stmtIter.hasNext()) {
+//            Statement s = stmtIter.nextStatement();
+//            System.out.println("Relation between " + c.getLocalName() + " and "
+//                    + a.getLocalName() + " is :");
+//            System.out.println(c.getLocalName() + " "
+//                    + s.getPredicate().getLocalName() + " " + a.getLocalName());
+//            System.out.println("\n-------------------\n");
+//        }
     }
 
 
