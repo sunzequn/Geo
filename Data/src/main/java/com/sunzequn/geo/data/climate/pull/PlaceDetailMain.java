@@ -86,6 +86,7 @@ public class PlaceDetailMain {
         List<Place> placesFromCountry = placeFromCountryDao.getAllUrls();
         System.out.println(placesFromCountry.size());
 
+
         Set<String> placeSet = new HashSet<>();
         for (Place place : places) {
             placeSet.add(place.getUrl());
