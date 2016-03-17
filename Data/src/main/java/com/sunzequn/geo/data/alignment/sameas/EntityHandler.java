@@ -14,6 +14,8 @@ import java.util.*;
 
 /**
  * Created by Sloriac on 16/2/27.
+ *
+ * 构建type树形结构
  */
 public class EntityHandler {
 
@@ -64,6 +66,7 @@ public class EntityHandler {
 
     /**
      * 去掉等价类,后面考虑保存等价类，但是不参与计算
+     * 去除等价类的方法是,对于多个等价类,保留父类数量较多的那个
      *
      * @param clazzs
      */
@@ -97,7 +100,6 @@ public class EntityHandler {
         }
         return null;
     }
-
 
     public static void main(String[] args) {
 

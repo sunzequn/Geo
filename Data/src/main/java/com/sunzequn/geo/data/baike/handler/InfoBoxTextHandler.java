@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.baike;
+package com.sunzequn.geo.data.baike.handler;
 
 import com.sunzequn.geo.data.utils.ReadUtils;
 import com.sunzequn.geo.data.utils.WriteUtils;

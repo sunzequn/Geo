@@ -24,4 +24,10 @@ public class InfoBoxDao extends BaseDao {
         Object[] params = {title};
         return query(connection, sql, params, InfoBox.class);
     }
+
+    public List<InfoBox> getAll() {
+        String sql = "select * from " + TABLE;
+        return query(connection, sql, null, InfoBox.class);
+    }
+
 }

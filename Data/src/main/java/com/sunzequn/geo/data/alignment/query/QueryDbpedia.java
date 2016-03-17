@@ -68,6 +68,12 @@ public class QueryDbpedia {
         return vqe.execSelect();
     }
 
+    /**
+     * 过滤掉其他数据集的type
+     *
+     * @param types
+     * @return
+     */
     private List<String> typeFilter(List<String> types) {
 
         String exclusion = "http://dbpedia.org/ontology/Article";
