@@ -15,8 +15,8 @@ import java.util.List;
 public class BaseDao {
 
     private static final String CLASS_NAME = "com.mysql.jdbc.Driver";
-    //    private static final String JDBC_URL_PREFIX = "jdbc:mysql://localhost:3306/";
-    private static final String JDBC_URL_PREFIX = "jdbc:mysql://114.212.83.214:3306/";
+    private static final String JDBC_URL_PREFIX = "jdbc:mysql://localhost:3306/";
+    //    private static final String JDBC_URL_PREFIX = "jdbc:mysql://114.212.83.214:3306/";
     private static final String JDBC_URL_SUFFIX = "?useUnicode=true&characterEncoding=UTF-8";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
