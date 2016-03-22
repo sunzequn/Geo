@@ -36,12 +36,7 @@ public class RegionLink {
                 continue;
             }
             regions = calculateFcode(countryinfo.getIso_alpha2(), "ADM1", regions);
-            regions = calculateFcode(countryinfo.getIso_alpha2(), "ADM1H", regions);
-
-
-//            regions = calculateFcode(countryinfo.getIso_alpha2(), "PPLA", regions);
-//            regions = calculateFcode(countryinfo.getIso_alpha2(), "PPLA2", regions);
-//            regions = calculateFcode(countryinfo.getIso_alpha2(), "PPLC", regions);
+//            regions = calculateFcode(countryinfo.getIso_alpha2(), "ADM1H", regions);
 
             System.out.println(countryinfo.getIso_alpha2() + " 未匹配的：" + regions);
         }

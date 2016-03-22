@@ -33,8 +33,10 @@ public class VirtGraphLoader {
     }
 
     private VirtGraphLoader() {
-//        geonamesVirtGraph = loader(VIRTUOSO_GEONAMES_CONF_FILE);
+        geonamesVirtGraph = loader(VIRTUOSO_GEONAMES_CONF_FILE);
+        System.out.println(geonamesVirtGraph.getConnection());
         dbpediaVirtGraph = loader(VIRTUOSO_DBPEIDA_CONF_FILE);
+        System.out.println(dbpediaVirtGraph.getConnection());
     }
 
     private VirtGraph loader(String confFile) {

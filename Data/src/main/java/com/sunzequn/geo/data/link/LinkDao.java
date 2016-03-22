@@ -30,6 +30,11 @@ public class LinkDao extends BaseDao {
         return query(connection, sql, null, LinkBean.class);
     }
 
+    public List<LinkBean> getAbove1() {
+        String sql = "select * from " + table + " where confidence > 1.0";
+        return query(connection, sql, null, LinkBean.class);
+    }
+
     public static void main(String[] args) {
         LinkDao linkDao = new LinkDao("country_link");
         linkDao.save(new LinkBean(1, 1, 1));
