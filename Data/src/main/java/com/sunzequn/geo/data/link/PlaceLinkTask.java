@@ -90,11 +90,11 @@
 //        List<Geoname> geonames = geonameDao.countryChildrenByFcode(country, fcode);
 //        if (geonames != null && places != null) {
 //            for (Place place : places) {
-//                String name = place.getName();
+//                String name = place.getTitle();
 //                name = LinkUtils.climateNameClear(name);
 //                Geoname matchGeo = null;
 //                for (Geoname geo : geonames) {
-//                    String name2 = geo.getName();
+//                    String name2 = geo.getTitle();
 //                    String asciiname = geo.getAsciiname();
 //                    String alterName = geo.getAlternatenames();
 //                    if (LinkUtils.isNameEqual(name, name2) || LinkUtils.isNameEqual(name, asciiname) || LinkUtils.isAlternameEqual(name, alterName)) {

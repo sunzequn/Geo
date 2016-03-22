@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.baike.infobox;
+package com.sunzequn.geo.data.baike.bean;
 
 /**
  * Created by Sloriac on 16/3/17.

@@ -32,7 +32,7 @@
 //                PlaceLink placeLink = new PlaceLink(countryinfo.getIso_alpha2());
 //
 //                List<Place> places = placeLink.getClimatePlaces(linkedCountry.getClimateid());
-//                System.out.println(Thread.currentThread().getName() + ": place num: " + places.size());
+//                System.out.println(Thread.currentThread().getTitle() + ": place num: " + places.size());
 //                int num = 0;
 //                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM1", places);
 //                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADM2", places);
@@ -44,8 +44,8 @@
 //                num += placeLink.calculateFcode(countryinfo.getIso_alpha2(), "ADMD", places);
 //                num += placeLink.calculateFclass(countryinfo.getIso_alpha2(), "P", places);
 //
-//                System.out.println(Thread.currentThread().getName() + ": matched num: " + num);
-//                System.out.println(Thread.currentThread().getName() + ": 差值: " + (num - places.size()));
+//                System.out.println(Thread.currentThread().getTitle() + ": matched num: " + num);
+//                System.out.println(Thread.currentThread().getTitle() + ": 差值: " + (num - places.size()));
 //
 //            }, "thread" + i).start();
 //        }

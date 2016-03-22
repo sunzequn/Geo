@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.baike.infobox;
+package com.sunzequn.geo.data.baike.bean;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -36,15 +36,15 @@ public class InfoBoxTemplate {
         String[] ps = StringUtils.split(prop, "/");
         for (String p : ps) {
             p = p.trim();
-            Prop prop1;
+            String name = p, comment = null;
             if (p.contains("(")) {
-                String name = StringUtils.split(p, "(")[0];
-                String comment = StringUtils.removeEnd(StringUtils.split(p, "(")[1], ")");
-                prop1 = new Prop(name, comment);
-            } else {
-                prop1 = new Prop(p, null);
+                name = StringUtils.split(p, "(")[0];
+                comment = StringUtils.removeEnd(StringUtils.split(p, "(")[1], ")");
             }
-            props.add(prop1);
+            if (name.contains(",")) {
+                name = name.replace(",", "/");
+            }
+            props.add(new Prop(name, comment));
         }
     }
 
