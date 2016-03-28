@@ -19,35 +19,48 @@ public class PlaceLink {
     private static LinkDao placeLinkDao = new LinkDao("place_link");
     private static LinkDao regionLinkDao = new LinkDao("region_link");
     private static LinkedList<LinkBean> linkedRegions = new LinkedList<>();
+    private static final int THREAD_NUM = 50;
 
     public PlaceLink() {
 
     }
 
     public static void main(String[] args) {
-        run();
-    }
+        init();
+        for (int i = 0; i < THREAD_NUM; i++) {
+            new Thread(() -> {
+                PlaceLink placeLink = new PlaceLink();
+                while (true) {
+                    LinkBean linkedRegion = getLinkedRegion();
+                    if (linkedRegion == null) {
+                        return;
+                    }
+                    System.out.print(Thread.currentThread().getName() + ": ");
+                    placeLink.run(linkedRegion);
+                }
 
-    private static void run() {
-        List<LinkBean> linkRegions = regionLinkDao.getAbove1();
-        for (LinkBean linkRegion : linkRegions) {
-            int geoId = linkRegion.getGeonameid();
-            int climateId = linkRegion.getClimateid();
-            List<Place> places = getClimatePlaces(climateId);
-            System.out.println(climateId + " =======================");
-            places = calculate(places, geoId, "ADM2");
-            places = calculate(places, geoId, "ADM3");
-            places = calculate(places, geoId, "ADM4");
-            places = calculate(places, geoId, "ADM5");
-            places = calculate(places, geoId, "PPL");
-            places = calculate(places, geoId, "PPLA");
-            places = calculate(places, geoId, "PPLA2");
-            places = calculate(places, geoId, "PPLA3");
-            System.out.println(climateId + " -----------------------");
+            }, "thread" + i).start();
         }
     }
 
-    private static List<Place> calculate(List<Place> places, int geoId, String fcode) {
+    private void run(LinkBean linkBean) {
+        int geoId = linkBean.getGeonameid();
+        int climateId = linkBean.getClimateid();
+        List<Place> places = getClimatePlaces(climateId);
+        System.out.println(climateId + " =======================");
+        places = calculate(places, geoId, "ADM2");
+        places = calculate(places, geoId, "ADM3");
+        places = calculate(places, geoId, "ADM4");
+        places = calculate(places, geoId, "ADM5");
+        places = calculate(places, geoId, "PPL");
+        places = calculate(places, geoId, "PPLA");
+        places = calculate(places, geoId, "PPLA2");
+        places = calculate(places, geoId, "PPLA3");
+        System.out.println(climateId + " -----------------------");
+
+    }
+
+    private List<Place> calculate(List<Place> places, int geoId, String fcode) {
         int matchedNum = 0;
         List<Place> unMatchedPlaces = new ArrayList<>();
         List<Geoname> geonames = geonameDao.admChildrenByFcode(geoId, fcode);
@@ -66,7 +79,7 @@ public class PlaceLink {
         }
     }
 
-    private static boolean match(Place place, List<Geoname> geonames) {
+    private boolean match(Place place, List<Geoname> geonames) {
 
         String name = place.getName();
         boolean hasMatch = false;
@@ -83,12 +96,12 @@ public class PlaceLink {
         return hasMatch;
     }
 
-    private static void save(Geoname geoname, Place place, double similarity) {
+    private void save(Geoname geoname, Place place, double similarity) {
         placeLinkDao.save(new LinkBean(geoname.getGeonameid(), place.getId(), similarity));
         //update
     }
 
-    public static List<Place> getClimatePlaces(int parentId) {
+    public List<Place> getClimatePlaces(int parentId) {
         return placeDao.getByParentId(parentId);
     }
 

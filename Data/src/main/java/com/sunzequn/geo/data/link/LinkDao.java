@@ -30,9 +30,27 @@ public class LinkDao extends BaseDao {
         return query(connection, sql, null, LinkBean.class);
     }
 
+    public List<LinkBean> getByGeonameid(int geonameid) {
+        String sql = "select * from " + table + " where geonameid = ?";
+        Object[] params = {geonameid};
+        return query(connection, sql, params, LinkBean.class);
+    }
+
+    public List<LinkBean> getByClimateid(int climateid) {
+        String sql = "select *  from " + table + " where climateid = ?";
+        Object[] params = {climateid};
+        return query(connection, sql, params, LinkBean.class);
+    }
+
     public List<LinkBean> getAbove1() {
         String sql = "select * from " + table + " where confidence > 1.0";
         return query(connection, sql, null, LinkBean.class);
+    }
+
+    public int deleteLine(int geonameid, int climateid) {
+        String sql = "delete from " + table + " where geonameid = ? and climateid = ?";
+        Object[] params = {geonameid, climateid};
+        return execute(connection, sql, params);
     }
 
     public static void main(String[] args) {

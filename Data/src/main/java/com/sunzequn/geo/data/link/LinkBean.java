@@ -1,9 +1,11 @@
 package com.sunzequn.geo.data.link;
 
+import java.util.Comparator;
+
 /**
  * Created by sloriac on 16-2-17.
  */
-public class LinkBean {
+public class LinkBean implements Comparable {
 
     private int geonameid;
     private int climateid;
@@ -49,5 +51,18 @@ public class LinkBean {
                 ", climateid=" + climateid +
                 ", confidence=" + confidence +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        LinkBean linkBean = (LinkBean) o;
+        double diff = linkBean.getConfidence() - this.getConfidence();
+        if (diff > 0) {
+            return 1;
+        } else if (diff < 0) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
