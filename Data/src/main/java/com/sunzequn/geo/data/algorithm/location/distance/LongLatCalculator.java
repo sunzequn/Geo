@@ -31,9 +31,11 @@ public class LongLatCalculator {
      * @return 如果两点距离小于或等于设定的阈值, 则返回真, 否则返回假
      */
     public boolean isNear(double lat1, double lon1, double lat2, double lon2, double threshold) {
-        if (HaversineDis.distance(lat1, lon1, lat2, lon2) <= threshold) {
+        double dis = HaversineDis.distance(lat1, lon1, lat2, lon2);
+        if (dis <= threshold) {
             return true;
         }
+        System.out.println("dis : " + dis);
         return false;
     }
 

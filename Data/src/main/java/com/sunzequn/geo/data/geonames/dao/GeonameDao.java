@@ -44,6 +44,16 @@ public class GeonameDao extends BaseDao {
         return query(connection, sql, params, Geoname.class);
     }
 
+    public List<Geoname> countryChildrenByFcode(int countryId, String fcode) {
+        Geoname country = getById(countryId);
+        if (country == null) {
+            return null;
+        }
+        String sql = "select * from " + TABLE + " where country = ? and fcode = ?";
+        Object[] params = {country.getCountry(), fcode};
+        return query(connection, sql, params, Geoname.class);
+    }
+
     public List<Geoname> countryChildrenByFclass(String country, String fclass) {
         String sql = "select * from " + TABLE + " where country = ? and fclass = ?";
         Object[] params = {country, fclass};
@@ -51,12 +61,13 @@ public class GeonameDao extends BaseDao {
     }
 
     /**
-     * 根据ADM1的id查询其ADM2,ADM3和ADM4的子类
+     * 查询id的满足指定fcode的子类（包含的地点）
+     * 也就是要满足country和admin1一致
      *
-     * @param id
+     * @param id geonames中的ADM1地点的id
      * @return
      */
-    public List<Geoname> admChildrenByFcode(int id, String fcode) {
+    public List<Geoname> childrenByFcode(int id, String fcode) {
         Geoname geoname = getById(id);
         if (geoname == null) {
             return null;

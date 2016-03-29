@@ -63,8 +63,9 @@ public class PlaceLink {
     private List<Place> calculate(List<Place> places, int geoId, String fcode) {
         int matchedNum = 0;
         List<Place> unMatchedPlaces = new ArrayList<>();
-        List<Geoname> geonames = geonameDao.admChildrenByFcode(geoId, fcode);
+        List<Geoname> geonames = geonameDao.childrenByFcode(geoId, fcode);
         if (geonames != null && places != null) {
+            //会出现多个place匹配到一个geonames上，暂时不管，后续处理
             for (Place place : places) {
                 if (match(place, geonames)) {
                     matchedNum++;
@@ -79,6 +80,13 @@ public class PlaceLink {
         }
     }
 
+    /**
+     * 会出现一个place匹配到多个geonames的情况，暂时不管，后续去重
+     *
+     * @param place
+     * @param geonames
+     * @return
+     */
     private boolean match(Place place, List<Geoname> geonames) {
 
         String name = place.getName();
