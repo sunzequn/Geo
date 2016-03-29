@@ -3,6 +3,7 @@ package com.sunzequn.geo.data.climate.dao;
 import com.sunzequn.geo.data.climate.bean.Place;
 import com.sunzequn.geo.data.climate.bean.Region;
 import com.sunzequn.geo.data.dao.BaseDao;
+import com.sunzequn.geo.data.utils.ListUtils;
 
 import java.sql.Connection;
 import java.util.List;
@@ -33,8 +34,22 @@ public class PlaceDao extends BaseDao {
         return query(connection, sql, null, Place.class);
     }
 
+    public Place getById(int id) {
+        String sql = "select * from " + table + " where id = " + id;
+        List<Place> places = query(connection, sql, null, Place.class);
+        if (ListUtils.isEmpty(places)) {
+            return null;
+        }
+        return places.get(0);
+    }
+
     public List<Place> getAllUrls() {
         String sql = "select url from " + table;
+        return query(connection, sql, null, Place.class);
+    }
+
+    public List<Place> getAll() {
+        String sql = "select * from " + table;
         return query(connection, sql, null, Place.class);
     }
 
