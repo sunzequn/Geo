@@ -16,7 +16,7 @@ import java.util.*;
  * 对于一个climate对应多个geonames,取置信度最高的，如果置信度最高的有多个，判断一下这些地点的距离，距离小于一个阈值的话，则全部保留这些匹配，否则，表示出错
  * 经过上述处理，可能会出现一个geonames对应多个climate的问题，如果这些climate的气候类型是一样的，则不处理，否则出错
  */
-public class DataHandler {
+public class PlaceDataHandler {
 
     private static final double DIS = 100 * 1000.0;
 
@@ -26,7 +26,8 @@ public class DataHandler {
     private static LongLatCalculator longLatCalculator = new LongLatCalculator();
 
     public static void main(String[] args) {
-        handleClimateId();
+//        handleClimateId();
+        handleGeonameId();
     }
 
     private static void handleGeonameId() {
@@ -113,13 +114,13 @@ public class DataHandler {
                     for (Geoname g : geonames) {
                         System.out.println(g);
                     }
-                } else {
-                    //index之后的是数据都要删除
-                    for (int i = index + 1; i < linksWithSameClimateIds.size(); i++) {
-                        LinkBean linkBean = linksWithSameClimateIds.get(i);
-//                    linkDao.deleteLine(linkBean.getGeonameid(), linkBean.getClimateid());
-                    }
                 }
+                //index之后的是数据都要删除
+                for (int i = index + 1; i < linksWithSameClimateIds.size(); i++) {
+                    LinkBean linkBean = linksWithSameClimateIds.get(i);
+//                    linkDao.deleteLine(linkBean.getGeonameid(), linkBean.getClimateid());
+                }
+
             }
         }
     }
