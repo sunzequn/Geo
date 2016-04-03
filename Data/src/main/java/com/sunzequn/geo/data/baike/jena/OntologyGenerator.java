@@ -1,14 +1,9 @@
 package com.sunzequn.geo.data.baike.jena;
 
-import com.sunzequn.geo.data.baike.bean.InfoBox;
 import com.sunzequn.geo.data.baike.bean.InfoBoxTemplate;
 import com.sunzequn.geo.data.baike.dao.InfoBoxTemplateDao;
-import org.apache.jena.ontology.OntClass;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.ontology.OntProperty;
-import org.apache.jena.rdf.model.ListIndexException;
-import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.ontology.*;
+import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.OWL;
@@ -36,7 +31,20 @@ public class OntologyGenerator {
 
     public static void main(String[] args) {
 
-        generateOntology();
+//        generateOntology();
+        generateRelation();
+    }
+
+    private static void generateRelation() {
+        OntClass ontClass = model.createClass();
+
+        Property property = model.createProperty("http://www.geonames.org/ontology#featureCode");
+        Restriction restriction = model.createRestriction(property);
+
+        ontClass.setEquivalentClass(restriction);
+        Resource resource = model.createResource("http://www.geonames.org/ontology#T.ATOL");
+        restriction.setPropertyValue(OWL.hasValue, resource);
+        toFile(model);
     }
 
     private static void generateOntology() {
