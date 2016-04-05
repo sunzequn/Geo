@@ -10,6 +10,7 @@ public class InfoBoxTemplateProp {
     private int templateid;
     //属性类型，0代表datatype, 1代表object
     private int type;
+    //对于datatype，标明具体类型
     private String comment;
 
     public InfoBoxTemplateProp() {
