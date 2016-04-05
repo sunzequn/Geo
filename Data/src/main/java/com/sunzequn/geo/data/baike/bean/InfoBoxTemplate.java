@@ -12,21 +12,16 @@ public class InfoBoxTemplate {
 
     private int id;
     private String title;
+    private String entitle;
     private int parentid;
     private int level;
     private String prop;
+    private String comment;
     private List<Prop> props;
 
     public InfoBoxTemplate() {
     }
 
-    public InfoBoxTemplate(int id, String title, int parentid, int level, String prop) {
-        this.id = id;
-        this.title = title;
-        this.parentid = parentid;
-        this.level = level;
-        this.prop = prop;
-    }
 
     public void initProps() {
         props = new ArrayList<>();
@@ -96,11 +91,29 @@ public class InfoBoxTemplate {
         this.props = props;
     }
 
+    public String getEntitle() {
+        return entitle;
+    }
+
+    public void setEntitle(String entitle) {
+        this.entitle = entitle;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     @Override
     public String toString() {
         return "InfoBoxTemplate{" +
-                "id=" + id +
+                "comment='" + comment + '\'' +
+                ", id=" + id +
                 ", title='" + title + '\'' +
+                ", entitle='" + entitle + '\'' +
                 ", parentid=" + parentid +
                 ", level=" + level +
                 ", prop='" + prop + '\'' +
