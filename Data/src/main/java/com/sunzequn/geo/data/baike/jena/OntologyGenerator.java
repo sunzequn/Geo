@@ -1,5 +1,6 @@
 package com.sunzequn.geo.data.baike.jena;
 
+import com.sunzequn.geo.data.algorithm.hanyu.Pinyin;
 import com.sunzequn.geo.data.baike.bean.ExtendedType;
 import com.sunzequn.geo.data.baike.bean.InfoBoxTemplate;
 import com.sunzequn.geo.data.baike.bean.InfoBoxTemplateProp;
@@ -33,9 +34,8 @@ public class OntologyGenerator {
     private static final String GEO = "http://www.geonames.org/ontology#";
     private static final String GEO_F = "http://www.geonames.org/ontology#featureCode";
     //百度百科uri前缀
-    private static final String BAIDU = "http://ws.nju.edu.cn/geoscholar/baidu/";
-    private static final String BO = BAIDU + "ontology/";
-    private static final String BP = BAIDU + "property/";
+    private static final String CLINGA = "http://ws.nju.edu.cn/clinga/ontology/";
+    private static Pinyin pinyin = new Pinyin();
 
     public static void main(String[] args) {
         generateOntology();
@@ -59,23 +59,21 @@ public class OntologyGenerator {
         for (InfoBoxTemplateProp prop : props) {
             prop.initAll();
             if (prop.getType() == 1) {
-                ObjectProperty property = model.createObjectProperty(BP + prop.getName());
+                ObjectProperty property = model.createObjectProperty(CLINGA + pinyin.getPinyinWithFirstOneLower(prop.getName()));
                 model = completeProperty(model, property, prop);
                 for (String domain : prop.getDomains()) {
-                    property.addDomain(model.getOntClass(BO + domain));
+                    property.addDomain(model.getOntClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(domain)));
                 }
                 if (!StringUtils.isNullOrEmpty(prop.getRange1())) {
                     for (String range : prop.getRanges()) {
-                        property.addRange(model.getOntClass(BO + range));
+                        property.addRange(model.getOntClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(range)));
                     }
                 }
             } else {
-                DatatypeProperty property = model.createDatatypeProperty(BP + prop.getName());
+                DatatypeProperty property = model.createDatatypeProperty(CLINGA + pinyin.getPinyinWithFirstOneLower(prop.getName()));
                 model = completeProperty(model, property, prop);
                 for (String domain : prop.getDomains()) {
-                    System.out.println(prop);
-                    System.out.println(model.getOntClass(BO + domain));
-                    property.addDomain(model.getOntClass(BO + domain));
+                    property.addDomain(model.getOntClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(domain)));
                 }
                 String range = prop.getRange1();
                 if (range.equals("int")) {
@@ -95,6 +93,7 @@ public class OntologyGenerator {
 //        property.addProperty(RDF.type, RDF.Property);
 
         property.addProperty(SKOS.prefLabel, model.createLiteral(prop.getName(), MultiLang.ZH));
+        property.addLabel(prop.getName(), MultiLang.ZH);
 
         if (!StringUtils.isNullOrEmpty(prop.getAltname())) {
             for (String altname : prop.getAltnames()) {
@@ -143,7 +142,7 @@ public class OntologyGenerator {
         List<ExtendedType> types = dao.getAll();
         for (ExtendedType type : types) {
             type.initAltLabels();
-            String ns = BO + type.getTypeName();
+            String ns = CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getTypeName());
             OntClass ontClass = model.getOntClass(ns);
             if (ontClass == null) {
                 model = addClass(model, type);
@@ -151,10 +150,10 @@ public class OntologyGenerator {
         }
 
         for (ExtendedType type : types) {
-            String ns1 = BO + type.getTypeName();
+            String ns1 = CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getTypeName());
             OntClass ontClass1 = model.getOntClass(ns1);
 
-            String ns2 = BO + type.getSuperType();
+            String ns2 = CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getSuperType());
             OntClass ontClass2 = model.getOntClass(ns2);
 
             ontClass1.setSuperClass(ontClass2);
@@ -164,13 +163,14 @@ public class OntologyGenerator {
 
     private static OntModel addClass(OntModel model, ExtendedType type) {
 
-        OntClass ontClass = model.createClass(BO + type.getTypeName().trim());
+        OntClass ontClass = model.createClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getTypeName().trim()));
         //处理comment
         if (!StringUtils.isNullOrEmpty(type.getComment())) {
             ontClass.addComment(type.getComment(), MultiLang.ZH);
         }
         //设置preflabel
         ontClass.addProperty(SKOS.prefLabel, model.createLiteral(type.getTypeName(), MultiLang.ZH));
+        ontClass.addLabel(type.getTypeName(), MultiLang.ZH);
         //处理中文altlabel
         if (type.getAltLabels() != null) {
             for (String label : type.getAltLabels())
@@ -185,7 +185,7 @@ public class OntologyGenerator {
 
 
     private static void handleTemplate(OntModel model, List<InfoBoxTemplate> templates, InfoBoxTemplate template) {
-        String ns = BO + template.getTitle();
+        String ns = CLINGA + pinyin.getPinyinWithFirstOneUpper(template.getTitle());
         OntClass ontClass = model.getOntClass(ns);
         //这个类不存在，就创建
         if (ontClass == null) {
@@ -200,7 +200,7 @@ public class OntologyGenerator {
                     System.out.println(parents);
                 }
                 for (String parent : parents) {
-                    String parentNs = BO + parent;
+                    String parentNs = CLINGA + pinyin.getPinyinWithFirstOneUpper(parent);
                     OntClass parentClass = model.getOntClass(parentNs);
                     if (parentClass == null) {
                         System.out.println("出错");
@@ -211,6 +211,7 @@ public class OntologyGenerator {
             }
             //设置preflabel
             newClass.addProperty(SKOS.prefLabel, model.createLiteral(template.getTitle(), MultiLang.ZH));
+            newClass.addLabel(template.getTitle(), MultiLang.ZH);
             //设置altlabel
             if (!StringUtils.isNullOrEmpty(template.getEntitle())) {
                 newClass.addProperty(SKOS.altLabel, model.createLiteral(template.getEntitle(), MultiLang.EN));

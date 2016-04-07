@@ -1,5 +1,6 @@
 package com.sunzequn.geo.data.baike.jena;
 
+import com.sunzequn.geo.data.algorithm.hanyu.Pinyin;
 import com.sunzequn.geo.data.baike.bean.TypeLink;
 import com.sunzequn.geo.data.baike.dao.TypeLinkDao;
 import com.sunzequn.geo.data.utils.ReadUtils;
@@ -28,9 +29,8 @@ public class MappingGenerator {
     private static final String GEO = "http://www.geonames.org/ontology#";
     private static final String GEO_F = "http://www.geonames.org/ontology#featureCode";
     //百度百科uri前缀
-    private static final String BAIDU = "http://ws.nju.edu.cn/geoscholar/baidu/";
-    private static final String BO = BAIDU + "ontology/";
-    private static final String BP = BAIDU + "property/";
+    private static final String CLINGA = "http://ws.nju.edu.cn/clinga/ontology/";
+    private static Pinyin pinyin = new Pinyin();
 
     public static void main(String[] args) {
         generateRelation();
@@ -58,7 +58,7 @@ public class MappingGenerator {
     }
 
     private static void handleDboLink(TypeLink link, OntModel model) {
-        String ns = BO + link.getType().trim();
+        String ns = CLINGA + pinyin.getPinyinWithFirstOneUpper(link.getType());
         OntClass ontClass = model.getOntClass(ns);
         if (ontClass == null) {
             ontClass = model.createClass(ns);
@@ -116,7 +116,7 @@ public class MappingGenerator {
     }
 
     private static void handleGeoLink(TypeLink link, OntModel model) {
-        String ns = BO + link.getType().trim();
+        String ns = CLINGA + pinyin.getPinyinWithFirstOneUpper(link.getType());
         OntClass ontClass = model.getOntClass(ns);
         if (ontClass == null) {
             ontClass = model.createClass(ns);
