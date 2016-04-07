@@ -17,7 +17,7 @@ public class PropHandler {
 
     private static BasicInfoDao basicInfoDao = new BasicInfoDao();
     private static InfoBoxTemplatePropDao propDao = new InfoBoxTemplatePropDao();
-    private static final double threshold = 0.8;
+    private static final double threshold = 0.5;
 
     public static void main(String[] args) {
         List<InfoBoxTemplateProp> props = propDao.getAll();
@@ -50,16 +50,16 @@ public class PropHandler {
     private static void updateProp(PropStatistics propStatistics) {
         //属性类型，0代表datatype, 1代表object
         if (propStatistics.objectNum > propStatistics.num * threshold) {
-            propDao.updateType(propStatistics.getProp().getId(), 1);
+            propDao.updateType(propStatistics.getProp().getName(), 1);
         } else {
             double n = propStatistics.datatypeNum * threshold;
-            int id = propStatistics.getProp().getId();
+            String name = propStatistics.getProp().getName();
             if (propStatistics.intNum > n) {
-                propDao.updateComment(id, "int");
+                propDao.updateRange(name, "int");
             } else if (propStatistics.doubleNum > n) {
-                propDao.updateComment(id, "double");
+                propDao.updateRange(name, "double");
             } else {
-                propDao.updateComment(id, "string");
+                propDao.updateRange(name, "string");
             }
         }
     }

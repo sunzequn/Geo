@@ -29,13 +29,8 @@ public class InfoBoxTemplateProphandler {
         List<InfoBoxTemplate> templates = templateDao.getAll();
         for (InfoBoxTemplate template : templates) {
             template.initProps();
-            int templateid = template.getId();
             for (Prop prop : template.getProps()) {
-                InfoBoxTemplateProp templateProp = new InfoBoxTemplateProp();
-                templateProp.setName(prop.getName());
-                templateProp.setComment(prop.getComment());
-                templateProp.setTemplateid(templateid);
-                propDao.save(templateProp);
+                propDao.addDomain(prop.getName(), template.getTitle());
             }
         }
     }

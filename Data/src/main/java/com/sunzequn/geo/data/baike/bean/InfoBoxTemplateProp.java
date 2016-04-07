@@ -1,42 +1,70 @@
 package com.sunzequn.geo.data.baike.bean;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by sloriac on 16-3-29.
  */
 public class InfoBoxTemplateProp {
 
-    private int id;
     private String name;
-    private int templateid;
-    //属性类型，0代表datatype, 1代表object
+    private String domain1;
+    private String range1;
     private int type;
-    //对于datatype，标明具体类型
+    private String altname;
+    private String ename;
     private String comment;
+
+    private List<String> domains = new ArrayList<>();
+    private List<String> ranges = new ArrayList<>();
+    private List<String> altnames = new ArrayList<>();
 
     public InfoBoxTemplateProp() {
     }
 
-    public InfoBoxTemplateProp(String comment, String name, int templateid, int type) {
-        this.comment = comment;
+    public InfoBoxTemplateProp(String domain1, String name, String range1, int type) {
+        this.domain1 = domain1;
         this.name = name;
-        this.templateid = templateid;
+        this.range1 = range1;
         this.type = type;
     }
 
-    public String getComment() {
-        return comment;
+    public void initAll() {
+        initDomainsAndRange();
+        initAltName();
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void initDomainsAndRange() {
+        init(domain1, domains);
+        init(range1, ranges);
     }
 
-    public int getId() {
-        return id;
+    public void initAltName() {
+        init(altname, altnames);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    private void init(String string, List<String> strings) {
+        if (string == null) {
+            return;
+        }
+        if (string.contains("/")) {
+            String[] ss = StringUtils.split(string, "/");
+            Collections.addAll(strings, ss);
+        } else {
+            strings.add(string);
+        }
+    }
+
+    public String getDomain1() {
+        return domain1;
+    }
+
+    public void setDomain1(String domain1) {
+        this.domain1 = domain1;
     }
 
     public String getName() {
@@ -47,12 +75,12 @@ public class InfoBoxTemplateProp {
         this.name = name;
     }
 
-    public int getTemplateid() {
-        return templateid;
+    public String getRange1() {
+        return range1;
     }
 
-    public void setTemplateid(int templateid) {
-        this.templateid = templateid;
+    public void setRange1(String range1) {
+        this.range1 = range1;
     }
 
     public int getType() {
@@ -63,13 +91,60 @@ public class InfoBoxTemplateProp {
         this.type = type;
     }
 
+    public String getAltname() {
+        return altname;
+    }
+
+    public void setAltname(String altname) {
+        this.altname = altname;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getEname() {
+        return ename;
+    }
+
+    public void setEname(String ename) {
+        this.ename = ename;
+    }
+
+    public List<String> getAltnames() {
+        return altnames;
+    }
+
+    public void setAltnames(List<String> altnames) {
+        this.altnames = altnames;
+    }
+
+    public List<String> getDomains() {
+        return domains;
+    }
+
+    public void setDomains(List<String> domains) {
+        this.domains = domains;
+    }
+
+    public List<String> getRanges() {
+        return ranges;
+    }
+
+    public void setRanges(List<String> ranges) {
+        this.ranges = ranges;
+    }
+
     @Override
     public String toString() {
         return "InfoBoxTemplateProp{" +
-                "comment='" + comment + '\'' +
-                ", id=" + id +
+                "domain1='" + domain1 + '\'' +
                 ", name='" + name + '\'' +
-                ", templateid=" + templateid +
+                ", range1='" + range1 + '\'' +
                 ", type=" + type +
                 '}';
     }

@@ -2,17 +2,20 @@ package com.sunzequn.geo.data.baike.jena;
 
 import com.sunzequn.geo.data.baike.bean.ExtendedType;
 import com.sunzequn.geo.data.baike.bean.InfoBoxTemplate;
-import com.sunzequn.geo.data.baike.bean.TypeLink;
+import com.sunzequn.geo.data.baike.bean.InfoBoxTemplateProp;
 import com.sunzequn.geo.data.baike.dao.ExtendedTypeDao;
 import com.sunzequn.geo.data.baike.dao.InfoBoxTemplateDao;
-import com.sunzequn.geo.data.baike.dao.TypeLinkDao;
+import com.sunzequn.geo.data.baike.dao.InfoBoxTemplatePropDao;
+import com.sunzequn.geo.data.utils.ReadUtils;
 import com.sunzequn.geo.data.utils.StringUtils;
+import com.sunzequn.geo.data.utils.WriteUtils;
 import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.SKOS;
+import org.apache.jena.vocabulary.XSD;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -24,7 +27,8 @@ import java.util.List;
  */
 public class OntologyGenerator {
 
-    private static final String FILE = "D:/DevSpace/github/Geo/Data/src/main/resources/baike/ontology.owl";
+    private static final String ONTOLOGY_FILE = "D:/DevSpace/github/Geo/Data/src/main/resources/baike/ontology.owl";
+    private static final String MAPPING_FILE = "D:/DevSpace/github/Geo/Data/src/main/resources/baike/mapping.owl";
     private static final String DBO = "http://dbpedia.org/ontology/";
     private static final String GEO = "http://www.geonames.org/ontology#";
     private static final String GEO_F = "http://www.geonames.org/ontology#featureCode";
@@ -32,116 +36,81 @@ public class OntologyGenerator {
     private static final String BAIDU = "http://ws.nju.edu.cn/geoscholar/baidu/";
     private static final String BO = BAIDU + "ontology/";
     private static final String BP = BAIDU + "property/";
-    private static OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
 
     public static void main(String[] args) {
         generateOntology();
-        generateRelation();
-        toFile(model);
     }
 
     /**
-     * 处理link关系
+     * 处理ontology
      */
-    private static void generateRelation() {
-        TypeLinkDao dao = new TypeLinkDao();
-        List<TypeLink> links = dao.getAll();
-        for (TypeLink link : links) {
-            if (link.getEntity().trim().startsWith("dbo:")) {
-                handleDboLink(link);
-            } else if (link.getEntity().trim().startsWith("geo:")) {
-                handleGeoLink(link);
-            } else {
-                System.out.println("link error");
-            }
-        }
-    }
-
-    private static String getDbo(String uri) {
-        return org.apache.commons.lang3.StringUtils.removeStart(uri.trim(), "dbo:");
-    }
-
-    private static String getGeo(String uri) {
-        return org.apache.commons.lang3.StringUtils.removeStart(uri.trim(), "geo:");
-    }
-
-    private static void handleDboLink(TypeLink link) {
-        OntClass ontClass = model.getOntClass(BO + link.getType().trim());
-        if (ontClass == null) {
-            System.out.println("no class : " + link.getType());
-        } else {
-            String relation = link.getRelation();
-            String dbos = link.getEntity();
-            if (dbos.contains("/")) {
-                String[] dboNames = org.apache.commons.lang3.StringUtils.split(dbos, "/");
-                for (String dboName : dboNames) {
-                    Resource dbo = model.createResource(DBO + getDbo(dboName));
-                    handleDbo(dbo, ontClass, relation);
-                }
-            } else {
-                Resource dbo = model.createResource(DBO + getDbo(dbos));
-                handleDbo(dbo, ontClass, relation);
-            }
-        }
-    }
-
-    private static void handleDbo(Resource resource, OntClass ontClass, String relation) {
-        if (relation.contains("exactMatch")) {
-            ontClass.addEquivalentClass(resource);
-        } else if (relation.contains("broadMatch")) {
-            ontClass.addProperty(SKOS.broadMatch, resource);
-        } else {
-            ontClass.addProperty(SKOS.narrowMatch, resource);
-        }
-    }
-
-    private static void handleGeo(OntClass ontClass, String relation, String geos) {
-        if (relation.contains("broadMatch")) {
-            System.out.println("broadMatch");
-        } else {
-            //narrowMatch
-            if (geos.contains("/")) {
-                String[] geoCodes = org.apache.commons.lang3.StringUtils.split(geos, "/");
-                RDFNode[] rdfNodes = new RDFNode[geoCodes.length];
-                for (int i = 0; i < geoCodes.length; i++) {
-                    Restriction restriction = model.createRestriction(model.createProperty(GEO_F));
-                    restriction.addProperty(OWL.hasValue, model.createResource(GEO + getGeo(geoCodes[i])));
-                    rdfNodes[i] = restriction;
-                }
-                RDFList rdfList = model.createList(rdfNodes);
-                UnionClass unionClass = model.createUnionClass(null, rdfList);
-                ontClass.addEquivalentClass(unionClass);
-            }
-            //narrowMatch 或者 exactMatch
-            else {
-                System.out.println(geos);
-                Restriction restriction = model.createRestriction(model.createProperty(GEO_F));
-                restriction.addProperty(OWL.hasValue, model.createResource(GEO + getGeo(geos)));
-                RDFList rdfList = model.createList(new RDFNode[]{restriction});
-                UnionClass unionClass = model.createUnionClass(null, rdfList);
-                ontClass.addEquivalentClass(unionClass);
-            }
-        }
-    }
-
-    private static void handleGeoLink(TypeLink link) {
-        TypeLinkDao dao = new TypeLinkDao();
-        OntClass ontClass = model.getOntClass(BO + link.getType().trim());
-        if (ontClass == null) {
-            System.out.println("no class : " + link.getType());
-        } else {
-            String relation = link.getRelation();
-            String geos = link.getEntity();
-            handleGeo(ontClass, relation, geos);
-        }
-    }
-
     private static void generateOntology() {
-        generateOriginOntology();
-        generateExtendedType();
+        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
+        model = generateOriginOntology(model);
+        model = generateExtendedType(model);
+        model = generateProperty(model);
+        toFile(model, ONTOLOGY_FILE);
     }
 
-    private static void generateOriginOntology() {
+    private static OntModel generateProperty(OntModel model) {
+
+        InfoBoxTemplatePropDao propDao = new InfoBoxTemplatePropDao();
+        List<InfoBoxTemplateProp> props = propDao.getAll();
+        for (InfoBoxTemplateProp prop : props) {
+            prop.initAll();
+            if (prop.getType() == 1) {
+                ObjectProperty property = model.createObjectProperty(BP + prop.getName());
+                model = completeProperty(model, property, prop);
+                for (String domain : prop.getDomains()) {
+                    property.addDomain(model.getOntClass(BO + domain));
+                }
+                if (!StringUtils.isNullOrEmpty(prop.getRange1())) {
+                    for (String range : prop.getRanges()) {
+                        property.addRange(model.getOntClass(BO + range));
+                    }
+                }
+            } else {
+                DatatypeProperty property = model.createDatatypeProperty(BP + prop.getName());
+                model = completeProperty(model, property, prop);
+                for (String domain : prop.getDomains()) {
+                    System.out.println(prop);
+                    System.out.println(model.getOntClass(BO + domain));
+                    property.addDomain(model.getOntClass(BO + domain));
+                }
+                String range = prop.getRange1();
+                if (range.equals("int")) {
+                    property.setRange(XSD.integer);
+                } else if (range.equals("double")) {
+                    property.setRange(XSD.decimal);
+                } else {
+                    property.setRange(XSD.xstring);
+                }
+            }
+        }
+        return model;
+    }
+
+    private static OntModel completeProperty(OntModel model, OntProperty property, InfoBoxTemplateProp prop) {
+
+//        property.addProperty(RDF.type, RDF.Property);
+
+        property.addProperty(SKOS.prefLabel, model.createLiteral(prop.getName(), MultiLang.ZH));
+
+        if (!StringUtils.isNullOrEmpty(prop.getAltname())) {
+            for (String altname : prop.getAltnames()) {
+                property.addProperty(SKOS.altLabel, model.createLiteral(altname, MultiLang.ZH));
+            }
+        }
+        if (!StringUtils.isNullOrEmpty(prop.getEname())) {
+            property.addProperty(SKOS.altLabel, model.createLiteral(prop.getEname(), MultiLang.EN));
+        }
+        if (!StringUtils.isNullOrEmpty(prop.getComment())) {
+            property.addComment(prop.getComment(), MultiLang.ZH);
+        }
+        return model;
+    }
+
+    private static OntModel generateOriginOntology(OntModel model) {
         InfoBoxTemplateDao templateDao = new InfoBoxTemplateDao();
         List<InfoBoxTemplate> templates = templateDao.getAll();
         List<InfoBoxTemplate> templates1 = new ArrayList<>();
@@ -166,9 +135,10 @@ public class OntologyGenerator {
         for (InfoBoxTemplate template : templates3) {
             handleTemplate(model, templates, template);
         }
+        return model;
     }
 
-    private static void generateExtendedType() {
+    private static OntModel generateExtendedType(OntModel model) {
         ExtendedTypeDao dao = new ExtendedTypeDao();
         List<ExtendedType> types = dao.getAll();
         for (ExtendedType type : types) {
@@ -176,22 +146,28 @@ public class OntologyGenerator {
             String ns = BO + type.getTypeName();
             OntClass ontClass = model.getOntClass(ns);
             if (ontClass == null) {
-                addClass(model, type, types);
+                model = addClass(model, type);
             }
         }
+
+        for (ExtendedType type : types) {
+            String ns1 = BO + type.getTypeName();
+            OntClass ontClass1 = model.getOntClass(ns1);
+
+            String ns2 = BO + type.getSuperType();
+            OntClass ontClass2 = model.getOntClass(ns2);
+
+            ontClass1.setSuperClass(ontClass2);
+        }
+        return model;
     }
 
-    private static OntClass addClass(OntModel model, ExtendedType type, List<ExtendedType> types) {
-        OntClass ontClass = model.createClass(BO + type.getTypeName().trim());
-        //添加父类信息
-        if (!addSupClass(model, ontClass, type, types)) {
-            System.out.println("错误");
-        }
+    private static OntModel addClass(OntModel model, ExtendedType type) {
 
+        OntClass ontClass = model.createClass(BO + type.getTypeName().trim());
         //处理comment
         if (!StringUtils.isNullOrEmpty(type.getComment())) {
-            Literal comment = model.createLiteral(type.getComment());
-            ontClass.addLabel(comment);
+            ontClass.addComment(type.getComment(), MultiLang.ZH);
         }
         //设置preflabel
         ontClass.addProperty(SKOS.prefLabel, model.createLiteral(type.getTypeName(), MultiLang.ZH));
@@ -204,24 +180,9 @@ public class OntologyGenerator {
         if (!StringUtils.isNullOrEmpty(type.getEntype())) {
             ontClass.addProperty(SKOS.altLabel, model.createLiteral(type.getEntype(), MultiLang.EN));
         }
-        return ontClass;
+        return model;
     }
 
-    private static boolean addSupClass(OntModel model, OntClass ontClass, ExtendedType type, List<ExtendedType> types) {
-        OntClass template = model.getOntClass(BO + type.getSuperType());
-        if (template != null) {
-            ontClass.setSuperClass(template);
-            return true;
-        } else {
-            for (ExtendedType type1 : types) {
-                if (type1.getTypeName().trim().equals(type.getSuperType().trim())) {
-                    ontClass.setSuperClass(addClass(model, type1, types));
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     private static void handleTemplate(OntModel model, List<InfoBoxTemplate> templates, InfoBoxTemplate template) {
         String ns = BO + template.getTitle();
@@ -288,13 +249,32 @@ public class OntologyGenerator {
         return null;
     }
 
-    private static void toFile(OntModel model) {
+    private static void toFile(OntModel model, String file) {
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = new FileOutputStream(FILE, false);
+            fileOutputStream = new FileOutputStream(file, false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         RDFDataMgr.write(fileOutputStream, model, Lang.RDFXML);
+    }
+
+    private static void reformatRDF(String file) {
+        ReadUtils readUtils = new ReadUtils(file);
+        List<String> lines = readUtils.readByLine();
+        readUtils.close();
+        if (lines.size() > 0) {
+            WriteUtils writeUtils = new WriteUtils(file, false);
+            for (int i = 0; i < lines.size(); i++) {
+                if (lines.get(i).contains("rdfs:range")) {
+                    writeUtils.write(lines.get(i + 1));
+                    writeUtils.write(lines.get(i));
+                    i++;
+                } else {
+                    writeUtils.write(lines.get(i));
+                }
+            }
+            writeUtils.close();
+        }
     }
 }
