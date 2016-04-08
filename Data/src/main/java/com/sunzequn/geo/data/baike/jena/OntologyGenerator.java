@@ -58,7 +58,8 @@ public class OntologyGenerator {
         List<InfoBoxTemplateProp> props = propDao.getAll();
         for (InfoBoxTemplateProp prop : props) {
             prop.initAll();
-            if (prop.getType() == 1) {
+            //非0的是objectProperty
+            if (prop.getType() > 1) {
                 ObjectProperty property = model.createObjectProperty(CLINGA + pinyin.getPinyinWithFirstOneLower(prop.getName()));
                 model = completeProperty(model, property, prop);
                 for (String domain : prop.getDomains()) {

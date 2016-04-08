@@ -1,6 +1,7 @@
 package com.sunzequn.geo.data.baike.bean;
 
 import org.apache.commons.lang3.StringUtils;
+import scala.math.Numeric;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,10 +19,12 @@ public class InfoBoxTemplateProp {
     private String altname;
     private String ename;
     private String comment;
+    private String sameas;
 
     private List<String> domains = new ArrayList<>();
     private List<String> ranges = new ArrayList<>();
     private List<String> altnames = new ArrayList<>();
+    private List<String> sameases = new ArrayList<>();
 
     public InfoBoxTemplateProp() {
     }
@@ -36,6 +39,7 @@ public class InfoBoxTemplateProp {
     public void initAll() {
         initDomainsAndRange();
         initAltName();
+        initSameAs();
     }
 
     public void initDomainsAndRange() {
@@ -45,6 +49,10 @@ public class InfoBoxTemplateProp {
 
     public void initAltName() {
         init(altname, altnames);
+    }
+
+    public void initSameAs() {
+        init(sameas, sameases);
     }
 
     private void init(String string, List<String> strings) {
