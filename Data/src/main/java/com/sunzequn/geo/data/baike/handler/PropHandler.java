@@ -1,9 +1,9 @@
 package com.sunzequn.geo.data.baike.handler;
 
-import com.sunzequn.geo.data.baike.bean.BasicInfo;
+import com.sunzequn.geo.data.baike.bdbk.BasicInfo;
 import com.sunzequn.geo.data.baike.bean.InfoBoxTemplateProp;
 import com.sunzequn.geo.data.baike.bean.PropStatistics;
-import com.sunzequn.geo.data.baike.dao.BasicInfoDao;
+import com.sunzequn.geo.data.baike.bdbk.BasicInfoDao;
 import com.sunzequn.geo.data.baike.dao.InfoBoxTemplatePropDao;
 import com.sunzequn.geo.data.utils.ListUtils;
 import com.sunzequn.geo.data.utils.StringUtils;

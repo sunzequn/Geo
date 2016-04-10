@@ -124,9 +124,9 @@ public class NearbyCrawler {
 //            }
 //            for (int i = 0; i < nearbies.size(); i++) {
 //                Nearby nearby = nearbies.get(i);
-//                handledIdset.add(nearby.getId());
+//                handledIdset.add(nearby.getUrl());
 //                if (i == nearbies.size() - 1) {
-//                    start = nearby.getId();
+//                    start = nearby.getUrl();
 //                }
 //            }
 //            System.out.println("success");

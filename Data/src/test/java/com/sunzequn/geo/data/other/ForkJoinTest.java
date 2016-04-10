@@ -63,7 +63,7 @@ public class ForkJoinTest {
         }
 
         protected Long compute() {
-            //System.out.println("Thread ID: " + Thread.currentThread().getId());
+            //System.out.println("Thread ID: " + Thread.currentThread().getUrl());
 
             Long sum = 0l;
 

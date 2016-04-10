@@ -3,9 +3,7 @@ package com.sunzequn.geo.data.baike.bean;
 import com.sunzequn.geo.data.utils.MyStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by sunzequn on 2016/4/9.
@@ -23,44 +21,6 @@ public class Rule {
         } else {
             ruless.add(rules);
         }
-    }
-
-    //判断百科页面是否和当前规则匹配
-    public boolean isMatched(BaikePage page) {
-        for (String rule : ruless) {
-            if (!isMatched(rule, page)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isMatched(String rule, BaikePage page) {
-        rule = rule.trim();
-        //*xx
-        if (rule.startsWith("*") && !rule.endsWith("*")) {
-            String match = StringUtils.removeStart(rule, "*");
-            return page.getTitle().endsWith(match);
-        }
-        //*xx*
-        else if (rule.startsWith("*") && rule.endsWith("*")) {
-            String match = MyStringUtils.remove(rule, "*", "*");
-            return page.getTitle().contains(match);
-        }
-        //(*xx*)
-        else if (rule.startsWith("(*") && rule.endsWith("*)")) {
-            String match = MyStringUtils.remove(rule, "(*", "*)");
-            return page.getSubTitle().contains(match);
-        }
-        //(*xx)，和上面的顺序不能换
-        else if (rule.startsWith("(*") && rule.endsWith(")")) {
-            String match = MyStringUtils.remove(rule, "(*", ")");
-            System.out.println(page);
-            return page.getSubTitle().endsWith(match);
-        } else {
-            System.out.println("出错");
-        }
-        return false;
     }
 
     public Rule() {

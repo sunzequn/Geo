@@ -90,11 +90,11 @@
 //        List<Geoname> geonames = geonameDao.countryChildrenByFcode(country, fcode);
 //        if (geonames != null && places != null) {
 //            for (Place place : places) {
-//                String name = place.getTitle();
+//                String name = place.getSubtitle();
 //                name = LinkUtils.climateNameClear(name);
 //                Geoname matchGeo = null;
 //                for (Geoname geo : geonames) {
-//                    String name2 = geo.getTitle();
+//                    String name2 = geo.getSubtitle();
 //                    String asciiname = geo.getAsciiname();
 //                    String alterName = geo.getAlternatenames();
 //                    if (LinkUtils.isNameEqual(name, name2) || LinkUtils.isNameEqual(name, asciiname) || LinkUtils.isAlternameEqual(name, alterName)) {
@@ -113,7 +113,7 @@
 //    }
 //
 //    private void save(Geoname geoname, Place place) {
-//        placeLinkDao.save(new LinkBean(geoname.getGeonameid(), place.getId()));
+//        placeLinkDao.save(new LinkBean(geoname.getGeonameid(), place.getUrl()));
 //    }
 //
 //    private List<Place> getClimatePlaces(int countryId) {
@@ -125,7 +125,7 @@
 //        List<Region> regions = regionDao.getByParentId(countryId);
 //        if (regions != null) {
 //            for (Region region : regions) {
-//                List<Place> placesFromRegion = placeDao.getByParentId(region.getId());
+//                List<Place> placesFromRegion = placeDao.getByParentId(region.getUrl());
 //                if (placesFromRegion != null) {
 //                    places.addAll(placesFromRegion);
 //                }

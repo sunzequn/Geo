@@ -1,9 +1,9 @@
-package com.sunzequn.geo.data.baike.bean;
+package com.sunzequn.geo.data.baike.bdbk;
 
 /**
  * Created by sunzequn on 2016/4/5.
  */
-public class BasicInfo {
+public class BasicInfo implements BDBK {
 
     private String url;
     private String key;
