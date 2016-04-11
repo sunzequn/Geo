@@ -40,7 +40,6 @@ public class MappingGenerator {
         reformatRDF(MAPPING_FILE);
     }
 
-
     /**
      * 处理link关系
      */

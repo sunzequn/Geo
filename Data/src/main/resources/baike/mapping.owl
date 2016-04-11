@@ -1,0 +1,566 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:j.0="http://www.w3.org/2004/02/skos/core#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/Qiao">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.BDG"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Bridge"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShiDi">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.WTLD"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/HuBo">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.LK"/>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.LKN"/>
+          </owl:Restriction>
+        </owl:unionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Lake"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XiaoXi">
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Creek"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/WeiXing">
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Satellite"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/QiCheZhan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.BUSTN"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <j.0:broadMatch rdf:resource="http://dbpedia.org/ontology/Station"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/JiChang">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.AIRP"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Airport"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XianJiXingZhengQu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#A.ADM3"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShengJiXingZhengQu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#A.ADM1"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Province"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/SenLinGongYuan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#V.FRST"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <j.0:broadMatch rdf:resource="http://dbpedia.org/ontology/ProtectedArea"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/CanTing">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.REST"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Restaurant"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/QunDao">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.ISLS"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/GongYuan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#L.PRK"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Park"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/Yang">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.OCN"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Ocean"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/HaiWan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.BAY"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Bay"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/QiuLing">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.HLL"/>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.HLLS"/>
+          </owl:Restriction>
+        </owl:unionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShuiXi">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.STM"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Stream"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XingXing">
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Planet"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/DaZhou">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#L.CONT"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Continent"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/TieLu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#R.RR"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/RailwayLine"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/HengXing">
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Star"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/Shan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.MT"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Mountain"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/Jiao">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.RF"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XiangJiXingZhengQu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#A.ADM4"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/BinGuan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.HTL"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Hotel"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/Hai">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.SEA"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Sea"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/GaoYuan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.PLAT"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ZuZhiJiGou">
+    <j.0:broadMatch rdf:resource="http://dbpedia.org/ontology/Organisation"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShuiKu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.RSV"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShanFeng">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.PK"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/BoWuGuan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.MUS"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Museum"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/DiXingDiMao">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H"/>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T"/>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#U"/>
+          </owl:Restriction>
+        </owl:unionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/HuoShan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.VLC"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Volcano"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/JieQuLu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#R.ST"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Street"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/GongLu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#R.RD"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Road"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/DiJiXingZhengQu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#A.ADM2"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/HuoCheZhan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.RSTN"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/RailwayStation"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/YunHe">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.CNL"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Canal"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/GuanKou">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.PASS"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/MountainPass"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/Quan">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.SPNG"/>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.SPNT"/>
+          </owl:Restriction>
+        </owl:unionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <j.0:narrowMatch rdf:resource="http://dbpedia.org/ontology/HotSpring"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShanMai">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.MTS"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/MountainRange"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/Dao">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.ISL"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Island"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/HeLiu">
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/River"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/DongWuYuan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.ZOO"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Zoo"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/YiYuan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.HSP"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Hospital"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/PuBu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.FLLS"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XueXiao">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.SCH"/>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.SCHC"/>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.UNIV"/>
+          </owl:Restriction>
+        </owl:unionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/EducationalInstitution"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XiaGu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.GRGE"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Valley"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/PenDi">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#U.BSNU"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/GuoJia">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#A.PCLI"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Country"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XingZhengQuHua">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#A"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/GovernmentalAdministrativeRegion"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/SuiDao">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#R.TNL"/>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#R.TNLRD"/>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+            <owl:hasValue rdf:resource="http://www.geonames.org/ontology#R.TNLRR"/>
+          </owl:Restriction>
+        </owl:unionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <j.0:narrowMatch rdf:resource="http://dbpedia.org/ontology/RailwayTunnel"/>
+    <j.0:narrowMatch rdf:resource="http://dbpedia.org/ontology/RoadTunnel"/>
+    <j.0:narrowMatch rdf:resource="http://dbpedia.org/ontology/Tunnel"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/GuangChang">
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Square"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/PingYuan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.PLN"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XingTi">
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/CelestialBody"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/DiTieZhan">
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/MetroStation"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShaMo">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.DSRT"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Desert"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/GangKou">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.HBR"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Port"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/BanDao">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.PEN"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/HaiXia">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#H.STRT"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/FaDianZhan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.PS"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/PowerStation"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ZiRanBaoHuQu">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#L.RESN"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <j.0:broadMatch rdf:resource="http://dbpedia.org/ontology/ProtectedArea"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/HaiTan">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#T.BCH"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Beach"/>
+  </owl:Class>
+</rdf:RDF>
