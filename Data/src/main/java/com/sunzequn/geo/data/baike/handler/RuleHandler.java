@@ -21,6 +21,7 @@ public class RuleHandler {
     private static BasicInfoDao basicInfoDao = new BasicInfoDao();
     private static SubTitleDao subTitleDao = new SubTitleDao();
     private static TitleDao titleDao = new TitleDao();
+    private static UrlTypeDao urlTypeDao = new UrlTypeDao();
 
     public static void main(String[] args) {
         List<Rule> rules = ruleDao.getAll();
@@ -39,7 +40,7 @@ public class RuleHandler {
                 }
             }
             for (String s : res) {
-                System.out.println(s);
+                urlTypeDao.addType(s, rule.getType(), 1);
             }
         }
     }
