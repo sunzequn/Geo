@@ -94,10 +94,32 @@ public class RuleHandler {
         //*xx
         if (rule.startsWith("*") && !rule.endsWith("*")) {
             String match = StringUtils.removeStart(rule, "*");
+            //不包含的处理
+            List<String> notContains = new ArrayList<>();
+            if (match.contains("!")) {
+                String[] matchArr = StringUtils.split(match, "!");
+                match = matchArr[0];
+                for (int i = 1; i < matchArr.length; i++) {
+                    notContains.add(matchArr[i]);
+                }
+            }
             List<Title> titles = titleDao.getTitleEnds(match);
             if (!ListUtils.isEmpty(titles)) {
                 for (Title title : titles) {
-                    res.add(title.getUrl());
+                    if (notContains.size() > 0) {
+                        boolean ifMatched = true;
+                        for (String not : notContains) {
+                            if (title.getTitle().endsWith(not)) {
+                                ifMatched = false;
+                            }
+                        }
+                        if (ifMatched) {
+                            res.add(title.getUrl());
+                        }
+                    } else {
+                        res.add(title.getUrl());
+                    }
+
                 }
             } else {
                 return null;
