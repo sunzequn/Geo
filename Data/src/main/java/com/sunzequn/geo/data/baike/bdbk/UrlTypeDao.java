@@ -12,9 +12,13 @@ import java.util.List;
 public class UrlTypeDao extends BaseDao {
 
     private static final String DATABASE = "baidubaike";
-    private static final String TABLE = "url_type";
+    private static String TABLE = "url_type";
     private Connection connection;
 
+    public UrlTypeDao(String table) {
+        TABLE = table;
+        connection = getConnection(DATABASE);
+    }
     public UrlTypeDao() {
         connection = getConnection(DATABASE);
     }

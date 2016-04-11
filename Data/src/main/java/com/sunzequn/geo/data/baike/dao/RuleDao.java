@@ -13,10 +13,15 @@ import java.util.List;
 public class RuleDao extends BaseDao {
 
     private static final String DATABASE = "baidubaike";
-    private static final String TABLE = "rules";
+    private static String TABLE = "rules";
     private Connection connection;
 
     public RuleDao() {
+        connection = getConnection(DATABASE);
+    }
+
+    public RuleDao(String table) {
+        TABLE = table;
         connection = getConnection(DATABASE);
     }
 
