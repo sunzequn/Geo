@@ -1,13 +1,13 @@
 package com.sunzequn.geo.data.baike.handler;
 
 import com.sunzequn.geo.data.baike.bdbk.*;
-import com.sunzequn.geo.data.baike.bean.BaikePage;
 import com.sunzequn.geo.data.baike.bean.Rule;
 import com.sunzequn.geo.data.baike.dao.RuleDao;
 import com.sunzequn.geo.data.utils.ListUtils;
 import com.sunzequn.geo.data.utils.MyStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,8 +22,49 @@ public class RuleHandler {
     private static SubTitleDao subTitleDao = new SubTitleDao();
     private static TitleDao titleDao = new TitleDao();
     private static UrlTypeDao urlTypeDao = new UrlTypeDao();
+    private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
+        extract();
+//        completion();
+    }
+
+    private static void completion() {
+        while (true) {
+            List<UrlType> urlTypes = urlTypeDao.getAllUrlWithNull(1000);
+            if (ListUtils.isEmpty(urlTypes)) {
+                return;
+            }
+            for (UrlType urlType : urlTypes) {
+                Title title_bean = titleDao.getByUrl(urlType.getUrl());
+                SubTitle subTitle_bean = subTitleDao.getByUrl(urlType.getUrl());
+                Summary summary_bean = summaryDao.getByUrl(urlType.getUrl());
+                String title, subtitle, summary;
+                if (title_bean == null) {
+                    title = "";
+                } else {
+                    title = title_bean.getTitle();
+                }
+                urlType.setTitle(title);
+                if (subTitle_bean == null) {
+                    subtitle = "";
+                } else {
+                    subtitle = subTitle_bean.getSubtitle();
+                }
+                urlType.setSubtitle(subtitle);
+                if (summary_bean == null) {
+                    summary = "";
+                } else {
+                    summary = summary_bean.getSummary();
+                }
+                urlType.setSummary(summary);
+            }
+            System.out.println(urlTypes.size());
+            urlTypeDao.updateBatch(urlTypes);
+        }
+    }
+
+    private static void extract() {
         List<Rule> rules = ruleDao.getAll();
         for (Rule rule : rules) {
             rule.initRules();
@@ -39,9 +80,11 @@ public class RuleHandler {
                     }
                 }
             }
+            List<UrlType> urlTypes = new ArrayList<>();
             for (String s : res) {
-                urlTypeDao.addType(s, rule.getType(), 1);
+                urlTypes.add(new UrlType(s, rule.getType(), 1));
             }
+            urlTypeDao.addTypeBatch(urlTypes);
         }
     }
 

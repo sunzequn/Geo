@@ -147,6 +147,22 @@ public class InfoBoxTemplateProp {
         this.ranges = ranges;
     }
 
+    public String getSameas() {
+        return sameas;
+    }
+
+    public void setSameas(String sameas) {
+        this.sameas = sameas;
+    }
+
+    public List<String> getSameases() {
+        return sameases;
+    }
+
+    public void setSameases(List<String> sameases) {
+        this.sameases = sameases;
+    }
+
     @Override
     public String toString() {
         return "InfoBoxTemplateProp{" +
