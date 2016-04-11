@@ -60,7 +60,7 @@ public class RegionDao extends BaseDao {
 //        Region region = new Region(0, "name", "url", 136, 0);
         RegionDao regionDao = new RegionDao();
 //        regionDao.save(region);
-//        region.setTitle("name2");
+//        region.setSubtitle("name2");
 //        regionDao.save(region);
         System.out.println(regionDao.getByParentId(136));
 

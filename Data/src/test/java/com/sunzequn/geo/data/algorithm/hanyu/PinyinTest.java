@@ -11,7 +11,7 @@ public class PinyinTest {
 
     @Test
     public void getPinyinTest() {
-        String[] pinyins = pinyin.getPinyin('孙');
-        System.out.println(pinyins[0]);
+        String pinyins = pinyin.getPinyin('孙');
+        System.out.println(pinyins);
     }
 }

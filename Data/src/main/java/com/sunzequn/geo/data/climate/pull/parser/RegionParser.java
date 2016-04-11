@@ -100,12 +100,12 @@ public class RegionParser extends PullText {
 //        PlaceDao dao = new PlaceDao();
 //        for (Country country : countries) {
 //            String url = PREFIX + country.getUrl();
-//            List<Place> places = parser(url, country.getId());
+//            List<Place> places = parser(url, country.getUrl());
 //            if (places != null) {
 //                for (Place place : places) {
 //                    dao.save(place, FROM_COUNTRY_TABLE_NAME);
 //                }
-//                countryDao.update(country.getId(), 1);
+//                countryDao.update(country.getUrl(), 1);
 //            }
 //        }
 //    }
@@ -116,12 +116,12 @@ public class RegionParser extends PullText {
 //        PlaceDao dao = new PlaceDao();
 //        for (Region region : regions) {
 //            String url = PREFIX + region.getUrl();
-//            List<Place> places = parser(url, region.getId());
+//            List<Place> places = parser(url, region.getUrl());
 //            if (places != null) {
 //                for (Place place : places) {
 //                    dao.save(place, TABLE_NAME);
 //                }
-//                regionDao.update(region.getId(), 1);
+//                regionDao.update(region.getUrl(), 1);
 //            }
 //        }
 

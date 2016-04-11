@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public class MyStringUtils {
 
     public static String removePrefix(String string, String prefix) {
-        return string.replaceFirst(prefix, "").trim();
+        return StringUtils.removeStart(string, prefix);
     }
 
     public static String removeSuffix(String string, String suffix) {

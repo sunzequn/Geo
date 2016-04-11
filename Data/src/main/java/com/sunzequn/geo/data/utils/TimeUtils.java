@@ -19,6 +19,7 @@ public class TimeUtils {
     }
 
     public long duration() {
+        end();
         return endTime - startTime;
     }
 

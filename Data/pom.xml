@@ -69,7 +69,6 @@
             <version>3.0.0</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.belerweb</groupId>
             <artifactId>pinyin4j</artifactId>

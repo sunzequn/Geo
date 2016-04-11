@@ -56,7 +56,7 @@ public class ReadUtils {
         }
         List<String> strings = new ArrayList<>();
         while (lineIterator.hasNext()) {
-            String line = lineIterator.nextLine().trim();
+            String line = lineIterator.nextLine();
             strings.add(line);
         }
         return strings;
