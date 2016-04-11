@@ -33,6 +33,7 @@ public class OntologyGenerator {
     private static final String DBO = "http://dbpedia.org/ontology/";
     private static final String GEO = "http://www.geonames.org/ontology#";
     private static final String GEO_F = "http://www.geonames.org/ontology#featureCode";
+    private static final String FOAF = "http://xmlns.com/foaf/0.1/";
     //百度百科uri前缀
     private static final String CLINGA = "http://ws.nju.edu.cn/clinga/ontology/";
     private static Pinyin pinyin = new Pinyin();
@@ -67,7 +68,11 @@ public class OntologyGenerator {
                 }
                 if (!StringUtils.isNullOrEmpty(prop.getRange1())) {
                     for (String range : prop.getRanges()) {
-                        property.addRange(model.getOntClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(range)));
+                        if (range.contains("foaf")) {
+                            property.addRange(model.createResource(FOAF + StringUtils.removeStart(range, "foaf:")));
+                        } else {
+                            property.addRange(model.getOntClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(range)));
+                        }
                     }
                 }
             } else {

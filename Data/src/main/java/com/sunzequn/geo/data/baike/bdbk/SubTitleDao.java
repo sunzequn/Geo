@@ -19,10 +19,14 @@ public class SubTitleDao extends ServerDao {
         connection = getConnection(DATABASE);
     }
 
-    public List<SubTitle> getByUrl(String url) {
+    public SubTitle getByUrl(String url) {
         String sql = "select * from " + TABLE + " where url = ?";
         Object[] params = {url};
-        return query(connection, sql, params, SubTitle.class);
+        List<SubTitle> subTitles = query(connection, sql, params, SubTitle.class);
+        if (ListUtils.isEmpty(subTitles)) {
+            return null;
+        }
+        return subTitles.get(0);
     }
 
     public List<SubTitle> getSubtitleEnds(String ends) {

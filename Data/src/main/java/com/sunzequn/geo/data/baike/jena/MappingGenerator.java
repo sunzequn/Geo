@@ -1,9 +1,12 @@
 package com.sunzequn.geo.data.baike.jena;
 
 import com.sunzequn.geo.data.algorithm.hanyu.Pinyin;
+import com.sunzequn.geo.data.baike.bean.InfoBoxTemplateProp;
 import com.sunzequn.geo.data.baike.bean.TypeLink;
+import com.sunzequn.geo.data.baike.dao.InfoBoxTemplatePropDao;
 import com.sunzequn.geo.data.baike.dao.TypeLinkDao;
 import com.sunzequn.geo.data.utils.ReadUtils;
+import com.sunzequn.geo.data.utils.StringUtils;
 import com.sunzequn.geo.data.utils.WriteUtils;
 import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -43,6 +46,30 @@ public class MappingGenerator {
      */
     private static void generateRelation() {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
+        generateClassRel(model);
+        generatePropertyRel(model);
+        toFile(model, MAPPING_FILE);
+    }
+
+    private static void generatePropertyRel(OntModel model) {
+
+        InfoBoxTemplatePropDao propDao = new InfoBoxTemplatePropDao();
+        List<InfoBoxTemplateProp> props = propDao.getAll();
+        for (InfoBoxTemplateProp prop : props) {
+            if (StringUtils.isNullOrEmpty(prop.getSameas())) {
+                prop.initSameAs();
+                for (String same : prop.getAltnames()) {
+                    if (same.startsWith("dbo:")) {
+                        same = StringUtils.removeStart(same, "dbo:");
+
+                    }
+                }
+            }
+        }
+
+    }
+
+    private static void generateClassRel(OntModel model) {
         TypeLinkDao dao = new TypeLinkDao();
         List<TypeLink> links = dao.getAll();
         for (TypeLink link : links) {
@@ -54,7 +81,6 @@ public class MappingGenerator {
                 System.out.println("link error");
             }
         }
-        toFile(model, MAPPING_FILE);
     }
 
     private static void handleDboLink(TypeLink link, OntModel model) {

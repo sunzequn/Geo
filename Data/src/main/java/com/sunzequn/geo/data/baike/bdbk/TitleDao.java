@@ -21,10 +21,14 @@ public class TitleDao extends ServerDao {
         connection = getConnection(DATABASE);
     }
 
-    public List<Title> getByUrl(String url) {
+    public Title getByUrl(String url) {
         String sql = "select * from " + TABLE + " where url = ?";
         Object[] params = {url};
-        return query(connection, sql, params, Title.class);
+        List<Title> titles = query(connection, sql, params, Title.class);
+        if (ListUtils.isEmpty(titles)) {
+            return null;
+        }
+        return titles.get(0);
     }
 
     public List<Title> getTitleEnds(String ends) {

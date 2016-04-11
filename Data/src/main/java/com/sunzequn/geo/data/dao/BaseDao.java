@@ -73,4 +73,18 @@ public class BaseDao {
         return 0;
     }
 
+    protected int[] batch(Connection connection, String sql, Object[][] params) {
+        try {
+            connection.setAutoCommit(false);
+            QueryRunner queryRunner = new QueryRunner();
+            int[] res = queryRunner.batch(connection, sql, params);
+            connection.commit();
+            return res;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

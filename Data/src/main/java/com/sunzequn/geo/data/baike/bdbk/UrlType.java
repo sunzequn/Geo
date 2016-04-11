@@ -6,13 +6,26 @@ package com.sunzequn.geo.data.baike.bdbk;
 public class UrlType {
 
     private String url;
-    private String typr;
+    private String type;
     private int confidence;
     private String title;
     private String subtitle;
     private String summary;
 
     public UrlType() {
+    }
+
+    public UrlType(String url, String title, String subtitle, String summary) {
+        this.url = url;
+        this.title = title;
+        this.subtitle = subtitle;
+        this.summary = summary;
+    }
+
+    public UrlType(String url, String type, int confidence) {
+        this.url = url;
+        this.type = type;
+        this.confidence = confidence;
     }
 
     public String getUrl() {
@@ -23,12 +36,12 @@ public class UrlType {
         this.url = url;
     }
 
-    public String getTypr() {
-        return typr;
+    public String getType() {
+        return type;
     }
 
-    public void setTypr(String typr) {
-        this.typr = typr;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getConfidence() {
@@ -67,7 +80,7 @@ public class UrlType {
     public String toString() {
         return "UrlType{" +
                 "url='" + url + '\'' +
-                ", typr='" + typr + '\'' +
+                ", type='" + type + '\'' +
                 ", confidence=" + confidence +
                 ", title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
