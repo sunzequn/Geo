@@ -7,6 +7,7 @@ import com.sunzequn.geo.data.utils.ListUtils;
 import com.sunzequn.geo.data.utils.MyStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,8 +26,8 @@ public class RuleHandler {
     private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
-        extract();
-//        completion();
+//        extract();
+        completion();
     }
 
     private static void completion() {
