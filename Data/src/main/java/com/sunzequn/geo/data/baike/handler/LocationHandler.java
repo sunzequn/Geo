@@ -25,26 +25,35 @@ public class LocationHandler {
     private static LocationPull locationPull = new LocationPull();
 
     public static void main(String[] args) {
-//        getLocation("学校");
-        xingzhengquhua();
+        getLocation();
+//        xingzhengquhua();
     }
 
-    private static void getLocation(String type) {
-        List<UrlType> urlTypes = urlTypeDao.getByType(type);
+    private static void getLocation() {
+        List<UrlType> urlTypes = urlTypeDao.getAll();
         List<UrlTypeLocation> urlTypeLocations = new ArrayList<>();
         for (UrlType urlType : urlTypes) {
-            BDDT bddt = locationPull.getLngLat(urlType.getTitle());
-            if (bddt.isValid()) {
-                UrlTypeLocation urlTypeLocation = new UrlTypeLocation(urlType.getUrl(), urlType.getType(), urlType.getTitle());
-                urlTypeLocation.setLng(bddt.getLng());
-                urlTypeLocation.setLat(bddt.getLat());
-                urlTypeLocation.setConfidence(bddt.getConfidence());
-                urlTypeLocation.setLevel(bddt.getLevel());
-                urlTypeLocation.setPrecise(bddt.getPrecise());
-                System.out.println(urlTypeLocation);
-                urlTypeLocations.add(urlTypeLocation);
-                urlTypeLocationDao.add(urlTypeLocation);
+            try {
+                BDDT bddt = locationPull.getLngLat(urlType.getTitle());
+                if (bddt.isValid()) {
+                    UrlTypeLocation urlTypeLocation = new UrlTypeLocation(urlType.getUrl(), urlType.getType(), urlType.getTitle());
+                    urlTypeLocation.setLng(bddt.getLng());
+                    urlTypeLocation.setLat(bddt.getLat());
+                    urlTypeLocation.setConfidence(bddt.getConfidence());
+                    urlTypeLocation.setLevel(bddt.getLevel());
+                    urlTypeLocation.setPrecise(bddt.getPrecise());
+                    System.out.println(urlTypeLocation);
+                    urlTypeLocations.add(urlTypeLocation);
+                    if (urlTypeLocations.size() == 100) {
+                        urlTypeLocationDao.addBatch(urlTypeLocations);
+                        urlTypeLocations = new ArrayList<>();
+                    }
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
         }
 //        if (urlTypeLocations.size() > 0){
 //            urlTypeLocationDao.addBatch(urlTypeLocations);

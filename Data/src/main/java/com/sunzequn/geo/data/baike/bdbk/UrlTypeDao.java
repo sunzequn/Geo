@@ -30,6 +30,11 @@ public class UrlTypeDao extends BaseDao {
         return query(connection, sql, params, UrlType.class);
     }
 
+    public List<UrlType> getAll() {
+        String sql = "select * from " + TABLE;
+        return query(connection, sql, null, UrlType.class);
+    }
+
     public List<UrlType> getByType(String type) {
         String sql = "select * from " + TABLE + " where type = ?";
         Object[] params = {type};
@@ -74,7 +79,8 @@ public class UrlTypeDao extends BaseDao {
 
     public static void main(String[] args) {
         UrlTypeDao dao = new UrlTypeDao();
-        System.out.println(dao.getByTitle("丁陆海", "北京市"));
+        System.out.println(dao.getAll().size());
+//        System.out.println(dao.getByTitle("丁陆海", "北京市"));
 //        List<UrlType> urlTypes = new ArrayList<>();
 //        UrlType u1 = new UrlType("1", "s1", 1);
 //        UrlType u2 = new UrlType("2", "s2", 1);
