@@ -20,6 +20,11 @@ public class ChinaCityDao extends BaseDao {
         connection = getConnection(DATABASE);
     }
 
+    public List<ChinaCity> getAll() {
+        String sql = "select * from china_city";
+        return query(connection, sql, null, ChinaCity.class);
+    }
+
     public ChinaCity getById(int id) {
         String sql = "select * from " + TABLE + " where id = " + id;
         List<ChinaCity> chinaCities = query(connection, sql, null, ChinaCity.class);

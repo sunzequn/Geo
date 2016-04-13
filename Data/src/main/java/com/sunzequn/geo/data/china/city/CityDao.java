@@ -1,5 +1,6 @@
 package com.sunzequn.geo.data.china.city;
 
+import com.sunzequn.geo.data.dao.BaseDao;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
@@ -11,99 +12,59 @@ import java.util.List;
 /**
  * Created by Sloriac on 15/12/30.
  */
-public class CityDao {
+public class CityDao extends BaseDao {
 
-    private static final String CLASS_NAME = "com.mysql.jdbc.Driver";
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/geocities?useUnicode=true&characterEncoding=UTF-8";
-    private static Connection conn;
-
+    private static final String DATABASE = "geonames";
+    private static final String TABLE = "china_city";
+    private Connection connection;
     public CityDao() {
-        getConnection();
-    }
-
-    private void getConnection() {
-        try {
-            Class.forName(CLASS_NAME);
-            conn = DriverManager.getConnection(JDBC_URL, "root", "root");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        connection = getConnection(DATABASE);
     }
 
     public int save(ChinaCity city) {
-        QueryRunner queryRunner = new QueryRunner();
         String sql = "insert into china_city values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] params = {city.getId(), city.getName(), city.getShortName(), city.getMergerName(),
                 city.getPinyin(), city.getCityCode(), city.getZipCode(), city.getParentId(),
                 city.getLevelType(), city.getLng(), city.getLat()};
-        try {
-            int res = queryRunner.update(conn, sql, params);
-            return res;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return execute(connection, sql, params);
     }
 
     public List<ChinaCity> getCityById(int id) {
         String sql = "select * from china_city where id = ?";
         Object[] params = {id};
-        return query(sql, params);
+        return query(connection, sql, params, ChinaCity.class);
     }
 
     public List<ChinaCity> getCityByName(String name) {
         String sql = "select * from china_city where name = ?";
         Object[] params = {name};
-        return query(sql, params);
+        return query(connection, sql, params, ChinaCity.class);
     }
 
     public List<ChinaCity> getCityByLevel(int level) {
         String sql = "select * from china_city where leveltype = ?";
         Object[] params = {level};
-        return query(sql, params);
+        return query(connection, sql, params, ChinaCity.class);
     }
 
     public List<ChinaCity> getCityByParent(int parentId) {
         String sql = "select * from china_city where parentid = ?";
         Object[] params = {parentId};
-        return query(sql, params);
-    }
-
-    private List<ChinaCity> query(String sql, Object[] params) {
-        QueryRunner queryRunner = new QueryRunner();
-        try {
-            List<ChinaCity> chinacities = queryRunner.query(conn, sql, new BeanListHandler<ChinaCity>(ChinaCity.class), params);
-            if (chinacities != null && chinacities.size() > 0) {
-                return chinacities;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return query(connection, sql, params, ChinaCity.class);
     }
 
     public int deleteById(int id) {
         QueryRunner queryRunner = new QueryRunner();
         String sql = "delete from china_city where id = ?";
         Object[] params = {id};
-        try {
-            return queryRunner.update(conn, sql, params);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return execute(connection, sql, params);
     }
 
     public int updateBadData(int id, String mergerName, int parentId, int levelType) {
         QueryRunner queryRunner = new QueryRunner();
         String sql = "update china_city set mergername = ?, parentid = ?, leveltype = ? where id = ?";
         Object[] params = {mergerName, parentId, levelType, id};
-        try {
-            return queryRunner.update(conn, sql, params);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return execute(connection, sql, params);
 
     }
 

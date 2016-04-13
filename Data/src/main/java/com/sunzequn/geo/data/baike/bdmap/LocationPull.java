@@ -15,7 +15,8 @@ public class LocationPull extends PullText {
 
 
     private static String prefix = "http://api.map.baidu.com/geocoder/v2/?address=";
-    private static String suffix = "&output=json&ak=F12acc6f0e6b3d447be9e226846e4f6e";
+    private static String ak = "F12acc6f0e6b3d447be9e226846e4f6e";//孙
+    private static String suffix = "&output=json&ak=" + ak;
 
     public static void main(String[] args) throws IOException {
         LocationPull locationHandler = new LocationPull();

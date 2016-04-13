@@ -6,9 +6,14 @@ import com.sunzequn.geo.data.baike.bdbk.UrlTypeLocation;
 import com.sunzequn.geo.data.baike.bdbk.UrlTypeLocationDao;
 import com.sunzequn.geo.data.baike.bdmap.BDDT;
 import com.sunzequn.geo.data.baike.bdmap.LocationPull;
+import com.sunzequn.geo.data.china.geo.ChinaCity;
+import com.sunzequn.geo.data.china.geo.ChinaCityDao;
+import com.sunzequn.geo.data.utils.ListUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by sunzequn on 2016/4/12.
@@ -20,7 +25,8 @@ public class LocationHandler {
     private static LocationPull locationPull = new LocationPull();
 
     public static void main(String[] args) {
-        getLocation("学校");
+//        getLocation("学校");
+        xingzhengquhua();
     }
 
     private static void getLocation(String type) {
@@ -44,4 +50,26 @@ public class LocationHandler {
 //            urlTypeLocationDao.addBatch(urlTypeLocations);
 //        }
     }
+
+    private static void xingzhengquhua() {
+        Set<String> urls = new HashSet<>();
+        ChinaCityDao chinaCityDao = new ChinaCityDao();
+        List<ChinaCity> chinaCities = chinaCityDao.getAll();
+        for (ChinaCity chinaCity : chinaCities) {
+            List<UrlType> urlTypes = urlTypeDao.getByTitle(chinaCity.getName(), chinaCity.getShortname());
+            if (!ListUtils.isEmpty(urlTypes)) {
+                for (UrlType urlType : urlTypes) {
+                    UrlTypeLocation urlTypeLocation = new UrlTypeLocation(urlType.getUrl(), urlType.getType(), urlType.getTitle());
+                    urlTypeLocation.setLng(chinaCity.getLng());
+                    urlTypeLocation.setLat(chinaCity.getLat());
+                    urls.add(urlType.getTitle());
+                    System.out.println(urlTypeLocation);
+//                    urlTypeLocationDao.add(urlTypeLocation);
+                }
+            }
+
+        }
+        System.out.println(urls.size());
+    }
+
 }

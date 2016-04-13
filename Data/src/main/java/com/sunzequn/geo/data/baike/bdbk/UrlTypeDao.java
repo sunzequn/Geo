@@ -24,6 +24,12 @@ public class UrlTypeDao extends BaseDao {
         connection = getConnection(DATABASE);
     }
 
+    public List<UrlType> getByTitle(String title1, String title2) {
+        String sql = "select * from " + TABLE + " where title = ? or title = ?";
+        Object[] params = {title1, title2};
+        return query(connection, sql, params, UrlType.class);
+    }
+
     public List<UrlType> getByType(String type) {
         String sql = "select * from " + TABLE + " where type = ?";
         Object[] params = {type};
@@ -68,13 +74,14 @@ public class UrlTypeDao extends BaseDao {
 
     public static void main(String[] args) {
         UrlTypeDao dao = new UrlTypeDao();
-        List<UrlType> urlTypes = new ArrayList<>();
-        UrlType u1 = new UrlType("1", "s1", 1);
-        UrlType u2 = new UrlType("2", "s2", 1);
-        UrlType u3 = new UrlType("3", "s3", 1);
-        urlTypes.add(u1);
-        urlTypes.add(u2);
-        urlTypes.add(u3);
-        dao.addTypeBatch(urlTypes);
+        System.out.println(dao.getByTitle("丁陆海", "北京市"));
+//        List<UrlType> urlTypes = new ArrayList<>();
+//        UrlType u1 = new UrlType("1", "s1", 1);
+//        UrlType u2 = new UrlType("2", "s2", 1);
+//        UrlType u3 = new UrlType("3", "s3", 1);
+//        urlTypes.add(u1);
+//        urlTypes.add(u2);
+//        urlTypes.add(u3);
+//        dao.addTypeBatch(urlTypes);
     }
 }
