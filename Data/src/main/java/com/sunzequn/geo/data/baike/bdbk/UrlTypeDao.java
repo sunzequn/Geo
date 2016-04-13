@@ -1,6 +1,7 @@
 package com.sunzequn.geo.data.baike.bdbk;
 
 import com.sunzequn.geo.data.dao.BaseDao;
+import org.neo4j.cypher.internal.compiler.v2_2.functions.Str;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -21,6 +22,12 @@ public class UrlTypeDao extends BaseDao {
     }
     public UrlTypeDao() {
         connection = getConnection(DATABASE);
+    }
+
+    public List<UrlType> getByType(String type) {
+        String sql = "select * from " + TABLE + " where type = ?";
+        Object[] params = {type};
+        return query(connection, sql, params, UrlType.class);
     }
 
     public int addType(String url, String type, int confidence) {
