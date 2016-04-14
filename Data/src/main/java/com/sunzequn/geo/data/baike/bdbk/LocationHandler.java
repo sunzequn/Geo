@@ -39,9 +39,11 @@ public class LocationHandler {
             urls.add(location.getUrl());
         }
         List<UrlTypeLocation> urlTypeLocations = new ArrayList<>();
+        int visited = 0;
         for (UrlType urlType : urlTypes) {
             if (urls.contains(urlType.getUrl())) {
-                System.out.println("1");
+                visited++;
+                System.out.println(visited);
                 continue;
             }
             try {
