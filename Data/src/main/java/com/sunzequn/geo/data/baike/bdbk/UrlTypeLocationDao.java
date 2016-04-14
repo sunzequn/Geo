@@ -17,6 +17,11 @@ public class UrlTypeLocationDao extends BaseDao {
         connection = getConnection(DATABASE);
     }
 
+    public List<UrlTypeLocation> getAllUrl() {
+        String sql = "select url from " + TABLE;
+        return query(connection, sql, null, UrlTypeLocation.class);
+    }
+
     public int add(UrlTypeLocation urlTypeLocation) {
         String sql = "insert into " + TABLE + " (url, type, title, lng, lat, precise, confidence, level) values (?, ?, ?, ?, ?, ?, ?, ?)";
         Object[] parmas = {urlTypeLocation.getUrl(), urlTypeLocation.getType(), urlTypeLocation.getTitle(), urlTypeLocation.getLng(), urlTypeLocation.getLat(),

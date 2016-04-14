@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.baike.handler;
+package com.sunzequn.geo.data.baike.bdbk;
 
 import com.sunzequn.geo.data.baike.bdbk.UrlType;
 import com.sunzequn.geo.data.baike.bdbk.UrlTypeDao;
@@ -31,8 +31,19 @@ public class LocationHandler {
 
     private static void getLocation() {
         List<UrlType> urlTypes = urlTypeDao.getAll();
+        System.out.println(urlTypes.size());
+        List<UrlTypeLocation> locations = urlTypeLocationDao.getAllUrl();
+        System.out.println(locations.size());
+        Set<String> urls = new HashSet<>();
+        for (UrlTypeLocation location : locations) {
+            urls.add(location.getUrl());
+        }
         List<UrlTypeLocation> urlTypeLocations = new ArrayList<>();
         for (UrlType urlType : urlTypes) {
+            if (urls.contains(urlType.getUrl())) {
+                System.out.println("1");
+                continue;
+            }
             try {
                 BDDT bddt = locationPull.getLngLat(urlType.getTitle());
                 if (bddt.isValid()) {

@@ -97,7 +97,7 @@
   </owl:Class>
   <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/CanTing">
     <rdfs:subClassOf>
-      <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/YingYeChangSuo"/>
+      <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShengHuoChangSuo"/>
     </rdfs:subClassOf>
     <j.0:altLabel xml:lang="en">restaurant</j.0:altLabel>
     <j.0:altLabel xml:lang="zh">餐馆</j.0:altLabel>
@@ -336,6 +336,13 @@
       <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XingZhengQuHua"/>
     </rdfs:subClassOf>
   </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/LouPan">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShengHuoChangSuo"/>
+    </rdfs:subClassOf>
+    <rdfs:label xml:lang="zh">楼盘</rdfs:label>
+    <j.0:prefLabel xml:lang="zh">楼盘</j.0:prefLabel>
+  </owl:Class>
   <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/SuiDao">
     <rdfs:subClassOf>
       <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/JiaoTongSheShi"/>
@@ -416,12 +423,6 @@
     <j.0:altLabel xml:lang="en">area</j.0:altLabel>
     <rdfs:label xml:lang="zh">地区</rdfs:label>
     <j.0:prefLabel xml:lang="zh">地区</j.0:prefLabel>
-  </owl:Class>
-  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/YingYeChangSuo">
-    <j.0:altLabel xml:lang="en">place of business</j.0:altLabel>
-    <rdfs:label xml:lang="zh">营业场所</rdfs:label>
-    <j.0:prefLabel xml:lang="zh">营业场所</j.0:prefLabel>
-    <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/RenWenDiLi"/>
   </owl:Class>
   <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ZiRanBaoHuQu">
     <rdfs:comment xml:lang="zh">对有代表性的自然生态系统、珍稀濒危野生动植物物种的天然集中分布、有特殊意义的自然遗迹等保护对象所在的陆地、陆地水域或海域，依法划出一定面积予以特殊保护和管理的区域</rdfs:comment>
@@ -651,7 +652,9 @@ bus station</j.0:altLabel>
     <j.0:prefLabel xml:lang="zh">市辖区</j.0:prefLabel>
   </owl:Class>
   <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/BinGuan">
-    <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/YingYeChangSuo"/>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShengHuoChangSuo"/>
+    </rdfs:subClassOf>
     <j.0:altLabel xml:lang="en">guesthouse</j.0:altLabel>
     <j.0:altLabel xml:lang="zh">酒店</j.0:altLabel>
     <j.0:altLabel xml:lang="zh">旅馆</j.0:altLabel>
@@ -739,6 +742,12 @@ bus station</j.0:altLabel>
     <rdfs:label xml:lang="zh">火山</rdfs:label>
     <j.0:prefLabel xml:lang="zh">火山</j.0:prefLabel>
     <rdfs:comment xml:lang="zh">由固体碎屑、熔岩流或穹状喷出物围绕着其喷出口堆积而成的隆起的丘或山</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShengHuoChangSuo">
+    <j.0:altLabel xml:lang="en">place of business</j.0:altLabel>
+    <rdfs:label xml:lang="zh">生活场所</rdfs:label>
+    <j.0:prefLabel xml:lang="zh">生活场所</j.0:prefLabel>
+    <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/RenWenDiLi"/>
   </owl:Class>
   <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/JiCengQunZhongXingZiZhiQuYu">
     <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XingZhengQuHua"/>
@@ -946,7 +955,6 @@ bus station</j.0:altLabel>
     <j.0:prefLabel xml:lang="zh">主峰</j.0:prefLabel>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://ws.nju.edu.cn/clinga/ontology/zhiMingXiaoYou">
-    <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
     <rdfs:domain rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XueXiao"/>
     <j.0:altLabel xml:lang="en">well-known alumni</j.0:altLabel>
     <rdfs:label xml:lang="zh">知名校友</rdfs:label>
@@ -985,14 +993,12 @@ bus station</j.0:altLabel>
     <j.0:prefLabel xml:lang="zh">所属山系</j.0:prefLabel>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://ws.nju.edu.cn/clinga/ontology/yuanZhang">
-    <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
     <rdfs:domain rdf:resource="http://ws.nju.edu.cn/clinga/ontology/YiYuan"/>
     <j.0:altLabel xml:lang="en">director of the hospital</j.0:altLabel>
     <rdfs:label xml:lang="zh">院长</rdfs:label>
     <j.0:prefLabel xml:lang="zh">院长</j.0:prefLabel>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://ws.nju.edu.cn/clinga/ontology/faXianZhe">
-    <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
     <rdfs:domain rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XingTi"/>
     <rdfs:label xml:lang="zh">发现者</rdfs:label>
     <j.0:prefLabel xml:lang="zh">发现者</j.0:prefLabel>
@@ -1011,7 +1017,6 @@ bus station</j.0:altLabel>
     <j.0:prefLabel xml:lang="zh">主管部门</j.0:prefLabel>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="http://ws.nju.edu.cn/clinga/ontology/xianRenXiaoZhang">
-    <rdfs:range rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
     <rdfs:domain rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XueXiao"/>
     <j.0:altLabel xml:lang="en">current president of the school</j.0:altLabel>
     <rdfs:label xml:lang="zh">现任校长</rdfs:label>

@@ -43,6 +43,12 @@ public class BasicInfoDao extends ServerDao {
         return true;
     }
 
+    public List<BasicInfo> getByUrl(String url) {
+        String sql = "select * from " + TABLE + " where url = ?";
+        Object[] params = {url};
+        return query(connection, sql, params, BasicInfo.class);
+    }
+
 
     public static void main(String[] args) {
         BasicInfoDao dao = new BasicInfoDao();

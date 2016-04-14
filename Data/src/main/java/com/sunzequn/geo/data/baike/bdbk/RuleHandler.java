@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.baike.handler;
+package com.sunzequn.geo.data.baike.bdbk;
 
 import com.sunzequn.geo.data.baike.bdbk.*;
 import com.sunzequn.geo.data.baike.bean.Rule;

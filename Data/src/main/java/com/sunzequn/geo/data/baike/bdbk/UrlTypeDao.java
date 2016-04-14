@@ -31,7 +31,7 @@ public class UrlTypeDao extends BaseDao {
     }
 
     public List<UrlType> getAll() {
-        String sql = "select * from " + TABLE;
+        String sql = "select * from " + TABLE + " where confidence = 1 order by url desc";
         return query(connection, sql, null, UrlType.class);
     }
 
@@ -62,6 +62,12 @@ public class UrlTypeDao extends BaseDao {
     public List<UrlType> getAllUrlWithNull(int limit) {
         String sql = "select distinct url from " + TABLE + " where title is null limit " + limit;
         return query(connection, sql, null, UrlType.class);
+    }
+
+    public int updateConfidence(String url, int confidence) {
+        String sql = "update " + TABLE + " set confidence = ? where url = ?";
+        Object[] params = {confidence, url};
+        return execute(connection, sql, params);
     }
 
     public int[] updateBatch(List<UrlType> urlTypes) {
