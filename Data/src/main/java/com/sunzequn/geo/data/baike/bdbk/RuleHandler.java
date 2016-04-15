@@ -18,21 +18,22 @@ import java.util.Set;
  */
 public class RuleHandler {
 
-    private static RuleDao ruleDao = new RuleDao();
+    private static RuleDao ruleDao = new RuleDao("rules_broad");
     private static BasicInfoDao basicInfoDao = new BasicInfoDao();
     private static SubTitleDao subTitleDao = new SubTitleDao();
     private static TitleDao titleDao = new TitleDao();
-    private static UrlTypeDao urlTypeDao = new UrlTypeDao();
+    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_broad");
     private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
-//        extract();
-        completion();
+        extract();
+//        completion();
     }
 
     private static void completion() {
         while (true) {
-            List<UrlType> urlTypes = urlTypeDao.getAllUrlWithNull(1000);
+            List<UrlType> urlTypes = urlTypeDao.getAllUrlWithNull(10);
+            System.out.println(urlTypes.size());
             if (ListUtils.isEmpty(urlTypes)) {
                 return;
             }
@@ -80,6 +81,7 @@ public class RuleHandler {
                         res.retainAll(matcheds);
                     }
                 }
+                System.out.println("===   " + res.size());
             }
             List<UrlType> urlTypes = new ArrayList<>();
             for (String s : res) {
@@ -90,6 +92,7 @@ public class RuleHandler {
     }
 
     private static Set<String> getMatched(String rule) {
+        System.out.println(rule);
         rule = rule.trim();
         Set<String> res = new HashSet<>();
         //*xx

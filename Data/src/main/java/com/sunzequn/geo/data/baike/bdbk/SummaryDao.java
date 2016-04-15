@@ -28,4 +28,9 @@ public class SummaryDao extends ServerDao {
         }
         return summaries.get(0);
     }
+
+    public static void main(String[] args) {
+        SummaryDao dao = new SummaryDao();
+        System.out.println(dao.getByUrl("/view/2524260.htm"));
+    }
 }

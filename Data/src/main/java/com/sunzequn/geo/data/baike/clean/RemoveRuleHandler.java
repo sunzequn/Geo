@@ -23,8 +23,8 @@ public class RemoveRuleHandler {
             if (StringUtils.isNullOrEmpty(line)) {
                 continue;
             }
-            line = "{" + line.trim() + "}";
-            RemoveRule removeRule = new RemoveRule(line, "*", 3, "");
+            line = "[" + line.trim() + "]";
+            RemoveRule removeRule = new RemoveRule(line, "*", 7, "");
             removeRuleDao.save(removeRule);
         }
 

@@ -160,26 +160,50 @@ public class MyStringUtils {
         return new String(buffer.array(), "utf-8");
     }
 
+    /**
+     * 半角转全角
+     *
+     * @param input String.
+     * @return 全角字符串.
+     */
+    public static String ToSBC(String input) {
+        char c[] = input.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] == ' ') {
+                c[i] = '\u3000';
+            } else if (c[i] < '\177') {
+                c[i] = (char) (c[i] + 65248);
+
+            }
+        }
+        return new String(c);
+    }
+
+    /**
+     * 全角转半角
+     *
+     * @param input String.
+     * @return 半角字符串
+     */
+    public static String ToDBC(String input) {
+
+
+        char c[] = input.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] == '\u3000') {
+                c[i] = ' ';
+            } else if (c[i] > '\uFF00' && c[i] < '\uFF5F') {
+                c[i] = (char) (c[i] - 65248);
+
+            }
+        }
+        String returnString = new String(c);
+
+        return returnString;
+    }
+
 
     public static void main(String[] args) throws Exception {
-//        String dir = "Data/src/main/resources/data/dbpedia/old/category.nt";
-//        File file = new_test File(dir);
-//        String s = "<http://zh.wikipedia.org/wiki/\\u5F6D\\u8428\\u79D1\\u62C9\\u7EA7\\u91CD\\u5DE1\\u6D0B\\u8230> <http://xmlns.com/foaf/0.1/primaryTopic> <http://zh.dbpedia.org/resource/\\u5F6D\\u8428\\u79D1\\u62C9\\u7EA7\\u91CD\\u5DE1\\u6D0B\\u8230> .\n";
-//        System.out.println(s);
-//        System.out.println(encode(s));
-
-//        String s = "\u83f2\u723e\u02d9\u666e\u862d\u63d0\u723e";
-//        String[] strings = StringUtils.split(s, "u");
-//        System.out.println(strings.length);
-//        System.out.println(s);
-//        char[] chs = s.toCharArray();
-//        for (char ch : chs) {
-//            if (isChinese(ch))
-//                System.out.println(ch);
-//        }
-
-        String s = "http://zh.dbpedia.org/resource/wiki:";
-        System.out.println(encode(s));
 
     }
 }

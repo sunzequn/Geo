@@ -79,6 +79,7 @@ public class OntologyGenerator {
                 DatatypeProperty property = model.createDatatypeProperty(CLINGA + pinyin.getPinyinWithFirstOneLower(prop.getName()));
                 model = completeProperty(model, property, prop);
                 for (String domain : prop.getDomains()) {
+                    System.out.println(domain + "''''");
                     property.addDomain(model.getOntClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(domain)));
                 }
                 String range = prop.getRange1();

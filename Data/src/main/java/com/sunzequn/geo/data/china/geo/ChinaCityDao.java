@@ -5,7 +5,9 @@ import com.sunzequn.geo.data.utils.ListUtils;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Sloriac on 16/3/9.
@@ -21,7 +23,7 @@ public class ChinaCityDao extends BaseDao {
     }
 
     public List<ChinaCity> getAll() {
-        String sql = "select * from china_city";
+        String sql = "select * from " + TABLE;
         return query(connection, sql, null, ChinaCity.class);
     }
 
@@ -65,6 +67,29 @@ public class ChinaCityDao extends BaseDao {
     public List<ChinaCity> getChildren(int id) {
         String sql = "select * from " + TABLE + " where parentid = " + id;
         return query(connection, sql, null, ChinaCity.class);
+    }
+
+    public Set<String> getChinaCityLongName() {
+        List<ChinaCity> chinaCities = getAll();
+        Set<String> names = new HashSet<>();
+        for (ChinaCity chinaCity : chinaCities) {
+            names.add(chinaCity.getName());
+        }
+        return names;
+    }
+
+    public Set<String> getChinaCityShortName() {
+        List<ChinaCity> chinaCities = getAll();
+        Set<String> names = new HashSet<>();
+        for (ChinaCity chinaCity : chinaCities) {
+            names.add(chinaCity.getShortname());
+        }
+        return names;
+    }
+
+    public static void main(String[] args) {
+        ChinaCityDao dao = new ChinaCityDao();
+        System.out.println(dao.getChinaCityLongName());
     }
 
 }

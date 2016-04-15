@@ -24,6 +24,12 @@ public class UrlTypeDao extends BaseDao {
         connection = getConnection(DATABASE);
     }
 
+    public int updateType(String url, String type) {
+        String sql = "update " + TABLE + " set type = ? where url = ?";
+        Object[] params = {type, url};
+        return execute(connection, sql, params);
+    }
+
     public List<UrlType> getByTitle(String title1, String title2) {
         String sql = "select * from " + TABLE + " where title = ? or title = ?";
         Object[] params = {title1, title2};
