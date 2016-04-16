@@ -14,25 +14,25 @@ import java.util.Set;
  */
 public class RuleHandler {
 
-    private static RuleDao ruleDao = new RuleDao("rules_all");
+    private static RuleDao ruleDao = new RuleDao("rules_quhua");
     private static BasicInfoDao basicInfoDao = new BasicInfoDao();
     private static SubTitleDao subTitleDao = new SubTitleDao();
     private static TitleDao titleDao = new TitleDao();
-    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type");
+    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_quhua");
     private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
-        extract(1);
-//        completion();
+        extract(0, 5);
+        completion();
     }
 
     private static void completion() {
         while (true) {
-            List<UrlType> urlTypes = urlTypeDao.getAllUrlWithNull(10);
-            System.out.println(urlTypes.size());
+            List<UrlType> urlTypes = urlTypeDao.getAllUrlWithNull(1000);
             if (ListUtils.isEmpty(urlTypes)) {
                 return;
             }
+            System.out.println(urlTypes.size());
             for (UrlType urlType : urlTypes) {
                 Title title_bean = titleDao.getByUrl(urlType.getUrl());
                 SubTitle subTitle_bean = subTitleDao.getByUrl(urlType.getUrl());
@@ -57,13 +57,14 @@ public class RuleHandler {
                 }
                 urlType.setSummary(summary);
             }
+            System.out.println(urlTypes);
             System.out.println(urlTypes.size());
             urlTypeDao.updateBatch(urlTypes);
         }
     }
 
-    private static void extract(int visit) {
-        List<Rule> rules = ruleDao.getAll(1);
+    private static void extract(int visit, int confidence) {
+        List<Rule> rules = ruleDao.getAll(visit);
         for (Rule rule : rules) {
             rule.initRules();
             System.out.println("----------------------------- " + rule + "--------------------------------");
@@ -81,9 +82,10 @@ public class RuleHandler {
             }
             List<UrlType> urlTypes = new ArrayList<>();
             for (String s : res) {
-                urlTypes.add(new UrlType(s, rule.getType(), 1));
+                urlTypeDao.addType(s, rule.getType(), confidence);
+                urlTypes.add(new UrlType(s, rule.getType(), confidence));
             }
-            urlTypeDao.addTypeBatch(urlTypes);
+//            urlTypeDao.addTypeBatch(urlTypes);
         }
     }
 
@@ -164,10 +166,15 @@ public class RuleHandler {
         //[key,value]
         else if (rule.startsWith("[") && rule.endsWith("]")) {
             String match = MyStringUtils.remove(rule, "[", "]");
-            String[] strings = StringUtils.split(match, ",");
-            String key = strings[0].trim();
-            String value = strings[1].trim();
-            List<BasicInfo> basicInfos = basicInfoDao.getKeyValue(key, value);
+            List<BasicInfo> basicInfos;
+            if (rule.contains(",")) {
+                String[] strings = StringUtils.split(match, ",");
+                String key = strings[0].trim();
+                String value = strings[1].trim();
+                basicInfos = basicInfoDao.getKeyValue(key, value);
+            } else {
+                basicInfos = basicInfoDao.getByPropKey(match);
+            }
             if (!ListUtils.isEmpty(basicInfos)) {
                 for (BasicInfo basicInfo : basicInfos) {
                     res.add(basicInfo.getUrl());
@@ -175,6 +182,7 @@ public class RuleHandler {
             } else {
                 return null;
             }
+
         } else {
             System.out.println("出错");
             return null;

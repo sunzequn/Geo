@@ -74,7 +74,7 @@ public class CleanHandler {
             if (!ListUtils.isEmpty(catalogs)) {
                 List<String> keys = new ArrayList<>();
                 for (Catalog catalog : catalogs) {
-                    keys.add(clean(catalog.getCatalog_item()));
+                    keys.add(CleanUtils.clean(catalog.getCatalog_item()));
                 }
                 for (RemoveRule removeRule : removeRules) {
                     //规则匹配，去除
@@ -105,7 +105,7 @@ public class CleanHandler {
             if (!ListUtils.isEmpty(basicInfos)) {
                 List<String> basicKeys = new ArrayList<>();
                 for (BasicInfo basicInfo : basicInfos) {
-                    basicKeys.add(clean(basicInfo.getKey()));
+                    basicKeys.add(CleanUtils.clean(basicInfo.getKey()));
                 }
                 for (RemoveRule removeRule : removeRules) {
                     //规则匹配，去除
@@ -150,41 +150,6 @@ public class CleanHandler {
             return res;
         }
         return null;
-    }
-
-
-    public static String clean(String s) {
-        s = s.trim();
-        s = MyStringUtils.ToDBC(s);
-        s = find(s);
-        s = removeCh(s);
-        s = replace(s, "^(【)+");
-        s = replace(s, "(】|[1-9]|[１-９]|[①-⑨])+$");
-        return s;
-    }
-
-    private static String find(String s) {
-        List<String> strings = RegexUtils.extract("\\{\\{", "::", s);
-        if (!ListUtils.isEmpty(strings)) {
-            return strings.get(0);
-        }
-        return s;
-    }
-
-    private static String replace(String s, String reg) {
-        Pattern pattern = Pattern.compile(reg);
-        Matcher matcher = pattern.matcher(s);
-        return matcher.replaceAll("");
-    }
-
-    private static String removeCh(String string) {
-        String[] ss = {":", " ", ",", "%", "-"};
-        for (String s : ss) {
-            if (string.contains(String.valueOf(s))) {
-                string = string.replace(s, "");
-            }
-        }
-        return string;
     }
 
 }

@@ -31,6 +31,12 @@ public class TitleDao extends ServerDao {
         return titles.get(0);
     }
 
+    public List<Title> getByTitle(String title) {
+        String sql = "select * from " + TABLE + " where title = ?";
+        Object[] params = {title};
+        return query(connection, sql, params, Title.class);
+    }
+
     public List<Title> getTitleEnds(String ends) {
         String sql = "select * from " + TABLE + " where title like '%" + ends + "'";
         return query(connection, sql, null, Title.class);
@@ -64,7 +70,6 @@ public class TitleDao extends ServerDao {
     public static void main(String[] args) {
         TitleDao dao = new TitleDao();
 //        System.out.println(dao.getTitleEnds("省"));
-        System.out.println(dao.ifTitleContains("/subview/1000117/16114997.htm", "巧配"));
-        System.out.println(dao.getTitleContains("巧配"));
+        System.out.println(dao.getByTitle("江苏"));
     }
 }

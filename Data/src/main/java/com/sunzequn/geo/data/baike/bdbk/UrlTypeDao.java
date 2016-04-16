@@ -47,6 +47,12 @@ public class UrlTypeDao extends BaseDao {
         return query(connection, sql, params, UrlType.class);
     }
 
+    public List<UrlType> getByTypeConfidence(String type, int confidence) {
+        String sql = "select * from " + TABLE + " where type = ? and confidence = ?";
+        Object[] params = {type, confidence};
+        return query(connection, sql, params, UrlType.class);
+    }
+
     public int addType(String url, String type, int confidence) {
         String sql = "insert into " + TABLE + " (url, type, confidence) values (?, ?, ?)";
         Object[] parmas = {url, type, confidence};

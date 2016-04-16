@@ -28,8 +28,8 @@ public class BasicInfoDao extends ServerDao {
     }
 
     public List<BasicInfo> getKeyValue(String key, String value) {
-        String sql = "select * from " + TABLE + " where `key` = ? and value = ?";
-        Object[] params = {key, value};
+        String sql = "select * from " + TABLE + " where `key` = ? and value like '%" + value + "%'";
+        Object[] params = {key};
         return query(connection, sql, params, BasicInfo.class);
     }
 
@@ -49,13 +49,15 @@ public class BasicInfoDao extends ServerDao {
         return query(connection, sql, params, BasicInfo.class);
     }
 
+    public List<BasicInfo> getByPropKey(String key) {
+        String sql = "select * from " + TABLE + " where `key` = ?";
+        Object[] params = {key};
+        return query(connection, sql, params, BasicInfo.class);
+    }
+
 
     public static void main(String[] args) {
         BasicInfoDao dao = new BasicInfoDao();
-        TimeUtils timeUtils = new TimeUtils();
-        timeUtils.start();
-        System.out.println(dao.ifKeyValue("/subview/1000004/13868523.htm", "中文名", "尘根"));
-        timeUtils.end();
-        System.out.println(timeUtils.duration());
+        System.out.println(dao.getKeyValue("行政区类别", "自治州"));
     }
 }
