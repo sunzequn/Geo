@@ -18,11 +18,11 @@ import java.util.Set;
  */
 public class RuleHandler {
 
-    private static RuleDao ruleDao = new RuleDao("rules_broad");
+    private static RuleDao ruleDao = new RuleDao("rules_all");
     private static BasicInfoDao basicInfoDao = new BasicInfoDao();
     private static SubTitleDao subTitleDao = new SubTitleDao();
     private static TitleDao titleDao = new TitleDao();
-    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_broad");
+    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type");
     private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
