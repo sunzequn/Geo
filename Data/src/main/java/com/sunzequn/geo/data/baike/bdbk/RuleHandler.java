@@ -1,13 +1,9 @@
 package com.sunzequn.geo.data.baike.bdbk;
 
-import com.sunzequn.geo.data.baike.bdbk.*;
-import com.sunzequn.geo.data.baike.bean.Rule;
-import com.sunzequn.geo.data.baike.dao.RuleDao;
 import com.sunzequn.geo.data.utils.ListUtils;
 import com.sunzequn.geo.data.utils.MyStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +22,7 @@ public class RuleHandler {
     private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
-        extract();
+        extract(1);
 //        completion();
     }
 
@@ -66,8 +62,8 @@ public class RuleHandler {
         }
     }
 
-    private static void extract() {
-        List<Rule> rules = ruleDao.getAll();
+    private static void extract(int visit) {
+        List<Rule> rules = ruleDao.getAll(1);
         for (Rule rule : rules) {
             rule.initRules();
             System.out.println("----------------------------- " + rule + "--------------------------------");

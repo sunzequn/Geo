@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.baike.bean;
+package com.sunzequn.geo.data.baike.bdbk;
 
 import com.sunzequn.geo.data.utils.MyStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +12,7 @@ public class Rule {
 
     private String type;
     private String rules;
+    private int ifvisit;
     private List<String> ruless = new ArrayList<>();
 
     public void initRules() {
@@ -50,11 +51,20 @@ public class Rule {
         this.ruless = ruless;
     }
 
+    public int getIfvisit() {
+        return ifvisit;
+    }
+
+    public void setIfvisit(int ifvisit) {
+        this.ifvisit = ifvisit;
+    }
+
     @Override
     public String toString() {
         return "Rule{" +
                 "type='" + type + '\'' +
                 ", rules='" + rules + '\'' +
+                ", ifvisit=" + ifvisit +
                 ", ruless=" + ruless +
                 '}';
     }
