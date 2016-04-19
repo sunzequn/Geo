@@ -38,6 +38,15 @@
     </owl:equivalentClass>
     <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Lake"/>
   </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/TiYuChang">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#S.STDM"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
+    <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Stadium"/>
+  </owl:Class>
   <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XiaoXi">
     <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Creek"/>
   </owl:Class>
@@ -177,6 +186,14 @@
       </owl:Restriction>
     </owl:equivalentClass>
     <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/RailwayLine"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/SenLin">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:onProperty rdf:resource="http://www.geonames.org/ontology#featureCode"/>
+        <owl:hasValue rdf:resource="http://www.geonames.org/ontology#V.FRST"/>
+      </owl:Restriction>
+    </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/HengXing">
     <owl:equivalentClass rdf:resource="http://dbpedia.org/ontology/Star"/>

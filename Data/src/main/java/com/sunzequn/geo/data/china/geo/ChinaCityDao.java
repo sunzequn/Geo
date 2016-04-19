@@ -33,6 +33,11 @@ public class ChinaCityDao extends BaseDao {
         return query(connection, sql, params, ChinaCity.class);
     }
 
+    public List<ChinaCity> getEndWith(String suffix) {
+        String sql = "select * from " + TABLE + " where name like '%" + suffix + "'";
+        return query(connection, sql, null, ChinaCity.class);
+    }
+
     public ChinaCity getById(int id) {
         String sql = "select * from " + TABLE + " where id = " + id;
         List<ChinaCity> chinaCities = query(connection, sql, null, ChinaCity.class);
@@ -95,7 +100,8 @@ public class ChinaCityDao extends BaseDao {
 
     public static void main(String[] args) {
         ChinaCityDao dao = new ChinaCityDao();
-        System.out.println(dao.getByLevel(1));
+//        System.out.println(dao.getByLevel(1));
+        System.out.println(dao.getEndWith("县"));
     }
 
 }

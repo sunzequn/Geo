@@ -14,15 +14,17 @@ import java.util.Set;
  */
 public class RuleHandler {
 
-    private static RuleDao ruleDao = new RuleDao("rules_quhua");
+    private static RuleDao ruleDao = new RuleDao("rules_all");
+    //    private static RuleDao ruleDao = new RuleDao("rules_quhua");
     private static BasicInfoDao basicInfoDao = new BasicInfoDao();
     private static SubTitleDao subTitleDao = new SubTitleDao();
     private static TitleDao titleDao = new TitleDao();
-    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_quhua");
+    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type");
+    //    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_quhua");
     private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
-        extract(0, 5);
+        extract(0, 1);
         completion();
     }
 
@@ -82,10 +84,10 @@ public class RuleHandler {
             }
             List<UrlType> urlTypes = new ArrayList<>();
             for (String s : res) {
-                urlTypeDao.addType(s, rule.getType(), confidence);
+//                urlTypeDao.addType(s, rule.getType(), confidence);
                 urlTypes.add(new UrlType(s, rule.getType(), confidence));
             }
-//            urlTypeDao.addTypeBatch(urlTypes);
+            urlTypeDao.addTypeBatch(urlTypes);
         }
     }
 

@@ -24,6 +24,12 @@ public class UrlTypeDao extends BaseDao {
         connection = getConnection(DATABASE);
     }
 
+    public int deleteByUrl(String url) {
+        String sql = "delete from " + TABLE + " where url = ?";
+        Object[] params = {url};
+        return execute(connection, sql, params);
+    }
+
     public int updateType(String url, String type) {
         String sql = "update " + TABLE + " set type = ? where url = ?";
         Object[] params = {type, url};
@@ -37,12 +43,20 @@ public class UrlTypeDao extends BaseDao {
     }
 
     public List<UrlType> getAll() {
-        String sql = "select * from " + TABLE + " where confidence = 1 order by url desc";
+        String sql = "select * from " + TABLE + " where confidence = 1";
+//        String sql = "select * from " + TABLE ;
         return query(connection, sql, null, UrlType.class);
     }
 
+    public List<UrlType> getAll(int confidence) {
+        String sql = "select * from " + TABLE + " where confidence = ?";
+//        String sql = "select * from " + TABLE ;
+        Object[] params = {confidence};
+        return query(connection, sql, params, UrlType.class);
+    }
+
     public List<UrlType> getByType(String type) {
-        String sql = "select * from " + TABLE + " where type = ?";
+        String sql = "select * from " + TABLE + " where type = ? and confidence = 1";
         Object[] params = {type};
         return query(connection, sql, params, UrlType.class);
     }

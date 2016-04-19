@@ -12,8 +12,13 @@ import java.util.List;
 public class RemoveRuleDao extends BaseDao {
 
     private static final String DATABASE = "baidubaike";
-    private static final String TABLE = "rules_remove";
+    private static String TABLE = "rules_remove";
     private Connection connection;
+
+    public RemoveRuleDao(String table) {
+        TABLE = table;
+        this.connection = getConnection(DATABASE);
+    }
 
     public RemoveRuleDao() {
         this.connection = getConnection(DATABASE);

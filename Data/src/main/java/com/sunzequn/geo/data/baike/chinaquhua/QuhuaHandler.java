@@ -30,7 +30,12 @@ public class QuhuaHandler {
 //        countDijishi();
 //        queryByLevel("县级市", 3);
 //        countXianjishi();
-        countQu();
+//        countQu();
+//        countXian();
+//        countGuo();
+//        countZhen();
+//        countXiang();
+        countJiedao();
     }
 
     /**
@@ -76,6 +81,113 @@ public class QuhuaHandler {
         } else {
             return false;
         }
+    }
+
+
+    private static boolean isContainSheng(String subtitle) {
+        Set<String> shengs = QuhuaUtils.getShengShi();
+        for (String sheng : shengs) {
+            if (subtitle.contains(sheng)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private static boolean isContainWaiGuo(String summary) {
+//        System.out.println("--------------------------------");
+//        System.out.println(summary);
+        Set<String> guos = QuhuaUtils.getGuo();
+        guos.remove("中国");
+        for (String guo : guos) {
+            if (summary.contains(guo.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void countJiedao() {
+        List<UrlType> urlTypes = urlTypeDao.getByType("街道");
+        for (UrlType urlType : urlTypes) {
+            if (QuhuaUtils.ifGuoWai(urlType)) {
+                System.out.println(urlType);
+//                urlTypeDao.updateConfidence(urlType.getUrl(), 1);
+            }
+        }
+    }
+
+    private static void countXiang() {
+        List<UrlType> urlTypes = urlTypeDao.getByType("乡");
+        for (UrlType urlType : urlTypes) {
+            String summary = urlType.getSummary();
+            if (summary.length() > 50) {
+                summary = summary.substring(0, 50);
+            }
+            if (!isContainSheng(urlType.getSubtitle()) && !isContainSheng(summary) && isContainWaiGuo(summary)) {
+                System.out.println(urlType);
+//                urlTypeDao.updateConfidence(urlType.getUrl(), 1);
+            }
+        }
+    }
+
+    private static void countZhen() {
+        List<UrlType> urlTypes = urlTypeDao.getByType("镇");
+        for (UrlType urlType : urlTypes) {
+            String summary = urlType.getSummary();
+            if (summary.length() > 100) {
+                summary = summary.substring(0, 50);
+            }
+            if (!isContainSheng(urlType.getSubtitle()) && !isContainSheng(summary) && isContainWaiGuo(summary)) {
+                System.out.println(urlType);
+//                urlTypeDao.updateConfidence(urlType.getUrl(), 1);
+            }
+        }
+    }
+
+    private static void countGuo() {
+        Set<String> guos = QuhuaUtils.getGuo();
+        System.out.println(guos.size());
+        List<UrlType> urlTypes = urlTypeDao.getByTypeConfidence("国家", 21);
+        System.out.println(urlTypes.size());
+        int num = 0;
+        for (UrlType urlType : urlTypes) {
+            if (guos.contains(urlType.getTitle())) {
+                guos.remove(urlType.getTitle());
+                num++;
+//                urlTypeDao.deleteByUrl(urlType.getUrl());
+            } else {
+                System.out.println(urlType);
+            }
+        }
+        System.out.println(num);
+        System.out.println(guos);
+    }
+
+    private static void countXian() {
+        ChinaCityDao dao = new ChinaCityDao();
+        List<ChinaCity> chinaCities = dao.getEndWith("县");
+        List<String> xians = new ArrayList<>();
+        for (ChinaCity chinaCity : chinaCities) {
+            if (!chinaCity.getName().endsWith("自治县")) {
+                xians.add(chinaCity.getName());
+            }
+        }
+        System.out.println(xians.size());
+
+        List<UrlType> urlTypes = urlTypeDao.getByTypeConfidence("县", 5);
+        int num = 0;
+        for (UrlType urlType : urlTypes) {
+            if (urlType.getTitle().endsWith("自治县")) {
+                urlTypeDao.deleteByUrl(urlType.getUrl());
+            } else if (!xians.contains(urlType.getTitle())) {
+                urlTypeDao.updateConfidence(urlType.getUrl(), 4);
+            } else {
+                num++;
+            }
+        }
+        System.out.println(num);
     }
 
     private static void countQu() {
