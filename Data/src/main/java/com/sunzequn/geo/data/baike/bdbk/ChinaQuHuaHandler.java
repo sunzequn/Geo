@@ -37,7 +37,7 @@ public class ChinaQuHuaHandler {
     }
 
     private static void countNum() {
-        List<UrlType> urlTypes = urlTypeDao.getAll();
+        List<UrlType> urlTypes = urlTypeDao.getAll1();
         System.out.println(urlTypes.size());
         Set<String> cityLongNames = chinaCityDao.getChinaCityLongName();
         System.out.println(cityLongNames.size());

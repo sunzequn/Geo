@@ -1,10 +1,12 @@
 package com.sunzequn.geo.data.baike.bdbk;
 
 import com.sunzequn.geo.data.dao.BaseDao;
-import org.neo4j.cypher.internal.compiler.v2_2.functions.Str;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.sql.Connection;
-import java.util.ArrayList;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
 public class UrlTypeDao extends BaseDao {
 
     private static final String DATABASE = "baidubaike";
-    private static String TABLE = "url_type";
+    private static String TABLE = "url_type_filtered_4_20";
     private Connection connection;
 
     public UrlTypeDao(String table) {
@@ -23,6 +25,13 @@ public class UrlTypeDao extends BaseDao {
     public UrlTypeDao() {
         connection = getConnection(DATABASE);
     }
+
+    public List<UrlType> getTypes() {
+        String sql = "select distinct type from " + TABLE;
+        System.out.println(sql);
+        return query(connection, sql, null, UrlType.class);
+    }
+
 
     public int deleteByUrl(String url) {
         String sql = "delete from " + TABLE + " where url = ?";
@@ -43,6 +52,11 @@ public class UrlTypeDao extends BaseDao {
     }
 
     public List<UrlType> getAll() {
+        String sql = "select * from " + TABLE;
+        return query(connection, sql, null, UrlType.class);
+    }
+
+    public List<UrlType> getAll1() {
         String sql = "select * from " + TABLE + " where confidence = 1";
 //        String sql = "select * from " + TABLE ;
         return query(connection, sql, null, UrlType.class);
@@ -67,6 +81,12 @@ public class UrlTypeDao extends BaseDao {
         return query(connection, sql, params, UrlType.class);
     }
 
+    public int addType(UrlType urlType) {
+        String sql = "insert into " + TABLE + " (url, type, confidence, title, subtitle, summary) values (?, ?, ?, ?, ?, ?)";
+        Object[] parmas = {urlType.getUrl(), urlType.getType(), urlType.getConfidence(), urlType.getTitle(), urlType.getSubtitle(), urlType.getSummary()};
+        return execute(connection, sql, parmas);
+    }
+
     public int addType(String url, String type, int confidence) {
         String sql = "insert into " + TABLE + " (url, type, confidence) values (?, ?, ?)";
         Object[] parmas = {url, type, confidence};
@@ -74,13 +94,16 @@ public class UrlTypeDao extends BaseDao {
     }
 
     public int[] addTypeBatch(List<UrlType> urlTypes) {
-        String sql = "insert into " + TABLE + " (url, type, confidence) values (?, ?, ?)";
-        Object[][] parmas = new Object[urlTypes.size()][3];
+        String sql = "insert into " + TABLE + " (url, type, confidence, title, subtitle, summary) values (?, ?, ?, ?, ?, ?)";
+        Object[][] parmas = new Object[urlTypes.size()][6];
         for (int i = 0; i < urlTypes.size(); i++) {
             UrlType urlType = urlTypes.get(i);
             parmas[i][0] = urlType.getUrl();
             parmas[i][1] = urlType.getType();
             parmas[i][2] = urlType.getConfidence();
+            parmas[i][3] = urlType.getTitle();
+            parmas[i][4] = urlType.getSubtitle();
+            parmas[i][5] = urlType.getSummary();
         }
         return batch(connection, sql, parmas);
     }
@@ -111,7 +134,7 @@ public class UrlTypeDao extends BaseDao {
 
     public static void main(String[] args) {
         UrlTypeDao dao = new UrlTypeDao();
-        System.out.println(dao.getAll().size());
+        System.out.println(dao.getAll1().size());
 //        System.out.println(dao.getByTitle("丁陆海", "北京市"));
 //        List<UrlType> urlTypes = new ArrayList<>();
 //        UrlType u1 = new UrlType("1", "s1", 1);
@@ -122,4 +145,5 @@ public class UrlTypeDao extends BaseDao {
 //        urlTypes.add(u3);
 //        dao.addTypeBatch(urlTypes);
     }
+
 }

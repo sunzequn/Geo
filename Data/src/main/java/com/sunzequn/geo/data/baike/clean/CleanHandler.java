@@ -3,11 +3,8 @@ package com.sunzequn.geo.data.baike.clean;
 import com.sunzequn.geo.data.baike.bdbk.*;
 import com.sunzequn.geo.data.utils.ListUtils;
 import com.sunzequn.geo.data.utils.MyStringUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.jena.riot.thrift.TRDF;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,7 +30,7 @@ public class CleanHandler {
     }
 
     private static void countNoSummary() {
-        List<UrlType> urlTypes = urlTypeDao.getAll();
+        List<UrlType> urlTypes = urlTypeDao.getAll1();
         System.out.println(urlTypes.size());
         int num = 0;
         for (UrlType urlType : urlTypes) {
@@ -49,7 +46,7 @@ public class CleanHandler {
     }
 
     private static void countNoBasicInfo() {
-        List<UrlType> urlTypes = urlTypeDao.getAll();
+        List<UrlType> urlTypes = urlTypeDao.getAll1();
         int num = 0;
         for (UrlType urlType : urlTypes) {
             List<BasicInfo> basicInfos = basicInfoDao.getByUrl(urlType.getUrl());
@@ -93,7 +90,7 @@ public class CleanHandler {
     }
 
     private static void cleanAllByCatalog(int priority, int confidence, boolean ifUpdate) {
-        List<UrlType> urlTypes = urlTypeDao.getAll();
+        List<UrlType> urlTypes = urlTypeDao.getAll1();
         System.out.println(urlTypes.size());
         cleanByCatalog(priority, urlTypes, confidence, ifUpdate);
     }
@@ -144,7 +141,7 @@ public class CleanHandler {
     }
 
     private static void cleanAllByInfoBox(int priority, int confidence, boolean ifUpdate) {
-        List<UrlType> urlTypes = urlTypeDao.getAll();
+        List<UrlType> urlTypes = urlTypeDao.getAll1();
         System.out.println(urlTypes.size());
         cleanByInfoBox(priority, urlTypes, confidence, ifUpdate);
     }
@@ -156,7 +153,7 @@ public class CleanHandler {
     }
 
     private static void cleanAllByTag(int priority, int confidence, boolean ifUpdate) {
-        List<UrlType> urlTypes = urlTypeDao.getAll();
+        List<UrlType> urlTypes = urlTypeDao.getAll1();
         System.out.println(urlTypes.size());
         cleanByTag(priority, urlTypes, confidence, ifUpdate);
     }

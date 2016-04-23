@@ -1,9 +1,5 @@
 package com.sunzequn.geo.data.baike.bdbk;
 
-import com.sunzequn.geo.data.baike.bdbk.UrlType;
-import com.sunzequn.geo.data.baike.bdbk.UrlTypeDao;
-import com.sunzequn.geo.data.baike.bdbk.UrlTypeLocation;
-import com.sunzequn.geo.data.baike.bdbk.UrlTypeLocationDao;
 import com.sunzequn.geo.data.baike.bdmap.BDDT;
 import com.sunzequn.geo.data.baike.bdmap.LocationPull;
 import com.sunzequn.geo.data.china.geo.ChinaCity;
@@ -30,7 +26,7 @@ public class LocationHandler {
     }
 
     private static void getLocation() {
-        List<UrlType> urlTypes = urlTypeDao.getAll();
+        List<UrlType> urlTypes = urlTypeDao.getAll1();
         System.out.println(urlTypes.size());
         List<UrlTypeLocation> locations = urlTypeLocationDao.getAllUrl();
         System.out.println(locations.size());

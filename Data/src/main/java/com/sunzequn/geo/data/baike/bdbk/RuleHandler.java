@@ -19,26 +19,26 @@ public class RuleHandler {
     private static BasicInfoDao basicInfoDao = new BasicInfoDao();
     private static SubTitleDao subTitleDao = new SubTitleDao();
     private static TitleDao titleDao = new TitleDao();
-    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type");
+    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_toli");
     //    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_quhua");
     private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
-        extract(0, 1);
+//        extract(0, 1);
         completion();
     }
 
     private static void completion() {
         while (true) {
-            List<UrlType> urlTypes = urlTypeDao.getAllUrlWithNull(1000);
+            List<UrlType> urlTypes = urlTypeDao.getAllUrlWithNull(5000);
             if (ListUtils.isEmpty(urlTypes)) {
                 return;
             }
             System.out.println(urlTypes.size());
             for (UrlType urlType : urlTypes) {
                 Title title_bean = titleDao.getByUrl(urlType.getUrl());
-                SubTitle subTitle_bean = subTitleDao.getByUrl(urlType.getUrl());
-                Summary summary_bean = summaryDao.getByUrl(urlType.getUrl());
+//                SubTitle subTitle_bean = subTitleDao.getByUrl(urlType.getUrl());
+//                Summary summary_bean = summaryDao.getByUrl(urlType.getUrl());
                 String title, subtitle, summary;
                 if (title_bean == null) {
                     title = "";
@@ -46,21 +46,19 @@ public class RuleHandler {
                     title = title_bean.getTitle();
                 }
                 urlType.setTitle(title);
-                if (subTitle_bean == null) {
-                    subtitle = "";
-                } else {
-                    subtitle = subTitle_bean.getSubtitle();
-                }
-                urlType.setSubtitle(subtitle);
-                if (summary_bean == null) {
-                    summary = "";
-                } else {
-                    summary = summary_bean.getSummary();
-                }
-                urlType.setSummary(summary);
+//                if (subTitle_bean == null) {
+//                    subtitle = "";
+//                } else {
+//                    subtitle = subTitle_bean.getSubtitle();
+//                }
+                urlType.setSubtitle("");
+//                if (summary_bean == null) {
+//                    summary = "";
+//                } else {
+//                    summary = summary_bean.getSummary();
+//                }
+                urlType.setSummary("");
             }
-            System.out.println(urlTypes);
-            System.out.println(urlTypes.size());
             urlTypeDao.updateBatch(urlTypes);
         }
     }

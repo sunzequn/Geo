@@ -87,7 +87,7 @@ public class GeoCityDao {
 
     public static void main(String[] args) {
         GeoCityDao cityDao = new GeoCityDao();
-//        System.out.println(cityDao.getAll().size());
+//        System.out.println(cityDao.getAll1().size());
 
         cityDao.updateName(1279433, "孙泽群");
 

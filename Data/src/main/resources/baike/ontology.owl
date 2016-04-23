@@ -1482,7 +1482,7 @@
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/BinGuan">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShangYeFuWuSheShi"/>
         <rdfs:label xml:lang="zh">宾馆</rdfs:label>
-        <skos:altLabel xml:lang="en">guesthouse</skos:altLabel>
+        <skos:altLabel xml:lang="en">hotel</skos:altLabel>
         <skos:altLabel xml:lang="zh">旅馆</skos:altLabel>
         <skos:altLabel xml:lang="zh">酒店</skos:altLabel>
         <skos:prefLabel xml:lang="zh">宾馆</skos:prefLabel>
@@ -1510,6 +1510,17 @@
         <skos:altLabel xml:lang="en">restaurant</skos:altLabel>
         <skos:altLabel xml:lang="zh">餐馆</skos:altLabel>
         <skos:prefLabel xml:lang="zh">餐厅</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/ChengShiJiChuSheShi -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ChengShiJiChuSheShi">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/JiChuSheShi"/>
+        <rdfs:label xml:lang="zh">城市基础设施</rdfs:label>
+        <skos:altLabel xml:lang="en">urban infrastructure</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">城市基础设施</skos:prefLabel>
     </Class>
     
 
@@ -1579,6 +1590,7 @@
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/DiJiXingZhengQu">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XingZhengQuHua"/>
         <rdfs:label xml:lang="zh">地级行政区</rdfs:label>
+        <skos:altLabel xml:lang="en">prefecture-level administrative region</skos:altLabel>
         <skos:altLabel xml:lang="zh">二级行政区</skos:altLabel>
         <skos:prefLabel xml:lang="zh">地级行政区</skos:prefLabel>
     </Class>
@@ -1629,12 +1641,24 @@
     
 
 
+    <!-- http://ws.nju.edu.cn/clinga/ontology/DiZhiDiMaoJingGuan -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/DiZhiDiMaoJingGuan">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ZiRanJingGuan"/>
+        <rdfs:label xml:lang="zh">地质地貌景观</rdfs:label>
+        <skos:altLabel xml:lang="en">geological and geomorphic landscape</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">地质地貌景观</skos:prefLabel>
+    </Class>
+    
+
+
     <!-- http://ws.nju.edu.cn/clinga/ontology/DianLiSheShi -->
 
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/DianLiSheShi">
-        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShiZhengJiChuSheShi"/>
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ChengShiJiChuSheShi"/>
         <rdfs:comment xml:lang="zh">发电、变电、输电、配电和供电有关设备的总称</rdfs:comment>
         <rdfs:label xml:lang="zh">电力设施</rdfs:label>
+        <skos:altLabel xml:lang="en">power infrastructure</skos:altLabel>
         <skos:prefLabel xml:lang="zh">电力设施</skos:prefLabel>
     </Class>
     
@@ -1697,6 +1721,18 @@
         <rdfs:label xml:lang="zh">公园</rdfs:label>
         <skos:altLabel xml:lang="en">park</skos:altLabel>
         <skos:prefLabel xml:lang="zh">公园</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/GuJiJingGuan -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/GuJiJingGuan">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/RenWenJingGuan"/>
+        <rdfs:comment xml:lang="zh">人类社会历史发展过程留存下来的活动遗址、遗迹、遗物及遗风等</rdfs:comment>
+        <rdfs:label xml:lang="zh">古迹景观</rdfs:label>
+        <skos:altLabel xml:lang="en">historic site</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">古迹景观</skos:prefLabel>
     </Class>
     
 
@@ -1866,6 +1902,7 @@
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/JiCengQunZhongXingZiZhiQuYu">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XingZhengQuHua"/>
         <rdfs:label xml:lang="zh">基层群众性自治区域</rdfs:label>
+        <skos:altLabel xml:lang="en">mass autonomous area</skos:altLabel>
         <skos:prefLabel xml:lang="zh">基层群众性自治区域</skos:prefLabel>
     </Class>
     
@@ -1892,7 +1929,7 @@
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/RenWenDiLi"/>
         <rdfs:comment xml:lang="zh">为社会生产和居民生活提供公共服务的物质工程设施</rdfs:comment>
         <rdfs:label xml:lang="zh">基础设施</rdfs:label>
-        <skos:altLabel xml:lang="en">facility</skos:altLabel>
+        <skos:altLabel xml:lang="en">infrastructure</skos:altLabel>
         <skos:prefLabel xml:lang="zh">基础设施</skos:prefLabel>
     </Class>
     
@@ -1903,6 +1940,7 @@
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/JiGuan">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ZuZhiJiGou"/>
         <rdfs:label xml:lang="zh">机关</rdfs:label>
+        <skos:altLabel xml:lang="en">state organ</skos:altLabel>
         <skos:prefLabel xml:lang="zh">机关</skos:prefLabel>
     </Class>
     
@@ -1923,10 +1961,10 @@
     <!-- http://ws.nju.edu.cn/clinga/ontology/JiaoTongSheShi -->
 
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/JiaoTongSheShi">
-        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShiZhengJiChuSheShi"/>
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ChengShiJiChuSheShi"/>
         <rdfs:comment xml:lang="zh">为城市交通系统保障安全正常运营而设置的轨道、隧道、高架道路、车站、通风亭、机电设备、供电系统、通信信号、道路标线等设施</rdfs:comment>
         <rdfs:label xml:lang="zh">交通设施</rdfs:label>
-        <skos:altLabel xml:lang="en">transport facility</skos:altLabel>
+        <skos:altLabel xml:lang="en">transport infrastructure</skos:altLabel>
         <skos:prefLabel xml:lang="zh">交通设施</skos:prefLabel>
     </Class>
     
@@ -1937,7 +1975,7 @@
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/JieDao">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XiangJiXingZhengQu"/>
         <rdfs:label xml:lang="zh">街道</rdfs:label>
-        <skos:altLabel xml:lang="en">street</skos:altLabel>
+        <skos:altLabel xml:lang="en">subdistrict</skos:altLabel>
         <skos:prefLabel xml:lang="zh">街道</skos:prefLabel>
     </Class>
     
@@ -1983,6 +2021,7 @@
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ZiRanZiYuan"/>
         <rdfs:comment xml:lang="zh">地下或地表富含矿物资源的区域</rdfs:comment>
         <rdfs:label xml:lang="zh">矿场</rdfs:label>
+        <skos:altLabel xml:lang="en">mine</skos:altLabel>
         <skos:prefLabel xml:lang="zh">矿场</skos:prefLabel>
     </Class>
     
@@ -2005,6 +2044,7 @@
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/LouPan">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShangYeFuWuSheShi"/>
         <rdfs:label xml:lang="zh">楼盘</rdfs:label>
+        <skos:altLabel xml:lang="en">real estate</skos:altLabel>
         <skos:prefLabel xml:lang="zh">楼盘</skos:prefLabel>
     </Class>
     
@@ -2030,6 +2070,30 @@
         <rdfs:label xml:lang="zh">盟</rdfs:label>
         <skos:altLabel xml:lang="en">league</skos:altLabel>
         <skos:prefLabel xml:lang="zh">盟</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/MengKuang -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/MengKuang">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/KuangChang"/>
+        <rdfs:label xml:lang="zh">锰矿</rdfs:label>
+        <skos:altLabel xml:lang="en">manganese deposit</skos:altLabel>
+        <skos:altLabel xml:lang="zh">锰矿床</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">锰矿</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/MinSuJingGuan -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/MinSuJingGuan">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/RenWenJingGuan"/>
+        <rdfs:comment xml:lang="zh">作为旅游项目的民间风俗习惯、文化活动、历史底蕴等</rdfs:comment>
+        <rdfs:label xml:lang="zh">民俗景观</rdfs:label>
+        <skos:altLabel xml:lang="en">folk landscape</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">民俗景观</skos:prefLabel>
     </Class>
     
 
@@ -2063,7 +2127,7 @@
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/DiXingDiMao"/>
         <rdfs:comment xml:lang="zh">海拔一般在0到500米，地面平坦或起伏较小，主要分布在大河两岸和濒临海洋的地区</rdfs:comment>
         <rdfs:label xml:lang="zh">平原</rdfs:label>
-        <skos:altLabel xml:lang="en">flatland</skos:altLabel>
+        <skos:altLabel xml:lang="en">plain</skos:altLabel>
         <skos:prefLabel xml:lang="zh">平原</skos:prefLabel>
     </Class>
     
@@ -2088,6 +2152,7 @@
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XianJiXingZhengQu"/>
         <rdfs:comment xml:lang="zh">内蒙古自治区的县级行政区划</rdfs:comment>
         <rdfs:label xml:lang="zh">旗</rdfs:label>
+        <skos:altLabel xml:lang="en">banner</skos:altLabel>
         <skos:prefLabel xml:lang="zh">旗</skos:prefLabel>
     </Class>
     
@@ -2102,6 +2167,17 @@
         <skos:altLabel xml:lang="en">
 bus station</skos:altLabel>
         <skos:prefLabel xml:lang="zh">汽车站</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/QiHouQiXiangJingGuan -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/QiHouQiXiangJingGuan">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ZiRanJingGuan"/>
+        <rdfs:label xml:lang="zh">气候气象景观</rdfs:label>
+        <skos:altLabel xml:lang="en">meteorologicallandscape</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">气候气象景观</skos:prefLabel>
     </Class>
     
 
@@ -2177,6 +2253,18 @@ bus station</skos:altLabel>
     
 
 
+    <!-- http://ws.nju.edu.cn/clinga/ontology/RenWenJingGuan -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/RenWenJingGuan">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/JingGuanJingDian"/>
+        <rdfs:comment xml:lang="zh">历史形成的、与人的社会性活动有关的景物构成的风景画面</rdfs:comment>
+        <rdfs:label xml:lang="zh">人文景观</rdfs:label>
+        <skos:altLabel xml:lang="en">human landscape</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">人文景观</skos:prefLabel>
+    </Class>
+    
+
+
     <!-- http://ws.nju.edu.cn/clinga/ontology/SenLin -->
 
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/SenLin">
@@ -2192,7 +2280,7 @@ bus station</skos:altLabel>
     <!-- http://ws.nju.edu.cn/clinga/ontology/SenLinGongYuan -->
 
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/SenLinGongYuan">
-        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/JingGuanJingDian"/>
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShengWuJingGuan"/>
         <rdfs:comment xml:lang="zh">以大面积人工林或天然林为主体而建设的公园</rdfs:comment>
         <rdfs:label xml:lang="zh">森林公园</rdfs:label>
         <skos:altLabel xml:lang="en">forest park</skos:altLabel>
@@ -2266,7 +2354,7 @@ bus station</skos:altLabel>
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShangChang">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShangYeFuWuSheShi"/>
         <rdfs:label xml:lang="zh">商场</rdfs:label>
-        <skos:altLabel xml:lang="en">mall</skos:altLabel>
+        <skos:altLabel xml:lang="en">marketl</skos:altLabel>
         <skos:prefLabel xml:lang="zh">商场</skos:prefLabel>
     </Class>
     
@@ -2277,7 +2365,7 @@ bus station</skos:altLabel>
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShangYeFuWuSheShi">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShengHuoFuWuSheShi"/>
         <rdfs:label xml:lang="zh">商业服务设施</rdfs:label>
-        <skos:altLabel xml:lang="en">commercial service facility</skos:altLabel>
+        <skos:altLabel xml:lang="en">commercial service infrastructure</skos:altLabel>
         <skos:prefLabel xml:lang="zh">商业服务设施</skos:prefLabel>
     </Class>
     
@@ -2312,7 +2400,7 @@ bus station</skos:altLabel>
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/JiChuSheShi"/>
         <rdfs:comment xml:lang="zh">设置在居住区内主要为满足本居住区居民日常生活需要的各项公共建筑和设施</rdfs:comment>
         <rdfs:label xml:lang="zh">生活服务设施</rdfs:label>
-        <skos:altLabel xml:lang="en">public service facility</skos:altLabel>
+        <skos:altLabel xml:lang="en">public service infrastructure</skos:altLabel>
         <skos:prefLabel xml:lang="zh">生活服务设施</skos:prefLabel>
     </Class>
     
@@ -2323,8 +2411,21 @@ bus station</skos:altLabel>
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShengJiXingZhengQu">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XingZhengQuHua"/>
         <rdfs:label xml:lang="zh">省级行政区</rdfs:label>
+        <skos:altLabel xml:lang="en">province-level administrative region</skos:altLabel>
         <skos:altLabel xml:lang="zh">一级行政区</skos:altLabel>
         <skos:prefLabel xml:lang="zh">省级行政区</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/ShengWuJingGuan -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShengWuJingGuan">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ZiRanJingGuan"/>
+        <rdfs:comment xml:lang="zh">以生物群体构成的总体景观和个别的具有珍稀品种和奇异形态个体</rdfs:comment>
+        <rdfs:label xml:lang="zh">生物景观</rdfs:label>
+        <skos:altLabel xml:lang="en">biology landscape</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">生物景观</skos:prefLabel>
     </Class>
     
 
@@ -2352,17 +2453,6 @@ bus station</skos:altLabel>
     
 
 
-    <!-- http://ws.nju.edu.cn/clinga/ontology/ShiZhengJiChuSheShi -->
-
-    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShiZhengJiChuSheShi">
-        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/JiChuSheShi"/>
-        <rdfs:label xml:lang="zh">市政基础设施</rdfs:label>
-        <skos:altLabel xml:lang="en">municipal public engineering</skos:altLabel>
-        <skos:prefLabel xml:lang="zh">市政基础设施</skos:prefLabel>
-    </Class>
-    
-
-
     <!-- http://ws.nju.edu.cn/clinga/ontology/ShuiKu -->
 
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShuiKu">
@@ -2378,11 +2468,22 @@ bus station</skos:altLabel>
     <!-- http://ws.nju.edu.cn/clinga/ontology/ShuiLiSheShi -->
 
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShuiLiSheShi">
-        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShiZhengJiChuSheShi"/>
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ChengShiJiChuSheShi"/>
         <rdfs:comment xml:lang="zh">对自然界的水进行控制、调节、开发、利用和保护，以减轻和免除水旱灾害，并利用水资源，适应人类社会和自然环境需要的设施</rdfs:comment>
         <rdfs:label xml:lang="zh">水利设施</rdfs:label>
-        <skos:altLabel xml:lang="en">water conservancy facility</skos:altLabel>
+        <skos:altLabel xml:lang="en">water conservancy infrastructure</skos:altLabel>
         <skos:prefLabel xml:lang="zh">水利设施</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/ShuiWenJingGuan -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ShuiWenJingGuan">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ZiRanJingGuan"/>
+        <rdfs:label xml:lang="zh">水文景观</rdfs:label>
+        <skos:altLabel xml:lang="en">hydrological landscape</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">水文景观</skos:prefLabel>
     </Class>
     
 
@@ -2405,6 +2506,7 @@ bus station</skos:altLabel>
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XiangJiXingZhengQu"/>
         <rdfs:comment xml:lang="zh">内蒙古的类乡级行政区划</rdfs:comment>
         <rdfs:label xml:lang="zh">苏木</rdfs:label>
+        <skos:altLabel xml:lang="en">sum (country subdivision)</skos:altLabel>
         <skos:prefLabel xml:lang="zh">苏木</skos:prefLabel>
     </Class>
     
@@ -2439,6 +2541,7 @@ bus station</skos:altLabel>
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XianJiXingZhengQu"/>
         <rdfs:comment xml:lang="zh">特指中国贵州省的六枝特区</rdfs:comment>
         <rdfs:label xml:lang="zh">特区</rdfs:label>
+        <skos:altLabel xml:lang="en">special area</skos:altLabel>
         <skos:prefLabel xml:lang="zh">特区</skos:prefLabel>
     </Class>
     
@@ -2464,6 +2567,19 @@ bus station</skos:altLabel>
         <rdfs:label xml:lang="zh">体育馆</rdfs:label>
         <skos:altLabel xml:lang="en">gymnasium</skos:altLabel>
         <skos:prefLabel xml:lang="zh">体育馆</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/TianRanQiTian -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/TianRanQiTian">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/KuangChang"/>
+        <rdfs:comment xml:lang="zh">富含天然气的地域</rdfs:comment>
+        <rdfs:label xml:lang="zh">天然气田</rdfs:label>
+        <skos:altLabel xml:lang="en">gas field</skos:altLabel>
+        <skos:altLabel xml:lang="zh">气田</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">天然气田</skos:prefLabel>
     </Class>
     
 
@@ -2517,11 +2633,23 @@ bus station</skos:altLabel>
     
 
 
+    <!-- http://ws.nju.edu.cn/clinga/ontology/WenHuaYiShuJingGuan -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/WenHuaYiShuJingGuan">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/RenWenJingGuan"/>
+        <rdfs:label xml:lang="zh">文化艺术景观</rdfs:label>
+        <skos:altLabel xml:lang="en">cultural and artistic landscape</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">文化艺术景观</skos:prefLabel>
+    </Class>
+    
+
+
     <!-- http://ws.nju.edu.cn/clinga/ontology/WenJiaoTiWeiSheShi -->
 
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/WenJiaoTiWeiSheShi">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShengHuoFuWuSheShi"/>
         <rdfs:label xml:lang="zh">文教体卫设施</rdfs:label>
+        <skos:altLabel xml:lang="en">infrastructure for culture, education, sports and health</skos:altLabel>
         <skos:prefLabel xml:lang="zh">文教体卫设施</skos:prefLabel>
     </Class>
     
@@ -2566,6 +2694,7 @@ bus station</skos:altLabel>
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XianJiXingZhengQu">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XingZhengQuHua"/>
         <rdfs:label xml:lang="zh">县级行政区</rdfs:label>
+        <skos:altLabel xml:lang="en">county-level administrative region</skos:altLabel>
         <skos:altLabel xml:lang="zh">三级行政区</skos:altLabel>
         <skos:prefLabel xml:lang="zh">县级行政区</skos:prefLabel>
     </Class>
@@ -2577,6 +2706,7 @@ bus station</skos:altLabel>
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/Xiang">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XiangJiXingZhengQu"/>
         <rdfs:label xml:lang="zh">乡</rdfs:label>
+        <skos:altLabel xml:lang="en">township</skos:altLabel>
         <skos:prefLabel xml:lang="zh">乡</skos:prefLabel>
     </Class>
     
@@ -2587,6 +2717,7 @@ bus station</skos:altLabel>
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/XiangJiXingZhengQu">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/XingZhengQuHua"/>
         <rdfs:label xml:lang="zh">乡级行政区</rdfs:label>
+        <skos:altLabel xml:lang="en">township-level administrative region</skos:altLabel>
         <skos:altLabel xml:lang="zh">四级行政区</skos:altLabel>
         <skos:prefLabel xml:lang="zh">乡级行政区</skos:prefLabel>
     </Class>
@@ -2600,6 +2731,7 @@ bus station</skos:altLabel>
         <rdfs:comment xml:lang="zh">在山涧、林中涓涓细流的水</rdfs:comment>
         <rdfs:label xml:lang="zh">小溪</rdfs:label>
         <skos:altLabel xml:lang="en">brook</skos:altLabel>
+        <skos:altLabel xml:lang="zh">溪流</skos:altLabel>
         <skos:prefLabel xml:lang="zh">小溪</skos:prefLabel>
     </Class>
     
@@ -2645,7 +2777,7 @@ bus station</skos:altLabel>
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/RenWenDiLi"/>
         <rdfs:comment xml:lang="zh">为了进行分级管理而实行的区域划分</rdfs:comment>
         <rdfs:label xml:lang="zh">行政区划</rdfs:label>
-        <skos:altLabel xml:lang="en">administrative divisions</skos:altLabel>
+        <skos:altLabel xml:lang="en">administrative division</skos:altLabel>
         <skos:prefLabel xml:lang="zh">行政区划</skos:prefLabel>
     </Class>
     
@@ -2659,6 +2791,17 @@ bus station</skos:altLabel>
         <rdfs:label xml:lang="zh">学校</rdfs:label>
         <skos:altLabel xml:lang="en">school</skos:altLabel>
         <skos:prefLabel xml:lang="zh">学校</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/YanKuang -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/YanKuang">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/KuangChang"/>
+        <rdfs:label xml:lang="zh">盐矿</rdfs:label>
+        <skos:altLabel xml:lang="en">salt mine </skos:altLabel>
+        <skos:prefLabel xml:lang="zh">盐矿</skos:prefLabel>
     </Class>
     
 
@@ -2684,6 +2827,18 @@ bus station</skos:altLabel>
         <rdfs:label xml:lang="zh">医院</rdfs:label>
         <skos:altLabel xml:lang="en">hospital</skos:altLabel>
         <skos:prefLabel xml:lang="zh">医院</skos:prefLabel>
+    </Class>
+    
+
+
+    <!-- http://ws.nju.edu.cn/clinga/ontology/YinKuang -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/YinKuang">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/KuangChang"/>
+        <rdfs:label xml:lang="zh">银矿</rdfs:label>
+        <skos:altLabel xml:lang="en">silver deposit</skos:altLabel>
+        <skos:altLabel xml:lang="zh">银矿床</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">银矿</skos:prefLabel>
     </Class>
     
 
@@ -2748,7 +2903,7 @@ bus station</skos:altLabel>
     <!-- http://ws.nju.edu.cn/clinga/ontology/ZiRanBaoHuQu -->
 
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ZiRanBaoHuQu">
-        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/JingGuanJingDian"/>
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ShengWuJingGuan"/>
         <rdfs:comment xml:lang="zh">对有代表性的自然生态系统、珍稀濒危野生动植物物种的天然集中分布、有特殊意义的自然遗迹等保护对象所在的陆地、陆地水域或海域，依法划出一定面积予以特殊保护和管理的区域</rdfs:comment>
         <rdfs:label xml:lang="zh">自然保护区</rdfs:label>
         <skos:altLabel xml:lang="en">natural reserve</skos:altLabel>
@@ -2768,13 +2923,25 @@ bus station</skos:altLabel>
     
 
 
+    <!-- http://ws.nju.edu.cn/clinga/ontology/ZiRanJingGuan -->
+
+    <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ZiRanJingGuan">
+        <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/JingGuanJingDian"/>
+        <rdfs:comment xml:lang="zh">受到人类间接、轻微或偶尔影响而原有自然面貌未发生明显变化的景观，如极地、高山、大荒漠、大沼泽、热带雨林以及某些自然保护区等</rdfs:comment>
+        <rdfs:label xml:lang="zh">自然景观</rdfs:label>
+        <skos:altLabel xml:lang="en">natural landscape</skos:altLabel>
+        <skos:prefLabel xml:lang="zh">自然景观</skos:prefLabel>
+    </Class>
+    
+
+
     <!-- http://ws.nju.edu.cn/clinga/ontology/ZiRanZiYuan -->
 
     <Class rdf:about="http://ws.nju.edu.cn/clinga/ontology/ZiRanZiYuan">
         <rdfs:subClassOf rdf:resource="http://ws.nju.edu.cn/clinga/ontology/ZiRanDiLi"/>
         <rdfs:comment xml:lang="zh">凡是自然物质经过人类的发现，被输入生产过程，或直接进入消耗过程，变成有用途的，或能给人以舒适感，从而产生经济价值以提高人类当前和未来福利的物质与能量的总称</rdfs:comment>
         <rdfs:label xml:lang="zh">自然资源</rdfs:label>
-        <skos:altLabel xml:lang="en">natural resources</skos:altLabel>
+        <skos:altLabel xml:lang="en">natural resource</skos:altLabel>
         <skos:prefLabel xml:lang="zh">自然资源</skos:prefLabel>
     </Class>
     
