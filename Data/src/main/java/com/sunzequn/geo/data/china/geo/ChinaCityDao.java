@@ -54,7 +54,7 @@ public class ChinaCityDao extends BaseDao {
         if (!ListUtils.isEmpty(fullCities)) {
             res.addAll(fullCities);
         }
-        if (!ListUtils.isEmpty(shortCities)) {
+        if (ListUtils.isEmpty(res) && !ListUtils.isEmpty(shortCities)) {
             res.addAll(shortCities);
         }
         if (res.size() == 0) {

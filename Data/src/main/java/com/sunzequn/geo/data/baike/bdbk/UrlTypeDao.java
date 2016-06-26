@@ -1,6 +1,7 @@
 package com.sunzequn.geo.data.baike.bdbk;
 
 import com.sunzequn.geo.data.dao.BaseDao;
+import com.sunzequn.geo.data.utils.ListUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class UrlTypeDao extends BaseDao {
 
     private static final String DATABASE = "baidubaike";
-    private static String TABLE = "url_type_filtered_4_20";
+    private static String TABLE = "url_type_zhengli_all";
     private Connection connection;
 
     public UrlTypeDao(String table) {
@@ -37,6 +38,16 @@ public class UrlTypeDao extends BaseDao {
         String sql = "delete from " + TABLE + " where url = ?";
         Object[] params = {url};
         return execute(connection, sql, params);
+    }
+
+    public UrlType getByUrl(String url) {
+        String sql = "select * from " + TABLE + " where url = ?";
+        Object[] params = {url};
+        List<UrlType> urlTypes = query(connection, sql, params, UrlType.class);
+        if (ListUtils.isEmpty(urlTypes)) {
+            return null;
+        }
+        return urlTypes.get(0);
     }
 
     public int updateType(String url, String type) {
@@ -64,6 +75,13 @@ public class UrlTypeDao extends BaseDao {
 
     public List<UrlType> getAll(int confidence) {
         String sql = "select * from " + TABLE + " where confidence = ?";
+//        String sql = "select * from " + TABLE ;
+        Object[] params = {confidence};
+        return query(connection, sql, params, UrlType.class);
+    }
+
+    public List<UrlType> getAbove(int confidence) {
+        String sql = "select * from " + TABLE + " where confidence > ?";
 //        String sql = "select * from " + TABLE ;
         Object[] params = {confidence};
         return query(connection, sql, params, UrlType.class);
@@ -109,7 +127,7 @@ public class UrlTypeDao extends BaseDao {
     }
 
     public List<UrlType> getAllUrlWithNull(int limit) {
-        String sql = "select distinct url from " + TABLE + " where title is null limit " + limit;
+        String sql = "select distinct url from " + TABLE + " where subtitle is null or subtitle = '' limit " + limit;
         return query(connection, sql, null, UrlType.class);
     }
 
@@ -117,6 +135,17 @@ public class UrlTypeDao extends BaseDao {
         String sql = "update " + TABLE + " set confidence = ? where url = ?";
         Object[] params = {confidence, url};
         return execute(connection, sql, params);
+    }
+
+    public int[] updateConfidenceBatch(List<UrlType> urlTypes) {
+        String sql = "update " + TABLE + " set confidence = ? where url = ?";
+        Object[][] parmas = new Object[urlTypes.size()][2];
+        for (int i = 0; i < urlTypes.size(); i++) {
+            UrlType urlType = urlTypes.get(i);
+            parmas[i][0] = urlType.getConfidence();
+            parmas[i][1] = urlType.getUrl();
+        }
+        return batch(connection, sql, parmas);
     }
 
     public int[] updateBatch(List<UrlType> urlTypes) {

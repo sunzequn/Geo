@@ -15,6 +15,7 @@ public class ExtendedType {
     private String superType;
     private String altLabel;
     private String comment;
+    private String encomment;
     private List<String> altLabels;
 
     public ExtendedType() {
@@ -85,6 +86,14 @@ public class ExtendedType {
 
     public void setEntype(String entype) {
         this.entype = entype;
+    }
+
+    public String getEncomment() {
+        return encomment;
+    }
+
+    public void setEncomment(String encomment) {
+        this.encomment = encomment;
     }
 
     @Override

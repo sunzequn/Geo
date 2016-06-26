@@ -18,20 +18,20 @@ import java.util.Set;
  */
 public class FindBasicInfoFrequence {
 
-    private static final float SUPPORT = 0.2f;
+    private static final float SUPPORT = 0.5f;
     private static long absSupport;
 
     private static final String FILE = "D:/DevSpace/github/Geo/Data/src/main/resources/mining/set.txt";
-    private static UrlTypeDao urlTypeDao = new UrlTypeDao();
-    private static BasicInfoDao basicInfoDao = new BasicInfoDao();
+//    private static UrlTypeDao urlTypeDao = new UrlTypeDao();
+//    private static BasicInfoDao basicInfoDao = new BasicInfoDao();
 
     public static void main(String[] args) {
-        handleType("半岛", 1);
+//        handleType("半岛", 1);
         mining();
     }
 
     private static void mining() {
-        List<String[]> matrix = Reader.readAsMatrix("D:/DevSpace/github/Geo/Data/src/main/resources/mining/set.txt", "\t", "utf-8");
+        List<String[]> matrix = Reader.readAsMatrix("D:/DevSpace/github/Geo/Data/src/main/resources/mining/set.txt", " ", "utf-8");
         System.out.println("size " + matrix.size());
         absSupport = (long) (SUPPORT * matrix.size());
         FpTree fpTree = new FpTree(absSupport);
@@ -49,23 +49,23 @@ public class FindBasicInfoFrequence {
         }
 
     }
-
-    private static void handleType(String type, int con) {
-        List<UrlType> urlTypes = urlTypeDao.getByTypeConfidence(type, con);
-        System.out.println(urlTypes.size());
-        WriteUtils writeUtils = new WriteUtils(FILE, false);
-        for (UrlType urlType : urlTypes) {
-            List<BasicInfo> basicInfos = basicInfoDao.getByUrl(urlType.getUrl());
-            if (!ListUtils.isEmpty(basicInfos)) {
-                String line = "";
-                for (BasicInfo basicInfo : basicInfos) {
-                    line += basicInfo.getKey();
-                    line += "\t";
-                }
-                line = StringUtils.removeEnd(line, "\t");
-                writeUtils.write(line);
-            }
-        }
-        writeUtils.close();
-    }
+//
+//    private static void handleType(String type, int con) {
+//        List<UrlType> urlTypes = urlTypeDao.getByTypeConfidence(type, con);
+//        System.out.println(urlTypes.size());
+//        WriteUtils writeUtils = new WriteUtils(FILE, false);
+//        for (UrlType urlType : urlTypes) {
+//            List<BasicInfo> basicInfos = basicInfoDao.getByUrl(urlType.getUrl());
+//            if (!ListUtils.isEmpty(basicInfos)) {
+//                String line = "";
+//                for (BasicInfo basicInfo : basicInfos) {
+//                    line += basicInfo.getKey();
+//                    line += "\t";
+//                }
+//                line = StringUtils.removeEnd(line, "\t");
+//                writeUtils.write(line);
+//            }
+//        }
+//        writeUtils.close();
+//    }
 }

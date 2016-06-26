@@ -25,8 +25,8 @@ public class CleanHandler {
 //        cleanTypeByTag(5, "岛" , 0, false);
 //        cleanAllByTag(5, 0, false);
 //        cleanAllByTag(5, 0, false);
-//        cleanTypeByInfoBox(0, "学校", 0, true);
-        cleanTypeByCatalog(0, "学校", 0, true);
+        cleanTypeByInfoBox(0, "宾馆", 0, true);
+//        cleanTypeByCatalog(0, "桥", 0, true);
     }
 
     private static void countNoSummary() {

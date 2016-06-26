@@ -23,6 +23,12 @@ public class Pinyin {
      * @return
      */
     public String getPinyinWithFirstOneUpper(String hanzi) {
+        if (hanzi.equals("银行")) {
+            return "YinHang";
+        }
+        if (hanzi.equals("湖泊")) {
+            return "HuPo";
+        }
         if (StringUtils.isNullOrEmpty(hanzi)) {
             return null;
         }
@@ -46,9 +52,16 @@ public class Pinyin {
      * @return
      */
     public String getPinyinWithFirstOneLower(String hanzi) {
+        if (hanzi.equals("银行")) {
+            return "yinHang";
+        }
+        if (hanzi.equals("湖泊")) {
+            return "huPo";
+        }
         if (StringUtils.isNullOrEmpty(hanzi)) {
             return null;
         }
+//        hanzi = hanzi.toLowerCase();
         char[] chars = hanzi.trim().toCharArray();
 
         if (chars.length == 1) {
@@ -68,7 +81,7 @@ public class Pinyin {
 
     public String getPinyin(char singleWord) {
         //不是中文直接返回
-        if (!MyStringUtils.isChinese(singleWord)) {
+        if (!MyStringUtils.isChineseNoBiaodian(singleWord)) {
             return String.valueOf(singleWord);
         }
 
@@ -94,7 +107,7 @@ public class Pinyin {
     public static void main(String[] args) {
         Pinyin pinyin = new Pinyin();
         System.out.println(pinyin.getPinyinWithFirstOneUpper("GDP"));
-        System.out.println(pinyin.getPinyinWithFirstOneLower("合计GDP"));
+        System.out.println(pinyin.getPinyinWithFirstOneLower("GDP总计"));
         System.out.println(pinyin.getPinyinWithFirstOneUpper("孙泽群"));
         System.out.println(pinyin.getPinyinWithFirstOneLower("孙泽群"));
     }

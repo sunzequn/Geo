@@ -32,7 +32,7 @@ public class MappingGenerator {
     private static final String GEO = "http://www.geonames.org/ontology#";
     private static final String GEO_F = "http://www.geonames.org/ontology#featureCode";
     //百度百科uri前缀
-    private static final String CLINGA = "http://ws.nju.edu.cn/clinga/ontology/";
+    private static final String CLINGA = "http://ws.nju.edu.cn/clinga/";
     private static Pinyin pinyin = new Pinyin();
 
     public static void main(String[] args) {

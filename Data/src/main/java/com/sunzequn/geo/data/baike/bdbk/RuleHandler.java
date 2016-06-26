@@ -19,12 +19,12 @@ public class RuleHandler {
     private static BasicInfoDao basicInfoDao = new BasicInfoDao();
     private static SubTitleDao subTitleDao = new SubTitleDao();
     private static TitleDao titleDao = new TitleDao();
-    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_toli");
-    //    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_quhua");
+    //    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_toli");
+    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_zhengli_all_ifchina");
     private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
-//        extract(0, 1);
+//        extract(0, 2);
         completion();
     }
 
@@ -37,8 +37,8 @@ public class RuleHandler {
             System.out.println(urlTypes.size());
             for (UrlType urlType : urlTypes) {
                 Title title_bean = titleDao.getByUrl(urlType.getUrl());
-//                SubTitle subTitle_bean = subTitleDao.getByUrl(urlType.getUrl());
-//                Summary summary_bean = summaryDao.getByUrl(urlType.getUrl());
+                SubTitle subTitle_bean = subTitleDao.getByUrl(urlType.getUrl());
+                Summary summary_bean = summaryDao.getByUrl(urlType.getUrl());
                 String title, subtitle, summary;
                 if (title_bean == null) {
                     title = "";
@@ -46,20 +46,21 @@ public class RuleHandler {
                     title = title_bean.getTitle();
                 }
                 urlType.setTitle(title);
-//                if (subTitle_bean == null) {
-//                    subtitle = "";
-//                } else {
-//                    subtitle = subTitle_bean.getSubtitle();
-//                }
-                urlType.setSubtitle("");
-//                if (summary_bean == null) {
-//                    summary = "";
-//                } else {
-//                    summary = summary_bean.getSummary();
-//                }
-                urlType.setSummary("");
+                if (subTitle_bean == null) {
+                    subtitle = "";
+                } else {
+                    System.out.println(subTitle_bean.getSubtitle());
+                    subtitle = subTitle_bean.getSubtitle();
+                }
+                urlType.setSubtitle(subtitle);
+                if (summary_bean == null) {
+                    summary = "";
+                } else {
+                    summary = summary_bean.getSummary();
+                }
+                urlType.setSummary(summary);
             }
-            urlTypeDao.updateBatch(urlTypes);
+//            urlTypeDao.updateBatch(urlTypes);
         }
     }
 
@@ -82,10 +83,10 @@ public class RuleHandler {
             }
             List<UrlType> urlTypes = new ArrayList<>();
             for (String s : res) {
-//                urlTypeDao.addType(s, rule.getType(), confidence);
-                urlTypes.add(new UrlType(s, rule.getType(), confidence));
+                urlTypeDao.addType(s, rule.getType(), confidence);
+//                urlTypes.add(new UrlType(s, rule.getType(), confidence));
             }
-            urlTypeDao.addTypeBatch(urlTypes);
+//            urlTypeDao.addTypeBatch(urlTypes);
         }
     }
 

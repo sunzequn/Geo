@@ -15,11 +15,11 @@ public class ServerDao {
 
     private static final String CLASS_NAME = "com.mysql.jdbc.Driver";
     //后面就可以使用本机的mysql了
-    private static final String JDBC_URL_PREFIX = "jdbc:mysql://localhost:3306/";
-    //    private static final String JDBC_URL_PREFIX = "jdbc:mysql://210.28.132.62:3306/";
+//    private static final String JDBC_URL_PREFIX = "jdbc:mysql://localhost:3306/";
+    private static final String JDBC_URL_PREFIX = "jdbc:mysql://210.28.132.62:3306/";
     private static final String JDBC_URL_SUFFIX = "?useUnicode=true&characterEncoding=UTF-8";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private static final String USER = "zqsun";
+    private static final String PASSWORD = "zqsun810";
 
     protected Connection getConnection(String databaseName) {
         try {
