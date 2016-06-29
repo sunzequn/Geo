@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class ChinaCityDao extends BaseDao {
 
-    private static final String DATABASE = "geocities";
+    private static final String DATABASE = "geonames";
     private static final String TABLE = "china_city";
     private Connection connection;
 
@@ -101,7 +101,7 @@ public class ChinaCityDao extends BaseDao {
     public static void main(String[] args) {
         ChinaCityDao dao = new ChinaCityDao();
 //        System.out.println(dao.getByLevel(1));
-        System.out.println(dao.getEndWith("县"));
+        System.out.println(dao.getChildren(110000));
     }
 
 }
