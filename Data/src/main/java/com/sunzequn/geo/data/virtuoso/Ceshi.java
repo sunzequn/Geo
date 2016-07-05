@@ -21,10 +21,10 @@ public class Ceshi extends PullText {
 
     public static void main(String[] args) throws Exception {
 
-        ParameterizedSparqlString sparqlstr = new ParameterizedSparqlString("select ?property where{ <http://xlore.org/instance/170248> ?property ?object }");
+        ParameterizedSparqlString sparqlstr = new ParameterizedSparqlString("select * where{ ?s ?property ?object } limit 10");
 //        sparqlstr.setIri("some_parameter", "");
 
-        URL queryURL = new URL("http://xlore.org/sparql?sq=" + URLEncoder.encode(sparqlstr.toString(), "UTF-8"));
+        URL queryURL = new URL("http://210.28.132.62:8891/sparql?default-graph-uri=&query=" + URLEncoder.encode(sparqlstr.toString(), "UTF-8") + "&format=xml%2Fhtml&timeout=0&debug=on");
         System.out.println(queryURL.toString());
 
         URLConnection connAPI = queryURL.openConnection();
@@ -35,7 +35,7 @@ public class Ceshi extends PullText {
         while (rs.hasNext()) {
             QuerySolution qs = rs.next();
             System.out.println("ok");
-            System.out.println(qs);
+            System.out.println(qs.get("s"));
         }
     }
 }

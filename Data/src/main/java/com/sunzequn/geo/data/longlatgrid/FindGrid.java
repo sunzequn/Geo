@@ -1,5 +1,6 @@
 package com.sunzequn.geo.data.longlatgrid;
 
+
 import com.sunzequn.geo.data.algorithm.location.distance.LongLatCalculator;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class FindGrid {
 
     public static void main(String[] args) {
         FindGrid findGrid = new FindGrid();
-//        System.out.println(findGrid.findKoppenGrid(107.73, 11.93));
-        System.out.println(findGrid.findGpcpGrid(-37.73, 12.93));
+        System.out.println(findGrid.findKoppenGrid(111, 121));
+//        System.out.println(findGrid.findGpcpGrid(-37.73, 12.93));
     }
 
 
