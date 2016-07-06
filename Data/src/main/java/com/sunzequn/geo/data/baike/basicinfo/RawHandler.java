@@ -1,29 +1,33 @@
 package com.sunzequn.geo.data.baike.basicinfo;
 
-import com.mongodb.gridfs.CLI;
 import com.sunzequn.geo.data.algorithm.hanyu.Pinyin;
 import com.sunzequn.geo.data.baike.bdbk.*;
+import com.sunzequn.geo.data.baike.bean.InfoBoxTemplateProp;
+import com.sunzequn.geo.data.baike.bean.Prop;
+import com.sunzequn.geo.data.baike.dao.InfoBoxTemplatePropDao;
+import com.sunzequn.geo.data.baike.jena.MultiLang;
 import com.sunzequn.geo.data.utils.ListUtils;
-import com.sunzequn.geo.data.utils.MyStringUtils;
 import com.sunzequn.geo.data.utils.ReadUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
+import com.sunzequn.geo.data.utils.WriteUtils;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.tdb.base.objectfile.StringFile;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.SKOS;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Created by sunzequn on 2016/4/30.
  */
-public class BasicInfoHandler {
+public class RawHandler {
 
     private static final String CLINGA = "http://ws.nju.edu.cn/clinga/";
     private static final String DIR = "Data/src/main/resources/basicinfo";
@@ -32,51 +36,68 @@ public class BasicInfoHandler {
     private static UrlIndexDao urlIndexDao = new UrlIndexDao();
     private static UrlTypeDao urlTypeDao = new UrlTypeDao();
     private static Pinyin pinyin = new Pinyin();
+    private static InfoBoxTemplatePropDao propDao = new InfoBoxTemplatePropDao();
+    private static Set<String> keys = new HashSet<>();
 
     public static void main(String[] args) {
-//        System.out.println(isUrl("http://ws.nju.edu.cn/clinga/DaZhongYunShu"));
+//        clean();
+        toFile();
+    }
+
+    private static void clean() {
+        ReadUtils readUtils = new ReadUtils("D:\\Code\\github\\Geo\\Data\\src\\main\\resources\\basicinfo\\raw");
+        WriteUtils writeUtils = new WriteUtils("D:\\Code\\github\\Geo\\Data\\src\\main\\resources\\basicinfo\\raw_cleaned", false);
+        List<String> rawProps = readUtils.readByLine();
+        List<InfoBoxTemplateProp> props = propDao.getAll();
+        Set<String> mappedProps = new HashSet<>();
+        for (InfoBoxTemplateProp prop : props) {
+            mappedProps.add(prop.getName());
+        }
+        System.out.println(mappedProps.size());
+        for (String rawProp : rawProps) {
+            if (!mappedProps.contains(rawProp)) {
+                String temp = getProp(rawProp);
+                if (temp != null) {
+                    writeUtils.write(rawProp);
+                }
+
+            }
+        }
+    }
+
+    private static void handleRaw() {
         List<String> types = getType();
         int num = 0;
         for (String type : types) {
             System.out.println(num++ + " " + type);
             handleType(type.trim());
+            System.out.println(keys.size());
         }
+        System.out.println(keys.size());
+        WriteUtils writeUtils = new WriteUtils("D:\\Code\\github\\Geo\\Data\\src\\main\\resources\\basicinfo\\raw", false);
+        for (String key : keys) {
+            writeUtils.write(key);
+        }
+        writeUtils.close();
     }
 
     private static void handleType(String type) {
-        String file = DIR + pinyin.getPinyinWithFirstOneUpper(type) + ".rdf";
-        Model model = ModelFactory.createDefaultModel();
+
         List<UrlType> urlTypes = urlTypeDao.getByType(type);
         for (UrlType urlType : urlTypes) {
-            String uri = PRE + urlIndexDao.getByUrl(urlType.getUrl()).getId();
-            Resource s = model.createResource(uri);
             List<BasicInfo> basicInfos = basicInfoDao.getByUrl(urlType.getUrl());
             if (!ListUtils.isEmpty(basicInfos)) {
                 for (BasicInfo basicInfo : basicInfos) {
                     String key = BasicInfoUtils.parseKey(basicInfo.getKey());
-                    key = getProp(key);
+//                    key = getProp(key);
                     if (key != null) {
-                        Property p = model.createProperty(key);
-                        String value = basicInfo.getValue();
-                        if (value.contains("{{") && value.contains("}}")) {
-                            List<String> valueUrls = BasicInfoUtils.parseValue(value, 3);
-                            for (String valueUrl : valueUrls) {
-                                UrlIndex urlIndex = urlIndexDao.getByUrl(valueUrl);
-                                if (urlIndex != null) {
-                                    String valueUri = PRE + urlIndex.getId();
-                                    Resource o = model.createResource(valueUri);
-                                    s.addProperty(p, o);
-                                }
-                            }
-                        } else {
-                            Literal o = model.createLiteral(value);
-                            s.addProperty(p, o);
-                        }
+                        key = key.trim();
+                        keys.add(key);
                     }
                 }
             }
         }
-        toFile(model, file);
+//        toFile(model, file);
     }
 
 
@@ -112,8 +133,20 @@ public class BasicInfoHandler {
         return lines;
     }
 
-    private static void toFile(Model model, String file) {
+    private static void toFile() {
+        String file = "D:\\Code\\github\\Geo\\Data\\src\\main\\resources\\basicinfo\\raw_property_ontology.owl";
         FileOutputStream fileOutputStream = null;
+        Model model = ModelFactory.createDefaultModel();
+        ReadUtils readUtils = new ReadUtils("D:\\Code\\github\\Geo\\Data\\src\\main\\resources\\basicinfo\\raw_cleaned");
+        List<String> props = readUtils.readByLine();
+        for (String prop : props) {
+            String propUri = getProp(prop);
+            Property p = model.createProperty(propUri);
+            p.addProperty(RDF.type, RDF.Property);
+            p.addProperty(SKOS.prefLabel, model.createLiteral(prop, MultiLang.ZH));
+            p.addProperty(SKOS.altLabel, model.createLiteral(prop, MultiLang.ZH));
+        }
+
         try {
             fileOutputStream = new FileOutputStream(file, false);
         } catch (FileNotFoundException e) {

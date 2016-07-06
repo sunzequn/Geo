@@ -19,6 +19,12 @@ public class RuleDao extends BaseDao {
         connection = getConnection(DATABASE);
     }
 
+
+    public List<Rule> getAll() {
+        String sql = "select * from " + table + " order by type";
+        return query(connection, sql, null, Rule.class);
+    }
+
     public List<Rule> getAll(int visit) {
         String sql = "select * from " + table + " where ifvisit = ?";
         Object[] params = {visit};
@@ -26,8 +32,8 @@ public class RuleDao extends BaseDao {
     }
 
     public static void main(String[] args) {
-        RuleDao ruleDao = new RuleDao("rules_quhua");
-        System.out.println(ruleDao.getAll(1));
+        RuleDao ruleDao = new RuleDao("rules_all_extract");
+        System.out.println(ruleDao.getAll().size());
     }
 
 }
