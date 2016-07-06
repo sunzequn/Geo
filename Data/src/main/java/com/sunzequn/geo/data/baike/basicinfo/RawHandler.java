@@ -14,6 +14,7 @@ import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.OWL;
 import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 import org.apache.jena.vocabulary.SKOS;
 
 import java.io.FileNotFoundException;
@@ -144,7 +145,7 @@ public class RawHandler {
             Property p = model.createProperty(propUri);
             p.addProperty(RDF.type, RDF.Property);
             p.addProperty(SKOS.prefLabel, model.createLiteral(prop, MultiLang.ZH));
-            p.addProperty(SKOS.altLabel, model.createLiteral(prop, MultiLang.ZH));
+            p.addProperty(RDFS.label, model.createLiteral(prop, MultiLang.ZH));
         }
 
         try {
