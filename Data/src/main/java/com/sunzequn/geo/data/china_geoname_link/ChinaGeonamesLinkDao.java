@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ChinaGeonamesLinkDao extends BaseDao {
 
-    private static final String DATABASE = "geonames";
+    private static final String DATABASE = "geonames_new";
     private static final String TABLE = "china_city_geoname_link";
     private Connection connection;
 

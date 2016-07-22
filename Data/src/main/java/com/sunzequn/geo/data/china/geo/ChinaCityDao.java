@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class ChinaCityDao extends BaseDao {
 
-    private static final String DATABASE = "geonames";
+    private static final String DATABASE = "geonames_new";
     private static final String TABLE = "china_city";
     private Connection connection;
 

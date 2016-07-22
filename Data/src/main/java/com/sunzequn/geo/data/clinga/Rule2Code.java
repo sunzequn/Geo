@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.baike.handler;
+package com.sunzequn.geo.data.clinga;
 
 import com.sunzequn.geo.data.baike.bdbk.Rule;
 import com.sunzequn.geo.data.baike.bdbk.RuleDao;

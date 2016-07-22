@@ -188,7 +188,7 @@ public class GenEntityMysql {
      */
     public static void main(String[] args) {
 
-        new GenEntityMysql("geonames", "continentCodes");
+        new GenEntityMysql("climate", "china_climate_factor");
 
     }
 

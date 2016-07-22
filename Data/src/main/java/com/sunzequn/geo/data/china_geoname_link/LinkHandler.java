@@ -24,7 +24,8 @@ public class LinkHandler {
     public static void main(String[] args) {
 //        handleADM1();
 //        handleADM2();
-        handleADM3();
+//        handleADM3();
+        handleTwXgAm();
     }
 
     private static void handle(List<ChinaCity> chinaCities, List<Geoname> geonames, String level) {
@@ -62,6 +63,7 @@ public class LinkHandler {
                 System.out.println("普通： " + chinaCityDao.getById(link.getCityid()));
             }
             List<Geoname> geonames = geonameDao.getADM2(link.getGeonameid());
+            System.out.println(geonames);
             //geonames没有二级直辖市,特殊处理一下geonames的上海
             if (geonames == null || (zhixiashi != null && zhixiashi.getName().equals("上海市"))) {
                 if (zhixiashi != null) {
@@ -118,5 +120,33 @@ public class LinkHandler {
         return res;
     }
 
+    /**
+     * 处理香港台湾澳门
+     */
+    private static void handleTwXgAm() {
+        ChinaGeonamesLink taiwanlink = new ChinaGeonamesLink(710000, 1668284, "ADM1", 2);
+        ChinaGeonamesLink xiangganglink = new ChinaGeonamesLink(810000, 1819730, "ADM1", 2);
+        ChinaGeonamesLink aomenlink = new ChinaGeonamesLink(820000, 1821275, "ADM1", 2);
+        ChinaGeonamesLinkDao linkDao = new ChinaGeonamesLinkDao();
+        linkDao.save(taiwanlink);
+        linkDao.save(xiangganglink);
+        linkDao.save(aomenlink);
+        handleTwXgAmADM2(taiwanlink);
+        handleTwXgAmADM2(xiangganglink);
+        handleTwXgAmADM2(aomenlink);
+
+
+    }
+
+    private static void handleTwXgAmADM2(ChinaGeonamesLink link) {
+        List<ChinaCity> chinaCities2 = chinaCityDao.getChildren(link.getCityid());
+        List<Geoname> geonames = geonameDao.getADM2ByCountry(link.getGeonameid());
+        System.out.println(link);
+        System.out.println(geonames);
+        if (geonames != null) {
+            handle(chinaCities2, geonames, "ADM2");
+        }
+
+    }
 
 }
