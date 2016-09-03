@@ -28,8 +28,8 @@ import java.util.List;
  */
 public class OntologyGenerator {
 
-    private static final String ONTOLOGY_FILE = "D:/DevSpace/github/Geo/Data/src/main/resources/baike/ontology.owl";
-    private static final String MAPPING_FILE = "D:/DevSpace/github/Geo/Data/src/main/resources/baike/mapping.owl";
+    private static final String ONTOLOGY_FILE = "Data/src/main/resources/baike/ontology.owl";
+    private static final String MAPPING_FILE = "    Data/src/main/resources/baike/mapping.owl";
     private static final String DBO = "http://dbpedia.org/ontology/";
     private static final String GEO = "http://www.geonames.org/ontology#";
     private static final String GEO_F = "http://www.geonames.org/ontology#featureCode";
