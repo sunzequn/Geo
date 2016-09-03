@@ -1,5 +1,6 @@
 package com.sunzequn.geo.data.regex;
 
+import com.sun.org.apache.regexp.internal.RE;
 import com.sunzequn.geo.data.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -52,8 +53,11 @@ public class RegexUtils {
 
 
     public static void main(String[] args) {
-        String str = "受到收到{{南京大学::</view/3143.htm>}}、{{东南大学::</view/3154.htm>}}等";
+//        String str = "受到收到{{南京大学::</view/3143.htm>}}、{{东南大学::</view/3154.htm>}}等";
         //"\\{\\{", "\\}\\}",
-        System.out.println(RegexUtils.parseLink(str, 2));
+//        System.out.println(RegexUtils.parseLink(str, 2));
+
+        String str = "**(pic,0,Pic7_8_9_1)**读“美国和巴西大豆产区图”**(pic,1,Pic7_8_9_1)**及**(pic,0,Pic7_8_9_2)**相关资料**(pic,1,Pic7_8_9_2)**，回答（1）～（3）题";
+        System.out.println(RegexUtils.extract("\\*\\*\\(", "\\)\\*\\*", str));
     }
 }
