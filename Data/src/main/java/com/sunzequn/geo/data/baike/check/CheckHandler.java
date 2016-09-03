@@ -5,6 +5,7 @@ import com.sunzequn.geo.data.baike.bdbk.UrlTypeDao;
 import com.sunzequn.geo.data.utils.ReadUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -16,7 +17,48 @@ public class CheckHandler {
     private static UrlTypeDao urlTypeDao = new UrlTypeDao();
 
     public static void main(String[] args) {
-        checkSea();
+//        checkSea();
+//        check1();
+//        check2();
+        checkfu();
+    }
+
+    private static void checkfu() {
+        String fileName = FILE_PATH + "qian2.txt";
+        ReadUtils readUtils = new ReadUtils(fileName);
+        List<String> lines = readUtils.readByLine();
+        for (String line : lines) {
+            handleLine(line, 2);
+        }
+    }
+
+    private static void check2() {
+        String fileName = FILE_PATH + "check2/xue.txt";
+        ReadUtils readUtils = new ReadUtils(fileName);
+        List<String> lines = readUtils.readByLine();
+        for (String line : lines) {
+            handleLine(line, 2);
+        }
+    }
+
+    private static void check1() {
+        String dirName = FILE_PATH + "check1";
+        File dir = new File(dirName);
+        File[] files = dir.listFiles();
+        for (File file : files) {
+            System.out.println(file.getName());
+            ReadUtils readUtils = new ReadUtils(dirName + "/" + file.getName());
+            List<String> lines = readUtils.readByLine();
+            int num = 0;
+            for (String line : lines) {
+                handleLine(line, 1);
+                if (line.startsWith("0")) {
+                    num++;
+                }
+            }
+            System.out.println(num);
+        }
+
     }
 
     private static void checkSea() {
@@ -24,13 +66,17 @@ public class CheckHandler {
         ReadUtils readUtils = new ReadUtils(seaFile);
         List<String> lines = readUtils.readByLine();
         for (String line : lines) {
-            line = line.trim();
-            if (line.startsWith("1")) {
-                String[] strings = StringUtils.split(line, "\t");
-                System.out.println(strings[1]);
-                String url = StringUtils.removeStart(strings[1], "http://baike.baidu.com");
-                urlTypeDao.updateConfidence(url, 2);
-            }
+            handleLine(line, 1);
+        }
+    }
+
+    private static void handleLine(String line, int urlIndex) {
+        line = line.trim();
+        if (line.startsWith("0")) {
+            String[] strings = StringUtils.split(line, "\t");
+            String url = StringUtils.removeStart(strings[urlIndex], "http://baike.baidu.com");
+            System.out.println(url);
+            urlTypeDao.updateConfidence(url, 0);
         }
     }
 }

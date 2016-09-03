@@ -28,6 +28,10 @@ public class DoubleUtils {
         return df.format(d);
     }
 
+    public static double m4d(double d) {
+        DecimalFormat df = new DecimalFormat("0.0000");
+        return Double.valueOf(df.format(d));
+    }
     public static void main(String[] args) {
         System.out.println(DoubleUtils.m4(200.99982287362163214124123213213));
     }

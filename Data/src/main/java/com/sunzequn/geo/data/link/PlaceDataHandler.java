@@ -3,7 +3,6 @@ package com.sunzequn.geo.data.link;
 import com.sunzequn.geo.data.algorithm.location.distance.LongLatCalculator;
 import com.sunzequn.geo.data.climate.bean.Place;
 import com.sunzequn.geo.data.climate.dao.PlaceDao;
-import com.sunzequn.geo.data.climate.dao.RegionDao;
 import com.sunzequn.geo.data.geonames.bean.Geoname;
 import com.sunzequn.geo.data.geonames.dao.GeonameDao;
 

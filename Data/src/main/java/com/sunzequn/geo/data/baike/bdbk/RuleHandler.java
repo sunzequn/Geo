@@ -19,18 +19,18 @@ public class RuleHandler {
     private static BasicInfoDao basicInfoDao = new BasicInfoDao();
     private static SubTitleDao subTitleDao = new SubTitleDao();
     private static TitleDao titleDao = new TitleDao();
-    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type");
-    //    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_quhua");
+    //    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_toli");
+    private static UrlTypeDao urlTypeDao = new UrlTypeDao("url_type_zhengli_all_ifchina");
     private static SummaryDao summaryDao = new SummaryDao();
 
     public static void main(String[] args) {
-        extract(0, 1);
+//        extract(0, 2);
         completion();
     }
 
     private static void completion() {
         while (true) {
-            List<UrlType> urlTypes = urlTypeDao.getAllUrlWithNull(1000);
+            List<UrlType> urlTypes = urlTypeDao.getAllUrlWithNull(5000);
             if (ListUtils.isEmpty(urlTypes)) {
                 return;
             }
@@ -49,6 +49,7 @@ public class RuleHandler {
                 if (subTitle_bean == null) {
                     subtitle = "";
                 } else {
+                    System.out.println(subTitle_bean.getSubtitle());
                     subtitle = subTitle_bean.getSubtitle();
                 }
                 urlType.setSubtitle(subtitle);
@@ -59,9 +60,7 @@ public class RuleHandler {
                 }
                 urlType.setSummary(summary);
             }
-            System.out.println(urlTypes);
-            System.out.println(urlTypes.size());
-            urlTypeDao.updateBatch(urlTypes);
+//            urlTypeDao.updateBatch(urlTypes);
         }
     }
 
@@ -84,10 +83,10 @@ public class RuleHandler {
             }
             List<UrlType> urlTypes = new ArrayList<>();
             for (String s : res) {
-//                urlTypeDao.addType(s, rule.getType(), confidence);
-                urlTypes.add(new UrlType(s, rule.getType(), confidence));
+                urlTypeDao.addType(s, rule.getType(), confidence);
+//                urlTypes.add(new UrlType(s, rule.getType(), confidence));
             }
-            urlTypeDao.addTypeBatch(urlTypes);
+//            urlTypeDao.addTypeBatch(urlTypes);
         }
     }
 

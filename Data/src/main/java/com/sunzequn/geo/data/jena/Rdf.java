@@ -15,9 +15,14 @@ import java.util.List;
  */
 public class Rdf {
 
+    public static void main(String[] args) {
+        Rdf rdf = new Rdf();
+        Model model = rdf.getModel("D:\\Code\\github\\Geo\\Data\\src\\main\\resources\\jena\\test.rdf", "RDF/XML");
+    }
+
     public Model getModel(String rdfFile, String type) {
         Model model = ModelFactory.createDefaultModel();
-        model.read(rdfFile, type);
+        model.read(rdfFile, null);
         return model;
     }
 

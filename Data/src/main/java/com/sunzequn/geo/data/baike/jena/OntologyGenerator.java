@@ -10,6 +10,7 @@ import com.sunzequn.geo.data.baike.dao.InfoBoxTemplatePropDao;
 import com.sunzequn.geo.data.utils.ReadUtils;
 import com.sunzequn.geo.data.utils.StringUtils;
 import com.sunzequn.geo.data.utils.WriteUtils;
+import org.apache.jena.assembler.Mode;
 import org.apache.jena.ontology.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.riot.Lang;
@@ -35,7 +36,7 @@ public class OntologyGenerator {
     private static final String GEO_F = "http://www.geonames.org/ontology#featureCode";
     private static final String FOAF = "http://xmlns.com/foaf/0.1/";
     //百度百科uri前缀
-    private static final String CLINGA = "http://ws.nju.edu.cn/clinga/ontology/";
+    private static final String CLINGA = "http://ws.nju.edu.cn/clinga/";
     private static Pinyin pinyin = new Pinyin();
 
     public static void main(String[] args) {
@@ -60,8 +61,8 @@ public class OntologyGenerator {
         for (InfoBoxTemplateProp prop : props) {
             prop.initAll();
             //非0的是objectProperty
-            if (prop.getType() > 1) {
-                ObjectProperty property = model.createObjectProperty(CLINGA + pinyin.getPinyinWithFirstOneLower(prop.getName()));
+            if (prop.getType() > 0) {
+                ObjectProperty property = model.createObjectProperty(CLINGA + pinyin.getPinyinWithFirstOneLower(prop.getName().trim()));
                 model = completeProperty(model, property, prop);
                 for (String domain : prop.getDomains()) {
                     property.addDomain(model.getOntClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(domain)));
@@ -79,7 +80,6 @@ public class OntologyGenerator {
                 DatatypeProperty property = model.createDatatypeProperty(CLINGA + pinyin.getPinyinWithFirstOneLower(prop.getName()));
                 model = completeProperty(model, property, prop);
                 for (String domain : prop.getDomains()) {
-                    System.out.println(domain + "''''");
                     property.addDomain(model.getOntClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(domain)));
                 }
                 String range = prop.getRange1();
@@ -92,8 +92,23 @@ public class OntologyGenerator {
                 }
             }
         }
+        handlePropSameAs(model, props);
         return model;
     }
+
+    private static void handlePropSameAs(Model model, List<InfoBoxTemplateProp> props) {
+        for (InfoBoxTemplateProp prop : props) {
+            //处理sameAs
+            if (!StringUtils.isNullOrEmpty(prop.getSameas())) {
+                String uri = CLINGA + pinyin.getPinyinWithFirstOneLower(prop.getName());
+                String sameAsUri = CLINGA + pinyin.getPinyinWithFirstOneLower(prop.getSameas());
+                Resource property = model.getResource(uri);
+                Resource sameProp = model.getResource(sameAsUri);
+                property.addProperty(OWL.equivalentProperty, sameProp);
+            }
+        }
+    }
+
 
     private static OntModel completeProperty(OntModel model, OntProperty property, InfoBoxTemplateProp prop) {
 
@@ -149,7 +164,7 @@ public class OntologyGenerator {
         List<ExtendedType> types = dao.getAll();
         for (ExtendedType type : types) {
             type.initAltLabels();
-            String ns = CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getTypeName());
+            String ns = CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getTypeName().trim());
             OntClass ontClass = model.getOntClass(ns);
             if (ontClass == null) {
                 model = addClass(model, type);
@@ -157,10 +172,10 @@ public class OntologyGenerator {
         }
 
         for (ExtendedType type : types) {
-            String ns1 = CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getTypeName());
+            String ns1 = CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getTypeName().trim());
             OntClass ontClass1 = model.getOntClass(ns1);
 
-            String ns2 = CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getSuperType());
+            String ns2 = CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getSuperType().trim());
             OntClass ontClass2 = model.getOntClass(ns2);
 
             ontClass1.setSuperClass(ontClass2);
@@ -173,11 +188,14 @@ public class OntologyGenerator {
         OntClass ontClass = model.createClass(CLINGA + pinyin.getPinyinWithFirstOneUpper(type.getTypeName().trim()));
         //处理comment
         if (!StringUtils.isNullOrEmpty(type.getComment())) {
-            ontClass.addComment(type.getComment(), MultiLang.ZH);
+            ontClass.addComment(type.getComment().trim(), MultiLang.ZH);
+        }
+        if (!StringUtils.isNullOrEmpty(type.getEncomment())) {
+            ontClass.addComment(type.getEncomment().trim(), MultiLang.EN);
         }
         //设置preflabel
-        ontClass.addProperty(SKOS.prefLabel, model.createLiteral(type.getTypeName(), MultiLang.ZH));
-        ontClass.addLabel(type.getTypeName(), MultiLang.ZH);
+        ontClass.addProperty(SKOS.prefLabel, model.createLiteral(type.getTypeName().trim(), MultiLang.ZH));
+        ontClass.addLabel(type.getTypeName().trim(), MultiLang.ZH);
         //处理中文altlabel
         if (type.getAltLabels() != null) {
             for (String label : type.getAltLabels())
@@ -185,14 +203,14 @@ public class OntologyGenerator {
         }
         //处理英文altlabel
         if (!StringUtils.isNullOrEmpty(type.getEntype())) {
-            ontClass.addProperty(SKOS.altLabel, model.createLiteral(type.getEntype(), MultiLang.EN));
+            ontClass.addProperty(SKOS.altLabel, model.createLiteral(type.getEntype().trim(), MultiLang.EN));
         }
         return model;
     }
 
 
     private static void handleTemplate(OntModel model, List<InfoBoxTemplate> templates, InfoBoxTemplate template) {
-        String ns = CLINGA + pinyin.getPinyinWithFirstOneUpper(template.getTitle());
+        String ns = CLINGA + pinyin.getPinyinWithFirstOneUpper(template.getTitle().trim());
         OntClass ontClass = model.getOntClass(ns);
         //这个类不存在，就创建
         if (ontClass == null) {
@@ -218,14 +236,17 @@ public class OntologyGenerator {
             }
             //设置preflabel
             newClass.addProperty(SKOS.prefLabel, model.createLiteral(template.getTitle(), MultiLang.ZH));
-            newClass.addLabel(template.getTitle(), MultiLang.ZH);
+            newClass.addLabel(template.getTitle().trim(), MultiLang.ZH);
             //设置altlabel
             if (!StringUtils.isNullOrEmpty(template.getEntitle())) {
-                newClass.addProperty(SKOS.altLabel, model.createLiteral(template.getEntitle(), MultiLang.EN));
+                newClass.addProperty(SKOS.altLabel, model.createLiteral(template.getEntitle().trim(), MultiLang.EN));
             }
             //设置commet
             if (!StringUtils.isNullOrEmpty(template.getComment())) {
-                newClass.addComment(template.getComment(), MultiLang.ZH);
+                newClass.addComment(template.getComment().trim(), MultiLang.ZH);
+            }
+            if (!StringUtils.isNullOrEmpty(template.getEncomment())) {
+                newClass.addComment(template.getEncomment().trim(), MultiLang.EN);
             }
         }
         //存在就不管了

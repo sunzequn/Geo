@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class GeonameDao extends BaseDao {
 
-    private static final String DATABASE = "geonames";
+    private static final String DATABASE = "geonames_new";
     private static final String TABLE = "geoname";
     private Connection connection;
 
@@ -83,9 +83,91 @@ public class GeonameDao extends BaseDao {
         return query(connection, sql, params, Geoname.class);
     }
 
+    public List<Geoname> getADM2ByCountry(int amd1id) {
+        Geoname geoname = getById(amd1id);
+        if (geoname == null) {
+            return null;
+        }
+        String country = geoname.getCountry();
+        System.out.println(country);
+        if (StringUtils.isNullOrEmpty(country)) {
+            System.out.println("数据有错误");
+            return null;
+        }
+        String sql = "select * from " + TABLE + " where country = ? and fcode = ?";
+        Object[] params = {country, "ADM2"};
+        return query(connection, sql, params, Geoname.class);
+    }
+
+    public List<Geoname> getADM3ByCountry(int amd1id) {
+        Geoname geoname = getById(amd1id);
+        if (geoname == null) {
+            return null;
+        }
+        String country = geoname.getCountry();
+        if (StringUtils.isNullOrEmpty(country)) {
+            System.out.println("数据有错误");
+            return null;
+        }
+        String sql = "select * from " + TABLE + " where country = ? and fcode = ?";
+        Object[] params = {country, "ADM3"};
+        return query(connection, sql, params, Geoname.class);
+    }
+
+
+    public List<Geoname> getADM2(int amd1id) {
+        Geoname geoname = getById(amd1id);
+        if (geoname == null) {
+            return null;
+        }
+        String country = geoname.getCountry();
+        String admin1 = geoname.getAdmin1();
+        if (StringUtils.isNullOrEmpty(country) || StringUtils.isNullOrEmpty(admin1)) {
+            System.out.println("数据有错误");
+            return null;
+        }
+        String sql = "select * from " + TABLE + " where country = ? and admin1 = ? and fcode = ?";
+        Object[] params = {country, admin1, "ADM2"};
+        return query(connection, sql, params, Geoname.class);
+    }
+
+    public List<Geoname> getADM3(int amd2id) {
+        Geoname geoname = getById(amd2id);
+        if (geoname == null) {
+            return null;
+        }
+        String country = geoname.getCountry();
+        String admin2 = geoname.getAdmin2();
+        if (StringUtils.isNullOrEmpty(country) || StringUtils.isNullOrEmpty(admin2)) {
+            System.out.println("数据有错误");
+            return null;
+        }
+        String sql = "select * from " + TABLE + " where country = ? and admin2 = ? and fcode = ?";
+        Object[] params = {country, admin2, "ADM3"};
+        return query(connection, sql, params, Geoname.class);
+    }
+
+    public List<Geoname> getADM3ByADM1(int amd1id) {
+        Geoname geoname = getById(amd1id);
+        if (geoname == null) {
+            return null;
+        }
+        String country = geoname.getCountry();
+        String admin1 = geoname.getAdmin1();
+        if (StringUtils.isNullOrEmpty(country) || StringUtils.isNullOrEmpty(admin1)) {
+            System.out.println("数据有错误");
+            return null;
+        }
+        String sql = "select * from " + TABLE + " where country = ? and admin1 = ? and fcode = ?";
+        Object[] params = {country, admin1, "ADM3"};
+        return query(connection, sql, params, Geoname.class);
+    }
+
 
     public static void main(String[] args) {
         GeonameDao geonameDao = new GeonameDao();
+        System.out.println(geonameDao.getADM3(1787823));
+
 //        System.out.println(geonameDao.getById(10));
 //        System.out.println(geonameDao.fuzzyMatching(32, 30, 120, 110, "ADM1").size());
 //        System.out.println(geonameDao.countryChildrenByFcode("CN", "ADM3").size());

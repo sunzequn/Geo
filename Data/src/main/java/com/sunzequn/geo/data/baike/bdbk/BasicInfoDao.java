@@ -28,9 +28,10 @@ public class BasicInfoDao extends ServerDao {
     }
 
     public List<BasicInfo> getKeyValue(String key, String value) {
-        String sql = "select * from " + TABLE + " where `key` = ? and value like '%" + value + "%'";
-        Object[] params = {key};
-        return query(connection, sql, params, BasicInfo.class);
+        String sql = "select * from " + TABLE + " where `key` like '%" + key + "%'" + " and value like '%" + value + "%'";
+        System.out.println(sql);
+//        Object[] params = {key};
+        return query(connection, sql, null, BasicInfo.class);
     }
 
     public boolean ifKeyValue(String url, String key, String value) {
@@ -50,9 +51,9 @@ public class BasicInfoDao extends ServerDao {
     }
 
     public List<BasicInfo> getByPropKey(String key) {
-        String sql = "select * from " + TABLE + " where `key` = ?";
-        Object[] params = {key};
-        return query(connection, sql, params, BasicInfo.class);
+        String sql = "select * from " + TABLE + " where `key` like '%" + key + "%'";
+        System.out.println(sql);
+        return query(connection, sql, null, BasicInfo.class);
     }
 
 

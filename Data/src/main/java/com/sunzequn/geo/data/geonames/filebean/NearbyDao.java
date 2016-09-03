@@ -41,7 +41,7 @@ public class NearbyDao extends BaseDao{
 
     public static void main(String[] args) {
         NearbyDao nearbyDao = new NearbyDao();
-//        List<NearbyCrawler> nearbies = nearbyDao.getAll(20000);
+//        List<NearbyCrawler> nearbies = nearbyDao.getAll1(20000);
 //        System.out.println(nearbies.size());
 //        Nearby nearby = new Nearby(0, "ss", 0);
 //        nearbyDao.save(nearby);

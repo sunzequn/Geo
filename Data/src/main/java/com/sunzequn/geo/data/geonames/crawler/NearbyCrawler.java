@@ -117,7 +117,7 @@ public class NearbyCrawler {
 //        Set<Integer> handledIdset = new HashSet<>();
 //        int start = 0;
 //        while (true) {
-//            List<Nearby> nearbies = nearbyDao.getAll(start, 40000);
+//            List<Nearby> nearbies = nearbyDao.getAll1(start, 40000);
 //            if (nearbies == null || nearbies.size() == 0) {
 //                System.out.println("over");
 //                break;

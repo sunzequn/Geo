@@ -1,5 +1,6 @@
 package com.sunzequn.geo.data.regex;
 
+import com.sun.org.apache.regexp.internal.RE;
 import com.sunzequn.geo.data.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -33,11 +34,30 @@ public class RegexUtils {
         return res.size() > 0 ? res : null;
     }
 
+    /**
+     * 解析连接中的文字
+     *
+     * @param content
+     * @return
+     */
+    public static List<String> parseLink(String content, int index) {
+        List<String> res = new ArrayList<>();
+        String regex = "(\\{\\{([\\u0000-\\uffff]+?)::<(.+?)>\\}\\})";
+        Matcher matcher = Pattern.compile(regex).matcher(content);
+        while (matcher.find()) {
+            res.add(matcher.group(index));
+        }
+        return res.size() > 0 ? res : null;
+    }
+
+
+
     public static void main(String[] args) {
-        String str = "<chapter_abstract>\n" +
-                "地质公园是国家公园的一种类型，它是以地质遗产和地质景观为主要内容的自然公园，如建于1872年的美国黄石公园、久负盛名的科罗拉多大峡谷就属于地质景观类的自然公园。\n" +
-                "1999年，中国开始推进地质遗产保护和地质公园建设。几年来，中国已经建立了85处国家地质公园，其中8处在2004年2月被联合国教科文组织列入首批世界地质公园名单。由于复杂的地质构造条件和地理背景，中国无疑是世界上地质景观最为丰富多样的国家，拥有令人炫目的遗产：嵩山，从最古老的太古代到最近的新生代的各代岩层都有发现，被称为“五世同堂”；石林，一个用中国的地名命名的喀斯特地貌类型；丹霞山，由红色陆相砂岩构成的赤壁丹霞地貌；庐山，中国第四纪冰川学说的诞生地……\n" +
-                "</chapter_abstract>";
-        System.out.println(RegexUtils.extract("<chapter_abstract>", "</chapter_abstract>", str));
+//        String str = "受到收到{{南京大学::</view/3143.htm>}}、{{东南大学::</view/3154.htm>}}等";
+        //"\\{\\{", "\\}\\}",
+//        System.out.println(RegexUtils.parseLink(str, 2));
+
+        String str = "**(pic,0,Pic7_8_9_1)**读“美国和巴西大豆产区图”**(pic,1,Pic7_8_9_1)**及**(pic,0,Pic7_8_9_2)**相关资料**(pic,1,Pic7_8_9_2)**，回答（1）～（3）题";
+        System.out.println(RegexUtils.extract("\\*\\*\\(", "\\)\\*\\*", str));
     }
 }

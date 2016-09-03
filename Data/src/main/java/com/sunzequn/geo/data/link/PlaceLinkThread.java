@@ -19,7 +19,7 @@
 //public class PlaceLinkThread {
 //
 //    private static LinkDao countryLinkDao = new LinkDao("country_link");
-//    private static LinkedList<LinkBean> linkedCountries = new LinkedList(countryLinkDao.getAll());
+//    private static LinkedList<LinkBean> linkedCountries = new LinkedList(countryLinkDao.getAll1());
 //
 //    public static void main(String[] args) {
 //

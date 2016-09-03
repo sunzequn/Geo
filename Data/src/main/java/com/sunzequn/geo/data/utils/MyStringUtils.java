@@ -88,6 +88,11 @@ public class MyStringUtils {
         return res;
     }
 
+    public static boolean isChineseNoBiaodian(char c) {
+        return (c >= 0x4e00) && (c <= 0x9fbb);
+    }
+
+
     public static boolean isChinese(char c) {
         Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
         if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS

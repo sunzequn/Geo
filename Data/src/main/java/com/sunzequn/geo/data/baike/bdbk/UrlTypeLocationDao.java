@@ -1,6 +1,7 @@
 package com.sunzequn.geo.data.baike.bdbk;
 
 import com.sunzequn.geo.data.dao.BaseDao;
+import com.sunzequn.geo.data.utils.ListUtils;
 
 import java.sql.Connection;
 import java.util.List;
@@ -13,6 +14,11 @@ public class UrlTypeLocationDao extends BaseDao {
     private static String TABLE = "url_type_location";
     private Connection connection;
 
+    public UrlTypeLocationDao(String table) {
+        connection = getConnection(DATABASE);
+        TABLE = table;
+    }
+
     public UrlTypeLocationDao() {
         connection = getConnection(DATABASE);
     }
@@ -20,6 +26,16 @@ public class UrlTypeLocationDao extends BaseDao {
     public List<UrlTypeLocation> getAllUrl() {
         String sql = "select url from " + TABLE;
         return query(connection, sql, null, UrlTypeLocation.class);
+    }
+
+    public UrlTypeLocation getByUrl(String url) {
+        String sql = "select * from " + TABLE + " where url = ?";
+        Object[] params = {url};
+        List<UrlTypeLocation> locations = query(connection, sql, params, UrlTypeLocation.class);
+        if (ListUtils.isEmpty(locations)) {
+            return null;
+        }
+        return locations.get(0);
     }
 
     public int add(UrlTypeLocation urlTypeLocation) {

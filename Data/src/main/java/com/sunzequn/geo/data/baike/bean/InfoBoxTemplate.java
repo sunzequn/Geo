@@ -17,6 +17,7 @@ public class InfoBoxTemplate {
     private int level;
     private String prop;
     private String comment;
+    private String encomment;
     private List<Prop> props;
 
     public InfoBoxTemplate() {
@@ -105,6 +106,14 @@ public class InfoBoxTemplate {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getEncomment() {
+        return encomment;
+    }
+
+    public void setEncomment(String encomment) {
+        this.encomment = encomment;
     }
 
     @Override
