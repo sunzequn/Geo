@@ -158,7 +158,7 @@ public class ParseXml {
         Elements ops = oneQuestion.select("option");
         for (Element op : ops) {
             String opText = op.text();
-            if (opText == null || opText.trim().equals(""))
+            if (opText == null || opText.trim().equals("") || opText.contains("**(pic"))
                 opText = "选项是图片";
             writeUtils.write(opText);
         }
