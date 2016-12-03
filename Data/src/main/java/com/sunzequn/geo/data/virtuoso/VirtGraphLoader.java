@@ -20,7 +20,7 @@ public class VirtGraphLoader {
      * 配置文件地址
      */
     private static final String VIRTUOSO_GEONAMES_CONF_FILE = "Data/src/main/resources/conf/virtuoso_geonames.properties";
-    private static final String VIRTUOSO_DBPEIDA_CONF_FILE = "Data/src/main/resources/conf/virtuoso_dbpedia.properties";
+//    private static final String VIRTUOSO_DBPEIDA_CONF_FILE = "Data/src/main/resources/conf/virtuoso_dbpedia.properties";
 
     /**
      * Virtuoso图
@@ -35,8 +35,8 @@ public class VirtGraphLoader {
     private VirtGraphLoader() {
         geonamesVirtGraph = loader(VIRTUOSO_GEONAMES_CONF_FILE);
         System.out.println(geonamesVirtGraph.getConnection());
-        dbpediaVirtGraph = loader(VIRTUOSO_DBPEIDA_CONF_FILE);
-        System.out.println(dbpediaVirtGraph.getConnection());
+//        dbpediaVirtGraph = loader(VIRTUOSO_DBPEIDA_CONF_FILE);
+//        System.out.println(dbpediaVirtGraph.getConnection());
     }
 
     private VirtGraph loader(String confFile) {
