@@ -14,13 +14,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by sloriac on 16-12-2.
+ * Created by sloriac on 16-12-4.
  */
-public class IdHandler {
+public class ZhHandler {
 
-    private static final String FILE = "/home/sloriac/code/Geo/Data/src/main/resources/geonames_ids";
     private static VirtGraph virtGraph = VirtGraphLoader.getInstance().getGeonamesVirtGraph();
-    private static WriteUtils writeUtils = new WriteUtils(FILE, false);
+    private static WriteUtils writeUtils = new WriteUtils(GeoNamesConf.GEONAMES_ZH, false);
 
 
     public static void main(String[] args) throws Exception {
@@ -29,23 +28,25 @@ public class IdHandler {
     }
 
     public static void id() throws Exception {
-
-        String sparql = "select distinct * where {GRAPH ?graph {?s  a <http://www.geonames.org/ontology#Feature>}}";
+        Set<String> res = new HashSet<>();
+        String sparql = "SELECT ?s ?label WHERE{ GRAPH ?graph { ?s <http://www.geonames.org/ontology#alternateName> ?label. BIND (lang(?label) AS ?language). FILTER regex(?language, \"zh\")}}";
 //        System.out.println(sparql);
         VirtuosoQueryExecution vqe = VirtuosoQueryExecutionFactory.create(sparql, virtGraph);
         ResultSet results = vqe.execSelect();
-        Set<String> res = new HashSet<>();
         while (results.hasNext()) {
             QuerySolution result = results.nextSolution();
             String s = result.get("s").toString();
             s = GeoNameUtils.trim(s);
-            if (!res.contains(s)){
-                writeUtils.write(s);
-                res.add(s);
+            String l = result.get("label").toString();
+            l = StringUtils.removeEnd(l, "@zh");
+            String line = s.trim() + GeoNamesConf.SPLIT + l.trim();
+            if (!res.contains(line)){
+                writeUtils.write(line);
+                res.add(line);
             }
         }
-        System.out.println("数量: " + res.size());
-        writeUtils.flush();
+        System.out.println("中文数量: " + res.size());
     }
+
 
 }

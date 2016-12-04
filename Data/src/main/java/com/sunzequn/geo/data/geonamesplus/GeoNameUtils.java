@@ -34,4 +34,16 @@ public class GeoNameUtils {
     public static boolean lngLatCheck(double lng, double lat) {
 		return (lng >= -180.0) && (lng <= 180.0) && (lat >= -90) && (lat <= 90);
 	}
+
+    public static String trim(String uri){
+        uri = uri.trim();
+        uri = StringUtils.removeStart(uri, "http://sws.geonames.org/");
+        uri = StringUtils.removeStart(uri, "http://www.geonames.org/ontology#");
+        uri = StringUtils.removeEnd(uri, "/");
+        return uri.trim();
+    }
+
+    public static String geneRelationUri(String uri){
+        return "http://www.geonames.org/ontology#" + uri.trim();
+    }
 }

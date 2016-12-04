@@ -24,6 +24,11 @@ public class ChinaGeonamesLinkDao extends BaseDao {
         return execute(connection, sql, params);
     }
 
+    public List<ChinaGeonamesLink> getAll() {
+        String sql = "select * from " + TABLE;
+        return query(connection, sql, null, ChinaGeonamesLink.class);
+    }
+
     public List<ChinaGeonamesLink> getByLevel(String level) {
         String sql = "select * from " + TABLE + " where leveltype = ?";
         Object[] params = {level};
