@@ -28,8 +28,8 @@ public class DoubleUtils {
         return df.format(d);
     }
 
-    public static double m4d(double d) {
-        DecimalFormat df = new DecimalFormat("0.0000");
+    public static double m2d(double d) {
+        DecimalFormat df = new DecimalFormat("0.00");
         return Double.valueOf(df.format(d));
     }
     public static void main(String[] args) {

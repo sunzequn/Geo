@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class TemperatureSiteInit {
 	
-    private static final String Gnext_TEMPERATURE_SITE = "data/gnext/temperature_site";
+    private static final String Gnext_TEMPERATURE_SITE = "/home/sloriac/code/Geo/Data/src/main/resources/temperature_site";
 	private static Map<String, TemperatureSite> temperatureMap = new HashMap<String, TemperatureSite>();
 	
 	static{

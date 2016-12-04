@@ -7,7 +7,7 @@ import java.util.List;
  * @author sunzequn
  *
  */
-public class PrecipitationDao extends GnextBaseDao{
+public class PrecipitationDao extends BaseDao{
 	
     private static final String TABLE = "ext_precipitation_monthly_recent10";
     
@@ -23,7 +23,7 @@ public class PrecipitationDao extends GnextBaseDao{
     public Precipitation getByKey(double lng, double lat, int year, int month) {
         String sql = "select * from " + TABLE + " where longitude = ? and latitude = ? and year = ? and month = ?";
         Object[] params = {lng, lat, year, month};
-        List<Precipitation> precipitations = query(sql, params, Precipitation.class);
+        List<Precipitation> precipitations = query(connection, sql, params, Precipitation.class);
         return precipitations == null ? null : precipitations.get(0); 
     }
 
@@ -53,7 +53,7 @@ public class PrecipitationDao extends GnextBaseDao{
     }
 
     private List<Precipitation> query(String sql, Object[] params){
-        List<Precipitation> precipitations = query(sql, params, Precipitation.class);
+        List<Precipitation> precipitations = query(connection, sql, params, Precipitation.class);
         return precipitations == null ? null : precipitations;
     }
 

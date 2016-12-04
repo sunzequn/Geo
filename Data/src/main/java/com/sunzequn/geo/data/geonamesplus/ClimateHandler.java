@@ -115,7 +115,7 @@ public class ClimateHandler {
         return null;
     }
     
-    public String getZhongxueTypeByLntLat(double lng, double lat) {
+    public String[] getZhongxueTypeByLntLat(double lng, double lat) {
         Grid grid = findGrid.find(lng, lat, koppenGrid);
         if (grid != null) {
             Koppen koppen = koppenDao.getByLngLat(grid.getLongitude(), grid.getLatitude());
@@ -123,10 +123,10 @@ public class ClimateHandler {
                 List<KoppenMapping> koppenMappings = koppenMappingDao.getByKoppenType(koppen.getType());
                 for(int i = 1; i < koppenMappings.size(); i++){
                 	if (isKoppenMatched(lng, lat, koppenMappings.get(i))) {
-						return koppenMappings.get(i).getZhongxuetype();
+						return new String[]{koppen.getType(), koppenMappings.get(i).getZhongxuetype()};
 					}
                 }
-                return koppenMappings.get(0).getZhongxuetype();
+                return new String[]{koppen.getType(), koppenMappings.get(0).getZhongxuetype()};
             }
         }
         return null;
