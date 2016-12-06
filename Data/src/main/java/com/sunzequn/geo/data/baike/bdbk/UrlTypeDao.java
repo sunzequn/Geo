@@ -172,7 +172,7 @@ public class UrlTypeDao extends BaseDao {
 //        urlTypes.add(u1);
 //        urlTypes.add(u2);
 //        urlTypes.add(u3);
-//        dao.addTypeBatch(urlTypes);
+//        dao.addBatch(urlTypes);
     }
 
 }

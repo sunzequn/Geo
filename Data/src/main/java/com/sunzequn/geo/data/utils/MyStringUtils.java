@@ -207,8 +207,14 @@ public class MyStringUtils {
         return returnString;
     }
 
+    public static boolean judgeContainsStr(String cardNum) {
+        String regex=".*[a-zA-Z]+.*";
+        Matcher m=Pattern.compile(regex).matcher(cardNum);
+        return m.matches();
+    }
+
 
     public static void main(String[] args) throws Exception {
-
+        System.out.println(judgeContainsStr("中国"));
     }
 }

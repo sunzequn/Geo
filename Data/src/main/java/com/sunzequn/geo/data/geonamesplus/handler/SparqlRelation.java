@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.geonames.relation;
+package com.sunzequn.geo.data.geonamesplus.handler;
 
 import com.sunzequn.geo.data.utils.WriteUtils;
 import com.sunzequn.geo.data.virtuoso.VirtGraphLoader;

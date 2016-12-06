@@ -4,6 +4,7 @@ import com.sunzequn.geo.data.china.geo.ChinaCity;
 import com.sunzequn.geo.data.china.geo.ChinaCityDao;
 import com.sunzequn.geo.data.china_geoname_link.ChinaGeonamesLink;
 import com.sunzequn.geo.data.china_geoname_link.ChinaGeonamesLinkDao;
+import com.sunzequn.geo.data.utils.MyStringUtils;
 import com.sunzequn.geo.data.utils.ReadUtils;
 import com.sunzequn.geo.data.utils.WriteUtils;
 
@@ -42,7 +43,8 @@ public class ZhsFromCityHandler {
 
         WriteUtils writeUtils = new WriteUtils(GeoNamesConf.GEONAMES_ZH_ALL, false);
         for (String re : res) {
-            writeUtils.write(re);
+            if (!MyStringUtils.judgeContainsStr(re))
+                writeUtils.write(re);
         }
         writeUtils.close();
 

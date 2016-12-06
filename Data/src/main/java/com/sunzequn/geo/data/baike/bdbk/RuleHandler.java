@@ -86,7 +86,7 @@ public class RuleHandler {
                 urlTypeDao.addType(s, rule.getType(), confidence);
 //                urlTypes.add(new UrlType(s, rule.getType(), confidence));
             }
-//            urlTypeDao.addTypeBatch(urlTypes);
+//            urlTypeDao.addBatch(urlTypes);
         }
     }
 

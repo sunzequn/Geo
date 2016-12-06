@@ -68,7 +68,7 @@ public class UrlToLiHX {
 //                num++;
 //            }
 //        }
-//        toLiDao.addTypeBatch(urlTypes);
+//        toLiDao.addBatch(urlTypes);
 //        System.out.println(num);
 
 

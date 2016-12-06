@@ -1,4 +1,4 @@
-package com.sunzequn.geo.data.geonames.relation;
+package com.sunzequn.geo.data.geonamesplus.handler;
 
 import com.sunzequn.geo.data.utils.ReadUtils;
 import com.sunzequn.geo.data.utils.WriteUtils;
